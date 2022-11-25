@@ -1,490 +1,403 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>Sucheng Ren</title>
+
+  <meta name="author" content="Sucheng Ren">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerfies: Deformable Neural Radiance Fields</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
+
 <body>
+  <table
+    style="width:110%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+    <tbody>
+      <tr style="padding:0px">
+        <td style="padding:0px">
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr style="padding:0px">
+                <td style="padding:2.5%;width:63%;vertical-align:middle">
+                  <p style="text-align:center">
+                    <name>Sucheng (Oliver) Ren</name>
+                  </p>
+                  <p>
+                    I am a master student advised by <a href="http://www.shengfenghe.com/">Shengfeng He</a> at the South China University of Technology, where I received my B.S. degree. I am interested in Transformer, Self-Supervised Learning, Transformer, and Multimodal Learning.
+                  </p>
+                  <p>
+                    I am very lucky to work with Prof. <a href="https://cihangxie.github.io/">Cihang Xie</a> and Prof. <a href="http://www.cs.jhu.edu/~ayuille/"> Alan Yuille</a> on Self-Supervised Learning at John Hopkins University, 
+                    <a href="https://scholar.google.com.hk/citations?user=Q8iay0gAAAAJ&hl=zh-CN">Jiashi Feng</a> on Transformer at National University of Singapore, and Prof. <a href="https://hangzhaomit.github.io/">Hang Zhao</a> on Multi-modal Learning and Knowledge Distillation at Tsinghua University. 
+                    
+                  </p>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav>
+                  <p style="text-align:center">
+                    <a href="mailto:oliverrensu@gmail.com">Email</a> &nbsp|&nbsp
+                    <a href="data/Sucheng_Ren_cv.pdf">CV</a> &nbsp|&nbsp
+                    <a href="https://scholar.google.com/citations?user=Hbf-SoAAAAAJ&hl=zh-CN">Scholar</a> &nbsp|&nbsp
+                    <a href="https://github.com/OliverRensu">Github</a> &nbsp|&nbsp
+                  </p>
+                </td>
+                <td style="padding:2.5%;width:40%;max-width:40%">
+                  <a href="images/profile.jpg"><img style="width:110%;max-width:110%" alt="profile photo"
+                      src="images/profile.jpg" class="hoverZoomLink"></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Nerfies: Deformable Neural Radiance Fields</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
-            </span>
-          </div>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Washington,</span>
-            <span class="author-block"><sup>2</sup>Google Research</span>
-          </div>
+          <table width="110%" align="center" border="0" cellspacing="0" cellpadding="20">
+            <tbody>
+              <tr>
+                <td>
+                  <heading>News</heading>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table width="100%" align="center" border="0" cellpadding="20">
+            <tbody>
+              <ul>
+                <li>[Feb. 2022] <strong>Three</strong> first author papers got accepted by <strong>CVPR2022</strong> including one <strong>Oral</strong> paper!🎉</li>
+                <li>[Sep. 2021] Working with Prof. <a href="https://scholar.google.com.hk/citations?user=Q8iay0gAAAAJ&hl=zh-CN">Jiashi Feng</a> at National University of Singapore as a research intern!👩‍💻</li>
+                <li>[Jul. 2021] <strong>Two</strong> papers got accepted by <strong>ICCV2021</strong> including one <strong>Oral</strong> paper (Acceptance Rate 3.0%)!🎉</li>
+                <li>[May. 2021] Working with Prof. <a href="https://cihangxie.github.io/">Cihang Xie</a> and Prof. <a href="http://www.cs.jhu.edu/~ayuille/"> Alan Yuille</a> at John Hopkins University!👩‍💻</li>
+                <li>[Mar. 2021] <strong>Three</strong> papers got accepted by <strong>CVPR2021</strong> including two first author papers!🎉</li>
+                <li>[Dec. 2020] Working with Prof. <a href="https://hangzhaomit.github.io/">Hang Zhao</a> in Tsinghua as a research intern!👩‍💻</li>
+                <li>[Jul. 2020] <strong>One</strong> first author paper got accepted by <strong>ECCV2020</strong> as spotlight paper (Acceptance Rate 5.0%)!🎉</li>
+              </ul>
+            </tbody>
+          </table>
 
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
+
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr>
+                <td style="padding:20px;width:110%;vertical-align:middle">
+                  <heading>Publications</heading>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table
+          style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tbody>
+            <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+              <td style="padding:20px;width:35%;vertical-align:left">
+                <div><img style="width:100%;max-width:100%" src="images/Shunted.png"></div>
+              </td>
+              <td style="padding:30px;width:60%;vertical-align:middle">
+                  <papertitle>Shunted Self-Attention via Multi-Scale Token Aggregation     
+                  </papertitle>
+                <br>
+                <br>
+                <strong>Sucheng Ren</strong>, 
+                <a href="https://zhengqigao.github.io/">Daquan Zhou</a>,
+                <a href="http://www.shengfenghe.com/">Shengfeng He</a>,
+                <a href="https://sites.google.com/site/jshfeng/home">Jiashi Feng</a>,
+                <a href="https://sites.google.com/site/sitexinchaowang/">Xinchao Wang</a>
+
+                <br>
+                IEEE Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, <strong>(Oral)</strong>, 2022
+                <br>
+                <a href="https://arxiv.org/abs/2111.15193">[paper]</a>
+                <a href="https://github.com/oliverrensu/shunted-transformer">[code]</a>
+                <a href="data/Shunted.bib">[bibtex]</a>
+                <p>
+                  Integrating the capability of capturing multiscale objects in each attention layer by adaptively merging tokens.
+                </p>
+              </td>
+            </tr>
+        </table>
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/coadvise.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>Co-advise: Cross Inductive Bias Distillation         
+                    </papertitle>
+                  <br>
+                  <br>
+                  <strong>Sucheng Ren</strong>, 
+                  <a href="https://zhengqigao.github.io/">Zhengqi Gao</a>,
+                  <a href="https://patrickhua.github.io/">Tianyu Hua</a>,
+                  <a href="https://zihuixue.github.io/">Zihui Xue</a>,
+                  <a href="https://people.csail.mit.edu/yonglong/">Yonglong Tian</a>,
+                  <a href="http://www.shengfenghe.com/">Shengfeng He</a>,
+                  <a href="https://hangzhaomit.github.io/">Hang Zhao</a>
+
+                  <br>
+                  IEEE Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2022
+                  <br>
+                  <a href="https://arxiv.org/abs/2106.12378">[paper]</a>
+                  <a href="https://github.com/OliverRensu/co-advise/">[code]</a>
+                  <a href="data/coadvise.bib">[bibtex]</a>
+                  <p>
+                    The first work delves into the influence of models inductive biases in knowledge distillation
+                  </p>
+                </td>
+              </tr>
+          </table>
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/SDMP.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>A Simple Data Mixing Prior for Improving Self-Supervised Learning                    
+                    </papertitle>
+                  <br>
+                  <br>
+                  <strong>Sucheng Ren</strong>, 
+                  <a href="https://zhengqigao.github.io/">Huiyu Wang</a>, 
+                  <a href="https://zhengqigao.github.io/">Zhengqi Gao</a>,
+                  <a href="http://www.shengfenghe.com/">Shengfeng He</a>,
+                  <a href="http://www.cs.jhu.edu/~ayuille/">Alan Yuille</a>,
+                  <a href="https://yuyinzhou.github.io/">Yuyin Zhou</a>,
+                  <a href="https://cihangxie.github.io/">Cihang Xie</a>
+
+                  <br>
+                  IEEE Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2022
+                  <br>
+                  <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Ren_A_Simple_Data_Mixing_Prior_for_Improving_Self-Supervised_Learning_CVPR_2022_paper.pdf">[paper]</a>
+                  <a href="data/SDMP.bib">[bibtex]</a>
+                  <p>
+                    A generic training strategy in data mixing that can improve the self-supervised representation learning of both CNNs and ViTs
+                  </p>
+                </td>
+              </tr>
+          </table>
+
+
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/MKE.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>Multimodal Knowledge Expansion                      
+                    </papertitle>
+                  <br>
+                  <br>
+                  <a href="https://zihuixue.github.io/">Zihui Xue</a>,, 
+                  <strong>Sucheng Ren</strong>, 
+                  <a href="https://zhengqigao.github.io/">Zhengqi Gao</a>, 
+                  <a href="https://hangzhaomit.github.io/">Hang Zhao</a>
+
+                  <br>
+                  International Conference on Computer Vision <strong>(ICCV)</strong>, 2021
+                  <br>
+                  <a href="https://arxiv.org/abs/2103.14431">[paper]</a>
+                  <a href="https://tsinghua-mars-lab.github.io/MKE/">[website]</a>
+                  <a href="data/MKE.bib">[bibtex]</a>
+                  <p>
+                    A knowledge distillation-based framework to effectively utilize multimodal data without requiring labels.
+                  </p>
+                </td>
+              </tr>
+          </table>
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/decorr.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>On Feature Decorrelation in Self-Supervised Learning                      
+                    </papertitle>
+                  <br>
+                  <br>
+                  <a href="https://patrickhua.github.io/">Tianyu Hua</a>,
+                  <a href="https://scholar.google.com/citations?user=hn0u5VgAAAAJ&hl=zh-CN">Wenxiao Wang</a>, 
+                  <a href="https://zihuixue.github.io/">Zihui Xue</a>, 
+                  <strong>Sucheng Ren</strong>, 
+                  <a href="https://people.csail.mit.edu/yuewang/">Yue Wang</a>, 
+                  <a href="https://hangzhaomit.github.io/">Hang Zhao</a>
+                  
+
+                  <br>
+                  International Conference on Computer Vision <strong>(ICCV)</strong>, 2021
+                  <br>
+                  (<strong>Oral</strong>, Acceptance Rate 3.0%)
+                  <br>
+                  <a href="https://arxiv.org/abs/2105.00470">[paper]</a>
+                  <a href="https://tsinghua-mars-lab.github.io/decorr/">[website]</a>
+                  <a href="data/Decorr.bib">[bibtex]</a>
+                  <p>
+                    Connecting dimensional collapse with strong correlations between axes and consider such connection as a strong motivation for feature decorrelation.
+                  </p>
+                </td>
+              </tr>
+          </table>
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/lipreading.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>Learning from the Master: Distilling Cross-modal Advanced Knowledge for Lip Reading                      
+                    </papertitle>
+                  <br>
+                  <strong>Sucheng Ren, </strong>
+                  Yong Du,
+                  Jianming Lv,
+                  Guoqiang Han, 
+                  and <a href="http://www.shengfenghe.com">Shengfeng He</a>
+
+                  <br>
+                  IEEE Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2021
+                  <br>
+                  <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Ren_Learning_From_the_Master_Distilling_Cross-Modal_Advanced_Knowledge_for_Lip_CVPR_2021_paper.pdf">[paper]</a>
+                  <!--<a href="https://arxiv.org/pdf/2012.01050.pdf">[paper]</a>-->
+                  <a href="data/lipreading.bib">[bibtex]</a>
+                  <p>
+                    Training a master to learn how to teach a better student.
+                  </p>
+                </td>
+              </tr>
+          </table>
+
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/RTM.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>Reciprocal Transformations for Unsupervised Video Object Segmentation
+                    </papertitle>
                   </a>
-              </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies/releases/tag/0.1"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
+                  <br>
+                  <br>
+                  <strong>Sucheng Ren, </strong>
+                  Wenxi Liu,
+                  Yongtuo Liu,
+                  Haoxin Chen,
+                  Guoqiang Han and
+                  <a href="http://www.shengfenghe.com">Shengfeng He</a>
+
+                  <br>
+                  IEEE Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2021
+                  <br>
+                  <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Ren_Reciprocal_Transformations_for_Unsupervised_Video_Object_Segmentation_CVPR_2021_paper.pdf">[paper]</a>
+                  <!--<a href="https://arxiv.org/pdf/2012.01050.pdf">[paper]</a>-->
+                  <a href="data/RTM.bib">[bibtex]</a>
+                  <a href="https://github.com/OliverRensu/RTNet">[code]</a>
+                  <p>
+                    Jointly learning salient objects, moving objects, recurring objects for Unsupervised Video Object Segmentation.
+                  </p>
+                </td>
+              </tr>
+          </table>
+          
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
+
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/FVOS.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>Delving Deep into Many-to-many Attention forFew-shot Video Object Segmentation
+                    </papertitle>
                   </a>
-            </div>
+                  <br>
+                  <br>
+                  Haoxin Chen, Hanjie Wu, Nanxuan Zhao, <strong>Sucheng Ren</strong> and
+                  <a href="http://www.shengfenghe.com">Shengfeng He</a>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                  <br>
+                  IEEE Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong></em>, 2021
+                  <br>
+                  <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Chen_Delving_Deep_Into_Many-to-Many_Attention_for_Few-Shot_Video_Object_Segmentation_CVPR_2021_paper.pdf">[paper]</a>
+                  <a href="data/DANet.bib">[bibtex]</a>
+                  <a href="https://github.com/scutpaul/DANet">[code]</a>
+                  <p>
+                    
+                  </p>
+                </td>
+              </tr>
+          </table>
+          
+          <table
+            style="width:110%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+            <tbody>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2>
-    </div>
-  </div>
-</section>
+              <tr onmouseout="end_user_stop()" onmouseover="end_user_start()">
+                <td style="padding:20px;width:35%;vertical-align:left">
+                  <div><img style="width:100%;max-width:100%" src="images/TENET.png"></div>
+                </td>
+                <td style="padding:30px;width:60%;vertical-align:middle">
+                    <papertitle>TENet: Triple Excitation Network for Video Salient Object Detection
+                    </papertitle>
+                  </a>
+                  <br>
+                  <br>
+                  <strong>Sucheng Ren,</strong>
+                  Chu Han,
+                  Xin Yang,
+                  Guoqiang Han and
+                  <a href="http://www.shengfenghe.com">Shengfeng He</a>
 
+                  <br>
+                  European Conference on Computer Vision <strong>(ECCV)</strong>, 2020
+                  <br>
+                  (<strong>Spotlight</strong>, Acceptance Rate 5.0%)
+                  <br>
+                  <a href="https://arxiv.org/abs/2007.09943">[paper]</a>
+                  <a href="data/TENet.bib">[bibtex]</a>
+                  <p>
+                    
+                  </p>
+                </td>
+              </tr>
+          </table>
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+          
 
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
-          </p>
-          <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
-          </p>
-          <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
 
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
-            </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
-          </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="https://homes.cs.washington.edu/~kpar/nerfies/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="https://homes.cs.washington.edu/~kpar/nerfies/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/>
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
-
-      </div>
-    </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Concurrent Work. -->
-
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
-}</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="https://homes.cs.washington.edu/~kpar/nerfies/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
+  <!-- Default Statcounter code for Personal Website
+https://oliverrensu.github.io/ -->
+<script type="text/javascript">
+  var sc_project=12694920; 
+  var sc_invisible=1; 
+  var sc_security="f1698122"; 
+  </script>
+  <script type="text/javascript"
+  src="https://www.statcounter.com/counter/counter.js" async></script>
+  <noscript><div class="statcounter"><a title="Web Analytics Made Easy -
+  Statcounter" href="https://statcounter.com/" target="_blank"><img
+  class="statcounter" src="https://c.statcounter.com/12694920/0/f1698122/1/"
+  alt="Web Analytics Made Easy - Statcounter"
+  referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+  <!-- End of Statcounter Code -->
 </body>
 </html>
