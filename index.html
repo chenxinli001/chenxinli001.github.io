@@ -183,8 +183,70 @@
         </tbody>
       </table> -->
       
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
+      <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <tr onmouseout="nerfsuper_stop()" onmouseover="nerfsuper_start()">
+          <td style="padding:20px;width:25%; vertical-align:middle">
+            <div class="one">
+              <div class="two" id='nerfsuper_image'>
+                <video  width=180 height="180" muted autoplay loop>
+              <source src="videos/pulling_ours.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
+              <video  width=180 height=180 muted autoplay loop>
+                <source src="videos/pulling_gt.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <script type="text/javascript">
+              function nerfsuper_start() {
+                document.getElementById('nerfsuper_image').style.opacity = "1";
+              }
+
+              function nerfsuper_stop() {
+                document.getElementById('nerfsuper_image').style.opacity = "0";
+              }
+              nerfsuper_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://xggnet.github.io/StegaNeRF/">
+              <papertitle>
+                EndoGaussian: Gaussian Splatting for Deformable Surgical Scene Reconstruction with 200 FPS
+              </papertitle>
+            </a>
+            <br>
+            <a href="https://yifliu3.github.io/chen">Lifan Liu*</a>,
+            <strong>Chenxin Li*</strong>,
+            <a href="https://scholar.google.com.hk/citations?user=C6fAQeIAAAAJ&hl=en"> Chen Yang</a>, 
+            <a href='https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm'> Yixuan Yuan</a> 
+            <!-- Brandon Y. Feng*,
+            Zhiwen Fan*, 
+            Panwang Pan, 
+            Zhangyang Wang -->
+            (* Equal Contribution)
+            <br>
+            <em>Preprint, 2024 </em>
+            <br> 
+            <a href="https://yifliu3.github.io/EndoGaussian/">[Project]</a> 
+            <a href="https://arxiv.org/abs/2401.12561">[ArXiv]</a> 
+            <a href="https://yifliu3.github.io/EndoGaussian/TBD">[Video]</a> 
+            <a href="https://github.com/yifliu3/EndoGaussian">[Code]</a> 
+            <!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
+            <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
+            <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
+            <p></p>
+            <p> 
+              <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
+              <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
+              Real-time intraoperative application by 200FPS surgical scene reconstruction
+            </p>
+          </td>
+        </tr>
+
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <tr onmouseout="nerfsuper_stop()" onmouseover="nerfsuper_start()">
             <td style="padding:20px;width:25%; vertical-align:middle">
               <div class="one">
@@ -967,7 +1029,7 @@
                 <heading>Professional Activities</heading>
                 <p><h3>Conference Reviewer</h3> 
                   <ul class="b">
-                    ICML'24, ICLR'24, CVPR'24/23, AAAI'24, NeurIPS'23, ICCV'23, ACM MM'23, MICCAI'23
+                    ICML'24, ICLR'24, CVPR'24/23, AAAI'24, NeurIPS'23, ICCV'23, ACM MM'24/23, MICCAI'23
                     <!-- <li>International Conference on Learning Representations (ICLR), 2024</li>
                     <p>    
                 <li>Conference on Neural Information Processing Systems (NeurIPS), 2023</li>
