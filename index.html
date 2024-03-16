@@ -132,8 +132,8 @@
               </p>
             </td>
             <td style="padding:2.5%;width:25%;max-width:40%">
-              <!-- <a href="my_images/photo.jpg"> -->
-                <img style="width:90%;max-width:90%" alt="profile photo" src="my_images/ava.jpg" class="hoverZoomLink"></a>
+              <!-- <a href="data/images/photo.jpg"> -->
+                <img style="width:90%;max-width:90%" alt="profile photo" src="data/images/ava.jpg" class="hoverZoomLink"></a>
             </td>
           </tr>
         </tbody></table>
@@ -189,38 +189,105 @@
           </tr>
         </tbody>
       </table> -->
-      
 
       <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-        <tr onmouseout="nerfsuper2_stop()" onmouseover="nerfsuper2_start()">
+        <tr onmouseout="proj_5_stop()" onmouseover="proj_5_start()">
           <td style="padding:20px;width:25%; vertical-align:middle">
             <div class="one">
-              <div class="two" id='nerfsuper_image2'>
+              <div class="two" id='proj_5'>
                 <video  width=180 height="180" muted autoplay loop>
-              <source src="videos/pulling_ours.mp4" type="video/mp4">
+              <source src="data/videos/result_2.mp4" type="video/mp4">
               Your browser does not support the video tag.
               </video></div>
               <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
               <video  width=180 height=180 muted autoplay loop>
-                <source src="videos/pulling_gt.mp4" type="video/mp4">
+                <source src="data/videos/result_1.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             </div>
             <script type="text/javascript">
-              function nerfsuper2_start() {
-                document.getElementById('nerfsuper_image2').style.opacity = "1";
+              function proj_5_start() {
+                document.getElementById('proj_5').style.opacity = "1";
               }
 
-              function nerfsuper2_stop() {
-                document.getElementById('nerfsuper_image2').style.opacity = "0";
+              function proj_5_stop() {
+                document.getElementById('proj_5').style.opacity = "0";
               }
-              nerfsuper2_stop()
+              proj_5_stop()
             </script>
           </td>
           <td style="padding:20px;width:75%;vertical-align:middle">
             <a href="https://xggnet.github.io/StegaNeRF/">
               <papertitle>
-                EndoGaussian: Gaussian Splatting for Deformable Surgical Scene Reconstruction with 200 FPS
+                Endora: Video Generation Models as Endoscopy Simulators
+              </papertitle>
+            </a>
+            <br>
+            <strong>Chenxin Li*</strong>,
+            Hengyu Liu*,
+            <a href="https://yifliu3.github.io/chen">Yifan Liu*</a>,
+            <a href="https://brandonyfeng.github.io/">Brandon Y. Feng</a>,
+            <a href="https://wymancv.github.io/wuyang.github.io/">Wuyang Li</a>,
+            <a href="https://xinyuliu-jeffrey.github.io//">Xinyu Liu</a>,
+            <a href="https://franciszchen.github.io/">Zhen Chen</a>,
+            <a href="https://amandajshao.github.io/">Jingshao</a>,
+            <a href='https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm'> Yixuan Yuan</a> 
+            <!-- Brandon Y. Feng*,
+            Zhiwen Fan*, 
+            Panwang Pan, 
+            Zhangyang Wang -->
+            (* Equal Contribution)
+            <br>
+            <em>Preprint, 2024 </em>
+            <br> 
+            <a href="https://en-dora.github.io/">[Project]</a> 
+            <a href="TBD">[ArXiv]</a> 
+            <a href="https://www.youtube.com/watch?v=_cBm336K2Tk&ab_channel=ChenxinLI">[Video]</a> 
+            <a href="https://github.com/XGGNet/Endora">[Code]</a> 
+            <!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
+            <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
+            <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
+            <p></p>
+            <p> 
+              <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
+              <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
+              Real-time surgical reconstruction with Gaussian Splatting representation
+            </p>
+          </td>
+        </tr>
+   
+      
+
+      <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <tr onmouseout="proj_4_stop()" onmouseover="proj_4_start()">
+          <td style="padding:20px;width:25%; vertical-align:middle">
+            <div class="one">
+              <div class="two" id='nerfsuper_image2'>
+                <video  width=180 height="180" muted autoplay loop>
+              <source src="data/videos/pulling_ours.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
+              <video  width=180 height=180 muted autoplay loop>
+                <source src="data/videos/pulling_gt.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <script type="text/javascript">
+              function proj_4_start() {
+                document.getElementById('nerfsuper_image2').style.opacity = "1";
+              }
+
+              function proj_4_stop() {
+                document.getElementById('nerfsuper_image2').style.opacity = "0";
+              }
+              proj_4_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://xggnet.github.io/StegaNeRF/">
+              <papertitle>
+                EndoGaussian: Gaussian Splatting for Deformable Surgical Scene Reconstruction
               </papertitle>
             </a>
             <br>
@@ -247,36 +314,36 @@
             <p> 
               <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
               <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
-              Real-time intraoperative application by 200FPS surgical scene reconstruction
+              Real-time surgical reconstruction with Gaussian Splatting representation
             </p>
           </td>
         </tr>
 
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr onmouseout="nerfsuper_stop()" onmouseover="nerfsuper_start()">
+          <tr onmouseout="proj_3_stop()" onmouseover="proj_3_start()">
             <td style="padding:20px;width:25%; vertical-align:middle">
               <div class="one">
                 <div class="two" id='nerfsuper_image'>
                   <video  width=180 height="180" muted autoplay loop>
-                <source src="videos/lego_res_resize160.mp4" type="video/mp4">
+                <source src="data/videos/lego_res_resize160.mp4" type="video/mp4">
                 Your browser does not support the video tag.
                 </video></div>
                 <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
                 <video  width=180 height=180 muted autoplay loop>
-                  <source src="videos/lego_ren_resize160.mp4" type="video/mp4">
+                  <source src="data/videos/lego_ren_resize160.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
               </div>
               <script type="text/javascript">
-                function nerfsuper_start() {
+                function proj_3_start() {
                   document.getElementById('nerfsuper_image').style.opacity = "1";
                 }
 
-                function nerfsuper_stop() {
+                function proj_3_stop() {
                   document.getElementById('nerfsuper_image').style.opacity = "0";
                 }
-                nerfsuper_stop()
+                proj_3_stop()
               </script>
             </td>
             <td style="padding:20px;width:75%;vertical-align:middle">
@@ -315,22 +382,22 @@
           
 					
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr onmouseout="samurai2_stop()" onmouseover="samurai2_start()">
+          <tr onmouseout="proj_2_stop()" onmouseover="proj_2_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='samurai_image2'>
-                  <img src='my_images/KCD-2.png'  width="180" ></div>
-                <img src='my_images/KCD-1.png' width="180" >
+                  <img src='data/images/KCD-2.png'  width="180" ></div>
+                <img src='data/images/KCD-1.png' width="180" >
               </div>
               <script type="text/javascript">
-                function samurai2_start() {
+                function proj_2_start() {
                   document.getElementById('samurai_image2').style.opacity = "1";
                 }
 
-                function samurai2_stop() {
+                function proj_2_stop() {
                   document.getElementById('samurai_image2').style.opacity = "0";
                 }
-                samurai2_stop() 
+                proj_2_stop() 
               </script>
             </td>
             <td style="padding:20px;width:75%;vertical-align:middle">
@@ -365,22 +432,22 @@
             </td>
           </tr>		
     
-          <tr onmouseout="samurai_stop()" onmouseover="samurai_start()">
+          <tr onmouseout="proj_1_stop()" onmouseover="proj_1_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='samurai_image'>
-                  <img src='my_images/GVS-2.png' width="180"></div>
-                <img src='my_images/GVS-1.png' width="180">
+                  <img src='data/images/GVS-2.png' width="180"></div>
+                <img src='data/images/GVS-1.png' width="180">
               </div>
               <script type="text/javascript">
-                function samurai_start() {
+                function proj_1_start() {
                   document.getElementById('samurai_image').style.opacity = "1";
                 }
 
-                function samurai_stop() {
+                function proj_1_stop() {
                   document.getElementById('samurai_image').style.opacity = "0";
                 }
-                samurai_stop()
+                proj_1_stop()
               </script>
             </td>
             <td style="padding:20px;width:75%;vertical-align:middle">
@@ -423,8 +490,8 @@
             <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one">
             <div class="two" id='pnf_image'>
-              <img src='my_images/VM-2.png' width="180"></div>
-            <img src='my_images/VM-1.png' width="180">
+              <img src='data/images/VM-2.png' width="180"></div>
+            <img src='data/images/VM-1.png' width="180">
             </div>
             <script type="text/javascript">
             function pnf_start() {
@@ -467,8 +534,8 @@
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='survey_image'>
-                  <img src='my_images/HKD-1.png' width="180"></div>
-                <img src='my_images/HKD-2.png' width="180">
+                  <img src='data/images/HKD-1.png' width="180"></div>
+                <img src='data/images/HKD-2.png' width="180">
               </div>
               <script type="text/javascript">
                 function survey_start() {
@@ -514,8 +581,8 @@
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='dualfont_image'>
-                  <img src='my_images/ULNA-2.png' width="180"></div>
-                <img src='my_images/ULNA-1.png' width="180">
+                  <img src='data/images/ULNA-2.png' width="180"></div>
+                <img src='data/images/ULNA-1.png' width="180">
               </div>
               <script type="text/javascript">
                 function dualfont_start() {
@@ -583,8 +650,8 @@
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='malle_image'>
-                  <img src='my_images/UASS-2.png' width="180"></div>
-                <img src='my_images/UASS-1.png' width="180">
+                  <img src='data/images/UASS-2.png' width="180"></div>
+                <img src='data/images/UASS-1.png' width="180">
               </div>
                <script type="text/javascript">
                 function malle_start() {
@@ -627,8 +694,8 @@
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='npil_image'>
-                  <img src='my_images/TA-2.png' width="180"></div>
-                <img src='my_images/TA-1.png' width="180">
+                  <img src='data/images/TA-2.png' width="180"></div>
+                <img src='data/images/TA-1.png' width="180">
               </div>
               <script type="text/javascript">
                 function npil_start() {
@@ -668,8 +735,8 @@
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='flare_image'>
-                  <img src='my_images/GCNDE-1.png' width="180"></div>
-                <img src='my_images/GCNDE-2.png' width="180">
+                  <img src='data/images/GCNDE-1.png' width="180"></div>
+                <img src='data/images/GCNDE-2.png' width="180">
               </div>
               <script type="text/javascript">
                 function flare_start() {
@@ -922,7 +989,7 @@
           <ul class="b">
 
               <details><summary><subheading><b>Embedding Information within Neural Radiance Fields</b></subheading></summary>
-                <img style="width:20%;" src="videos/lego_ren.gif"> &nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="videos/lego_res5.gif">&nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="videos/lego_res.gif">&nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="videos/lego_rec.gif">
+                <img style="width:20%;" src="data/videos/lego_ren.gif"> &nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="data/videos/lego_res5.gif">&nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="data/videos/lego_res.gif">&nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="data/videos/lego_rec.gif">
                   <figcaption>  &nbsp &nbsp Fig1. Rendering Views &nbsp &nbsp &nbsp &nbsp &nbsp  Fig2. Residual Error (x5).  &nbsp &nbsp &nbsp &nbsp  &nbsp  Fig3. Residual Error (x25).  &nbsp &nbsp  Fig4. Recovered Customized Images
                   </figcaption>
                   <p class="w3-justify">
@@ -939,10 +1006,10 @@
               <!-- <img style="width:96%;" src="images/cascade_costvolume_teaser.jpg"> -->
               <p class="w3-justify">
               <!-- <a style="color: #447ec9" href="https://live.huawei.com/huaweiconnect/meeting/cn/5872.html">Huawei Connect (HC) 2020</a> | <a style="color: #447ec9" href="https://www.mindspore.cn/resources/hub">MindSpore Hub</a> -->
-              <img style="width:35%;" src="my_images/fig2_v8.png">  
-              <!-- <img style="width:20%;" src="my_images/exp_value.png">  -->
-              <img style="width:22%;" src="my_images/task4_mask_rotation_3.png">
-               <img style="width:35%;" src="my_images/v11.png">
+              <img style="width:35%;" src="data/images/fig2_v8.png">  
+              <!-- <img style="width:20%;" src="data/images/exp_value.png">  -->
+              <img style="width:22%;" src="data/images/task4_mask_rotation_3.png">
+               <img style="width:35%;" src="data/images/v11.png">
                   <figcaption>  &nbsp Fig1. Knowledge Condensation Distillation &nbsp &nbsp Fig2. Relation of Condensed Knowledge.  &nbsp &nbsp &nbsp Fig3. Hint-Dynamic Distillation.
                   </figcaption>
               </p>
@@ -976,10 +1043,10 @@
             <!-- <p class="w3-justify"> -->
             <!-- <a style="color: #447ec9" href="https://floorplancad.github.io/">Project Page</a> and <a style="color: #447ec9" href="https://www.aliyun.com/product/ai/HoloWatcher_Introduction">Product Page</a> -->
             <!-- </p> -->
-            <img style="width:32%;" src="my_images/Fig12.png">  
-            <!-- <img style="width:23%;" src="my_images/图片5.png">  -->
-            <img style="width:40%;" src="my_images/图片9.png"> 
-            <img style="width:20%;" src="my_images/图片10.png">
+            <img style="width:32%;" src="data/images/Fig12.png">  
+            <!-- <img style="width:23%;" src="data/images/图片5.png">  -->
+            <img style="width:40%;" src="data/images/图片9.png"> 
+            <img style="width:20%;" src="data/images/图片10.png">
             <br>
             <br>
                 <figcaption>  &nbsp &nbsp Fig1. GVS for Pseudo-Healthy Synthesis &nbsp &nbsp &nbsp &nbsp &nbsp Fig2. Uncertainty-Aware Self-Training  &nbsp &nbsp&nbsp &nbsp&nbsp &nbsp &nbsp &nbsp  &nbsp&nbsp &nbsp  Fig3. Enhanced Feature by GCN-DE
