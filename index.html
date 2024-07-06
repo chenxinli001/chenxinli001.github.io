@@ -198,6 +198,62 @@
         </tbody>
       </table> -->
 
+      <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <tr onmouseout="proj_8_stop()" onmouseover="proj_8_start()">
+          <td style="padding:20px;width:25%; vertical-align:middle">
+            <div class="one">
+              <div class="two" id='proj_8'>
+                <video  width=180 height="180" muted autoplay loop>
+              <source src="data/videos/result_2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
+              <video  width=180 height=180 muted autoplay loop>
+                <source src="data/videos/result_1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <script type="text/javascript">
+              function proj_8_start() {
+                document.getElementById('proj_8').style.opacity = "1";
+              }
+
+              function proj_8_stop() {
+                document.getElementById('proj_8').style.opacity = "0";
+              }
+              proj_8_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://endora-medvidgen.github.io/">
+              <papertitle>
+                GTP-4o: Modality-prompted Heterogeneous Graph Learning
+for Omni-modal Biomedical Representation
+              </papertitle>
+            </a>
+            <br>
+            <strong>Chenxin Li</strong>,
+  , Xinyu Liu†, Cheng Wang†, Yifan Liu, Weihao Yu, Jing Shao, Yixuan Yuan
+            († Equal Contribution)
+            <br>
+            <em>ECCV, 2024 </em>
+            <br> 
+            <a href="https://gtp-4-o.github.io/">[Project]</a> 
+            <a href="TBD">[ArXiv]</a> 
+            <!-- <a href="https://youtu.be/VBw3XtGdRu8?si=F5m9r064IL4shCLA">[Video]</a>  -->
+            <a href="https://github.com/XGGNet/Endora">[Code]</a> 
+            <!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
+            <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
+            <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
+            <p></p>
+            <p> 
+              <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
+              <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
+              A pioneering exploration into high-fidelity medical video generation on endoscopy scenes
+            </p>
+          </td>
+        </tr>
+   
 
 
       <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
@@ -276,11 +332,11 @@
               </div>
       
               <script type="text/javascript">
-                function proj_5_start() {
+                function proj_6_start() {
                   document.getElementById('proj_5').style.opacity = "1";
                 }
   
-                function proj_5_stop() {
+                function proj_6_stop() {
                   document.getElementById('proj_5').style.opacity = "0";
                 }
                 proj_5_stop()
