@@ -202,3 +202,14 @@ display: inline-block;
 margin-left: 0.5em;
 margin-right: 0.5em;
 }
+
+.icon-link:hover .wechat-qr {
+    display: block;
+}
+
+/* Style for scrollable news list */
+.news-list {
+    max-height: 200px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+    padding-right: 15px; /* Prevent scrollbar from overlapping content */
+}
