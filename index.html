@@ -1,135 +1,236 @@
 <!DOCTYPE HTML>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-7580334-2');
-    
-    </script>
-
-    <script async defer src="https://buttons.github.io/buttons.js">
-    </script>
-
   <title>Chenxin Li</title>
-  
   <meta name="author" content="Chenxin Li">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
   <link rel="icon" href="./data/images/channels4_profile.jpg"/>
-  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" type="text/css" href="./css/jemdoc.css"/>
+  <link rel="stylesheet" type="text/css" href="./css/academicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" type="text/css" href="css/jemdoc.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Pacifico&family=Satisfy&family=Great+Vibes&family=Allura&family=Alex+Brush&display=swap" rel="stylesheet">
+  
 </head>
+
+<style>
+  .morphing-text {
+      background-image: linear-gradient(to right, 
+       #8B4513 0%, #DAA520 25%, #9370DB 50%, #FFD700 75%, #8A2BE2 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+  }
+  .center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Purple-yellow gradient border with white background */
+  .gradient-box {
+    background: white;
+    border-radius: 20px;
+    border: 3px solid;
+    border-image: linear-gradient(135deg, 
+      rgba(139, 69, 19, 0.8) 0%,     /* Saddle brown */
+      rgba(218, 165, 32, 0.9) 25%,   /* Goldenrod */
+      rgba(147, 112, 219, 0.8) 50%,  /* Medium slate blue */
+      rgba(255, 215, 0, 0.9) 75%,    /* Gold */
+      rgba(138, 43, 226, 0.8) 100%   /* Blue violet */
+    ) 1;
+    box-shadow: 0 8px 25px rgba(147, 112, 219, 0.2);
+    position: relative;
+  }
+
+  /* Corner stars decoration */
+  .gradient-box::before,
+  .gradient-box::after {
+    content: "⭐";
+    position: absolute;
+    font-size: 24px;
+    background: linear-gradient(45deg, #8A2BE2, #FFD700, #9370DB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    animation: twinkle 2s ease-in-out infinite alternate;
+    z-index: 10;
+  }
+
+  .gradient-box::before {
+    top: -18px;
+    left: -18px;
+  }
+
+  .gradient-box::after {
+    top: -18px;
+    right: -18px;
+  }
+
+  /* Additional corner stars using pseudo elements on child elements */
+  .gradient-box .corner-star-bottom-left,
+  .gradient-box .corner-star-bottom-right {
+    position: absolute;
+    font-size: 24px;
+    background: linear-gradient(45deg, #8A2BE2, #FFD700, #9370DB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    animation: twinkle 2s ease-in-out infinite alternate;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .gradient-box .corner-star-bottom-left {
+    bottom: -18px;
+    left: -18px;
+  }
+
+  .gradient-box .corner-star-bottom-right {
+    bottom: -18px;
+    right: -18px;
+  }
+
+  @keyframes twinkle {
+    0% {
+      opacity: 0.6;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+  
+  /* Enhanced publication boxes */
+  .publication-box {
+    background: linear-gradient(135deg, 
+      rgba(218, 165, 32, 0.1) 0%,
+      rgba(147, 112, 219, 0.15) 50%,
+      rgba(255, 215, 0, 0.1) 100%
+    );
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  /* Publication category tabs */
+  .publication-tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .tab-button {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 2px solid transparent;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #495057;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .tab-button:hover {
+    background: linear-gradient(135deg, #8B4513, #DAA520, #9370DB);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .tab-button.active {
+    background: linear-gradient(135deg, #8B4513, #DAA520, #9370DB);
+    color: white;
+    border-color: #FFD700;
+  }
+
+  /* Publication items with categories */
+  .publication-item {
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .publication-item.hidden {
+    display: none;
+  }
+</style>
 
 <body>
   <a id="home" class="anchor"></a>
-  <div id="container" class="container">
-    <table style="width:100%;max-width:1000px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-      <tr style="padding:0px">
-        <td style="padding:0px">
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr style="padding:0px">
-              <td style="padding:2%;width:75%;vertical-align:middle">
-                <p style="text-align:center">
-                  <name>Chenxin Li</name>
-                </p>
-                <p> 
-                </p>
-                I am a 2nd year Ph.D. student at <a href="https://www.cuhk.edu.hk/">The Chinese University of Hong Kong</a>, advised by Prof. <a href="https://www.ee.cuhk.edu.hk/~yxyuan/" target="_blank" rel="noopener">Yixuan Yuan</a>. I received my M.Eng from Xiamen University under Prof. <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a> and Prof. <a href="https://huangyue05.github.io/">Yue Huang</a>, where I also earned my B.Eng.
-                <br>
-                <br>
+  <div id="container" class="container gradient-box" style="margin: 20px auto; max-width: 1020px; padding: 20px;">
+    <div class="corner-star-bottom-left">⭐</div>
+    <div class="corner-star-bottom-right">⭐</div> 
 
-                My research evolved from building large <span style="color: blue;">visual foundation</span> and <span style="color: blue;">multimodal generation</span> models to unifying them as callable toolkits for <span style="color: blue;">multimodal intelligent agents</span>, driven by the reasoning and tool-use capacity of <span style="color: blue;">multimodal LLMs</span>. Currently, I strengthen this synergy by advancing <span style="color: blue;">multimodal reasoning</span> and exploring <span style="color: blue;">unified architectures</span> excelling in both understanding and generation for complex real-world challenges.
 
-                <br>
-                <br>
+  <table style="width:100%;max-width:1000px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+    <tr style="padding:0px">
+      <td style="padding:0px">
 
-                <span style="color: red;">[Pinned] Looking for job (for 2026) and internship opportunities (for now).</span>
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <tr style="padding:0px">
+            <td style="padding:2.5%;width:67%;vertical-align:middle">
+   
+              <p style="text-align:center;font-size: 28px">
+                <strong>Chenxin Li | <span style="font-family: 'Great Vibes', 'Dancing Script', 'Allura', '华文行楷', '方正行楷简体', '楷体', cursive; background: linear-gradient(45deg, #8A2BE2, #FFD700, #9370DB); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: bold; text-shadow: 3px 3px 6px rgba(147, 112, 219, 0.4); font-size: 32px; letter-spacing: 1px;">李宸鑫</span></strong>
+              </p>
+       
+              <p>I am a 2nd year Ph.D. student at <a href="https://www.cuhk.edu.hk/">The Chinese University of Hong Kong</a>, advised by Prof. <a href="https://www.ee.cuhk.edu.hk/~yxyuan/" target="_blank" rel="noopener">Yixuan Yuan</a>. I received my M.Eng from Xiamen University under Prof. <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a> and Prof. <a href="https://huangyue05.github.io/">Yue Huang</a>, where I also earned my B.Eng.<br><br>
 
-                </p>
-                <p style="text-align:center">
-                  <a href="mailto:chenxinli1996@gmail.com">
-                    <!-- Email -->
-                    <span class="icon"><i class="fa fa-envelope"></i></span>
-                    <span><strong>Email</strong></span>
-                  </a> &nbsp/&nbsp
-                  
-                  <!-- <a href="data/CV_Chenxin_Li_CUHK.pdf"> 
-                    <span class="icon"><i class="fa fa-sticky-note"></i></span>
-                    <span><strong>CV</strong></span>
-                  </a> &nbsp/&nbsp -->
+My research evolved from building large <span style="color: blue;">visual foundation</span> and <span style="color: blue;">multimodal generation</span> models to unifying them as callable toolkits for <span style="color: blue;">multimodal intelligent agents</span>, driven by the reasoning and tool-use capacity of <span style="color: blue;">multimodal LLMs</span>. Currently, I strengthen this synergy by advancing <span style="color: blue;">multimodal reasoning</span> and exploring <span style="color: blue;">unified architectures</span> excelling in both understanding and generation for complex real-world challenges.<br><br>
 
-                  <a href="https://scholar.google.com.hk/citations?user=yfptgYMAAAAJ&hl=zh-CN">
-                    <span class="icon"><i class="ai ai-google-scholar ai-1x"></i></span>
-                    <span><strong>Scholar</strong></span>
-                  </a> &nbsp/&nbsp
 
-                  <a href="https://github.com/chenxinli001">
-                    <span class="icon"><i class="fa fab fa-github"></i></span>
-                    <span><strong>Github</strong></span>
-                  </a> &nbsp/&nbsp
+<span style="color: red;">[Pinned] Looking for industry positions (for 2026) and internship opportunities (for now).</span></p>
 
-                  <a href="https://twitter.com/XGGNet">
-                    <span class="icon"><i class="fa fab fa-twitter"></i></span>
-                    <span><strong>X</strong></span> 
-                  </a> &nbsp;/&nbsp
+<p style="color: black; text-align: left; margin-top: 15px; font-style: italic;">
+I warmly welcome discussions on research collaborations, as well as any profound or interesting insights. Feel free to reach out!
+</p>
+		    
+              <p style="text-align:center">
+       
 
-                  <a href="contact_qr.html" target="_blank" class="icon-link"> <!-- Changed href to combined QR page -->
-                    <span class="icon"><i class="fa fa-weixin"></i></span> <!-- WeChat icon -->
-                    <span><strong>Chat</strong></span>
-              </td>
-              <td style="padding:2.5%;width:25%;max-width:40%">
-                <!-- <a href="data/images/photo.jpg"> -->
-                  <img style="width:90%;max-width:90%" alt="profile photo" src="data/images/e1092370-574d-4b48-9c97-6f7a01ecae18.png" class="hoverZoomLink"></a>
-              </td>
-            </tr>
-          </tbody></table>
-          
-          
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
-              <heading>Latest News</heading>
+                <a href="mailto:chenxinli1996@gmail.com">
+                  <span class="icon"><i class="fa fa-envelope"></i></span>
+                  <span><strong>Email</strong></span>
+                </a> &nbsp/&nbsp
 
-              <p>
-                <!-- [08/2022] Join <a href="https://www.mmlab-ntu.com/">Pico@ByteDance</a>! -->
+                <a href="https://scholar.google.com.hk/citations?user=yfptgYMAAAAJ&hl=zh-CN">
+                  <img src="data/images/google.png" width="18" height="15" alt="Google Scholar">
+                  <span><strong>Scholar</strong></span>
+                </a> &nbsp/&nbsp
+                <a href="https://github.com/chenxinli001">
+                  <span class="icon"><i class="fa fab fa-github"></i></span>
+                  <span><strong>Github</strong></span>
+                </a> &nbsp/&nbsp
+                <a href="https://twitter.com/XGGNet">
+                  <span class="icon"><i class="fa fab fa-twitter"></i></span>
+                  <span><strong>X</strong></span>
+                </a> &nbsp/&nbsp
+                <a href="contact_qr.html" target="_blank" class="icon-link">
+                  <span class="icon"><i class="fa fa-weixin"></i></span>
+                  <span><strong>WeChat</strong></span>
+                </a> &nbsp/&nbsp
+                                  <a href="https://www.xiaohongshu.com/user/profile/601e2f9d00000000010095a0" target="_blank" class="icon-link" rel="noopener">
+                    <img src="data/images/rednote_icon.webp" width="16" height="16" alt="小红书" style="vertical-align: middle;">
+                    <span><strong>RedNote</strong></span>
+                    <span style="font-size: 14px; margin-left: 5px;" title="Give me a like!">(🤩⭐)</span>
+                  </a>
+
                 
-                <ul class="b news-list"> <!-- Added class news-list -->
-                                   <li>[06/2025] Four papers (InfoBridge+X2Gaussian+MetaScope+Dissecting Generalized Category) accepted to ICCV 2025.  Appreciate&congratulate the co-authors! 
-        <span style="color: blue;">InfoBridge</span> discusses how balance <span style="color: blue;">modality alignment </span>modality alignment via a information theory perspective.</li>
-                  <li>[03/2025] Four papers (Track Any Video Anomaly + EfficientSplat + FlexGS + JarvisIR) accepted to CVPR 2025. 
-  		</li>
-                  <li>[02/2025] One author paper (InstantSplamp) accepted to ICLR 2025. 
-                  </li>
-                  <li>[01/2025] One author paper (U-KAN) accepted to AAAI 2025.
-                  </li>
-                   <li>[12/2025] One paper (ConcealGS) accepted to ICASSP 2025 and one paper (Hide-in-Motion) accepted to ICRA 2025.
-                  </li>
-                   <li>[11/2024] One paper (EndoGaussian) accepted to TMI 2024.
-                  </li>
-                  <li>[09/2024] One author paper (Flaws can be Applause) accepted to NeurIPS 2024.
-                  </li>
-                  <li>[09/2024] One paper (VLM Fine-tuning) accepted to EMNLP 2024. 
-                  </li>
-                  <li>[07/2024] One paper (P^2SAM) accepted to ACM MM 2024. 
-                  </li>
-                  <li>[07/2024] One paper (Multimodal Bio Graph) accepted to ECCV 2024.
-                  </li>
-                  <li>[06/2024] Three papers (Endora+EndoSparse+ GS) accepted to MICCAI 2024.
-                  </li>
-                  <!-- <li>[11/2023] One paper (FS-6DPose) accepted to 3DV 2024</a>. -->
-                 <!-- </li> -->
-                  <!-- <li>[07/2023] Invited talk for StegaNeRF at <a href="https://xiangli-shaun.github.io/AIxMed.html">AIxMed Seminar</a>, Massachusetts General Hospital and Harvard Medical School. 
-                  </li> -->
-                  <li>[07/2023] One paper (StegaNeRF) accepted to ICCV 2023.</li>
-                  <!-- <li>[06/2023] Work as a RA at CUHK, supervised by Prof.
-                    Yixuan Yuan.</li> -->
-                </ul class="b">
-
+              </p>
+            </td>
+            <td style="padding:2.5%;width:30%;max-width:40%">
+              <img style="width:90%;max-width:90%" alt="profile photo" src="data/images/e1092370-574d-4b48-9c97-6f7a01ecae18.png" class="hoverZoomLink">
             </td>
           </tr>
         </tbody></table>
@@ -137,1052 +238,516 @@
         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
           <tr>
             <td>
-              <heading>Main Publications</heading>
-              <br>
-              <p style="font-size: 16px;">
-              For full publications, visit [<a href="https://scholar.google.com.hk/citations?user=yfptgYMAAAAJ&hl=zh-CN">Google Scholar</a>]. 
-              </p>
-              <!-- <br><h3>Conference Paper</h3> -->
-              <!-- <p><font face="Arial"><a href="https://scholar.google.com.hk/citations?user=yfptgYMAAAAJ&hl=zh-CN">[Google Scholar]</a></font></p>  -->
+              <strong>📢 Latest News</strong> <hr>
+              <div style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+                <ul class="b news-list">
+                  <li>[06/2025] Four papers (InfoBridge+X2Gaussian+MetaScope+Dissecting Generalized Category) accepted to ICCV 2025.  Appreciate&congratulate the co-authors! 
+                    <span style="color: blue;">InfoBridge</span> discusses how balance <span style="color: blue;">modality alignment </span>modality alignment via a information theory perspective.</li>
+                  <li>[03/2025] Four papers (Track Any Anomalous Object + EfficientSplat + FlexGS + JarvisIR) accepted to CVPR 2025.</li>
+                  <li>[02/2025] One paper (InstantSplamp) accepted to ICLR 2025.</li>
+                  <li>[01/2025] One paper (U-KAN) accepted to AAAI 2025.</li>
+                  <li>[12/2025] One paper (ConcealGS) accepted to ICASSP 2025 and one paper (Hide-in-Motion) accepted to ICRA 2025.</li>
+                  <li>[11/2024] One paper (EndoGaussian) accepted to TMI 2024.</li>
+                  <li>[09/2024] One paper (Flaws can be Applause) accepted to NeurIPS 2024.</li>
+                  <li>[09/2024] One paper (VLM Fine-tuning) accepted to EMNLP 2024.</li>
+                  <li>[07/2024] One paper (P^2SAM) accepted to ACM MM 2024.</li>
+                  <li>[07/2024] One paper (Multimodal Bio Graph) accepted to ECCV 2024.</li>
+                  <li>[06/2024] Three papers (Endora+EndoSparse+ GS) accepted to MICCAI 2024.</li>
+                  <li>[07/2023] One paper (StegaNeRF) accepted to ICCV 2023.</li>
+                  <li>[05/2022] One paper (Knowledge Condensation Distillation) accepted to ECCV 2022.</li>
+                </ul>
+              </div>
             </td>
           </tr>
         </tbody></table>
 
 
-     
+        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
+          <tr>
+            <td>
+              <strong>📑 Selected Publications</strong> ( <a href="https://scholar.google.com.hk/citations?user=yfptgYMAAAAJ&hl=zh-CN">
+                <strong>Google Scholar</strong>
+              </a>) <hr>
+              * Equal contribution, † Project Leader, ‡ Corresponding author
+              
+              <!-- Publication Category Tabs -->
+              <div style="margin: 20px 0;">
+                <div class="publication-tabs">
+                  <button class="tab-button active" data-category="all" onmouseover="showCategory('all')" onclick="showCategory('all')">All by time</button>
+                  <button class="tab-button" data-category="multimodal-llms" onmouseover="showCategory('multimodal-llms')" onclick="showCategory('multimodal-llms')">Multimodal Understanding/LLM/Agent</button>
+                  <button class="tab-button" data-category="generation" onmouseover="showCategory('generation')" onclick="showCategory('generation')">Multimodal Generation</button>
+                  <button class="tab-button" data-category="perception" onmouseover="showCategory('perception')" onclick="showCategory('perception')">Visual Understanding</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody></table>
 
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr onmouseout="proj_10_stop()" onmouseover="proj_10_start()">
-              <td style="padding:20px;width:25%; vertical-align:middle">
-                <div class="one">
-                  <div class="two" id='proj_10'>
-                    <img src='data/images/ukan_gen.jpg'  width="180" ></div>
-                  <img src='data/images/ukan_framework.jpg' width="180" >
-                </div>
-                <script type="text/javascript">
-                  function proj_10_start() { document.getElementById('proj_10').style.opacity = "1"; }
-                  function proj_10_stop() { document.getElementById('proj_10').style.opacity = "0"; }
-                  proj_10_stop()
-                </script>
-              </td>
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <a href="https://yes-ukan.github.io/">
-                  <papertitle>U-KAN Makes Strong Backbone for Medical Image Segmentation and Generation</papertitle>
-                </a>
-                <br>
-                <strong>Chenxin Li*</strong>, Xinyu Liu*, Wuyang Li*, Cheng Wang*, Hengyu Liu, Yixuan Yuan
-                <br>
-                <em>AAAI, 2025 </em> <!-- Updated Venue -->
-                <br> 
-                <a href="https://yes-ukan.github.io/">[Project]</a> 
-                <a href="https://export.arxiv.org/abs/2407.05540">[ArXiv]</a> 
-                <a href="https://github.com/CUHK-AIM-Group/U-KAN">[Code]</a> 
-                <p></p>
-                <p> The endeavours unveil valuable insights and sheds light on the prospect that with U-KAN, you can make strong backbone for medical image segmentation and generation. </p>
-              </td>
-            </tr>
 
-            
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr onmouseout="proj_8_stop()" onmouseover="proj_8_start()">
-              <td style="padding:20px;width:25%; vertical-align:middle">
-                <div class="one">
-                  <div class="two" id='proj_8'>
-                    <img src='data/images/stego_2.png'  width="180" ></div>
-                  <img src='data/images/stego_1.png' width="180" >
-                </div>
-                <script type="text/javascript">
-                  function proj_8_start() { document.getElementById('proj_8').style.opacity = "1"; }
-                  function proj_8_stop() { document.getElementById('proj_8').style.opacity = "0"; }
-                  proj_8_stop()
-                </script>
-              </td>
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <a href="https://gaussian-stego.github.io/">
-                  <papertitle>InstantSplamp: Fast and Generalizable Stenography Framework for Generative Gaussian Splatting</papertitle> <!-- Updated Title -->
-                </a>
-                <br>
-                <strong>Chenxin Li*</strong>, Hengyu Liu*, Zhiwen Fan, Wuyang Li, Yifan Liu, Panwang Pan, Yixuan Yuan <!-- Updated Authors based on CV for InstantSplamp -->
-                <br>
-                <em>ICLR, 2025 </em> <!-- Updated Venue -->
-                <br> 
-                <a href="https://gaussian-stego.github.io/">[Project]</a> 
-                <a href="https://arxiv.org/abs/2407.01301">[ArXiv]</a> <!-- Kept old Arxiv -->
-                <a href="https://arxiv.org/abs/2407.01301">[ArXiv]</a> 
-                <!-- <a href="https://youtu.be/VBw3XtGdRu8?si=F5m9r064IL4shCLA">[Video]</a>  -->
-                <a href="https://github.com/CUHK-AIM-Group/GaussianStego">[Code]</a> 
-                <!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
-                <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
-                <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
-                <p></p>
-                <p> 
-                  <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
-                  <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
-                  An initial exploration into embedding customizable, imperceptible, and recoverable information within the renders produced by off-the-line 3D generative models, while ensuring minimal impact on the rendered content's quality.
-                </p>
-              </td>
-            </tr>
-       
-       
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr onmouseout="proj_9_stop()" onmouseover="proj_9_start()">
-              <td style="padding:20px;width:25%; vertical-align:middle">
-                <div class="one">
-                  <div class="two" id='proj_9'>
-                    <img src='data/images/gtp2.png'  width="180" ></div>
-                  <img src='data/images/gtp1.png' width="180" >
-                </div>
-        
-                <script type="text/javascript">
-                  function proj_9_start() {
-                    document.getElementById('proj_9').style.opacity = "1";
-                  }
+      <table class="publication-item" data-category="multimodal-llms" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> Preprint 2025  </strong> </font> <p></p>
+              <img src="data/images/fieldagent3d.png" alt="FieldAgent3D Framework" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="">
+              <span class="morphing-text">WonderFieldAgent:</span> Empowering Scene Interaction via an Intelligent Versatile Field-driven Agent
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li*</strong>, Hengyu Liu*, Zhiyang Yang, Yifan Liu, Wuyang Li, Yixuan Yuan
+           </div>
+           <p></p>
+      
+           [<a href="">Paper</a>]
+           [<a href="">Project</a>]
+           [<a href="">Code</a>]
+            <p>
+              <span style="color: red;">First explored vLLM-based agentic interaction</span> in generated 3D contents. <span style="color: red;">Got one industrial patent</span></p>
+          </td>
+      </tbody></table>
+
+      <table class="publication-item" data-category="multimodal-llms" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> Preprint 2025  </strong> </font> <p></p>
+              <img src="data/images/jarvisArt.png" alt="JarvisArt" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://jarvisart.vercel.app/">
+              <span class="morphing-text">JarvisArt:</span> Liberating Human Artistic Creativity via an Intelligent Photo Retouching Agent
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              Yunlong Lin, Zixu Lin, Kunjie Lin, Jinbin Bai, Panwang Pan, <strong>Chenxin Li</strong>, Haoyu Chen, Zhongdao Wang, Xinghao Ding†, Wenbo Li, Shuicheng Yan†
+           </div>
+           <p></p>
+      
+           [<a href="https://arxiv.org/pdf/2506.17612">Paper</a>]
+           [<a href="https://jarvisart.vercel.app/">Project</a>]
+           [<a href="https://github.com/LYL1015/JarvisArt">Code</a>]
+            <p>JarvisArt outperforms <span style="color: red;">GPT-4o with a 60% improvement</span> in average pixel-level metrics on MMArt-Bench for content fidelity. <span style="color: red;">Integrated into Huawei's autonomous-driving stack</span></p>
+          </td>
+      </tbody></table>
+
+      <table class="publication-item" data-category="generation" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> Preprint 2025  </strong> </font> <p></p>
+              <video width="90%" muted autoplay loop style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+                <source src="data/videos/dynamicverse.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://dynamic-verse.github.io/">
+              <span class="morphing-text">DynamicVerse:</span> Physically-Aware Multimodal Modeling for Dynamic 4D Worlds
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              Kairun Wen, Yuzhi Huang, Runyu Chen, Hui Zheng, Yunlong Lin, Panwang Pan, <strong>Chenxin Li</strong>, Wenyan Cong, Jian Zhang, Junbin Lu, Chenguo Lin, Dilin Wang, Zhicheng Yan, Hongyu Xu, Justin Theiss, Yue Huang, Xinghao Ding, Rakesh Ranjan, Zhiwen Fan
+           </div>
+           <p></p>
+      
+           [<a href="">Paper</a>]
+           [<a href="https://dynamic-verse.github.io/">Project</a>]
+           [<a href="https://github.com/kairunwen/DynamicVerse">Code</a>]
+            <p>DynamicVerse is a <span style="color: red;">physical‑scale, multimodal 4D modeling framework</span> for real-world video.</p>
+          </td>
+      </tbody></table>
+
+      <table class="publication-item" data-category="multimodal-llms" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> ICCV 2025  </strong> </font> <p></p>
+              <img src="data/images/c2infomax.png"  alt="InfoBridge Framework" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="">
+              <span class="morphing-text">InfoBridge:</span> Balanced Multimodal Fusion by Maximizing Cross-modal Conditional Mutual Information
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li</strong>, Yifan Liu, Xinyu Liu, Wuyang Li, Hengyu Liu, Cheng Wang, Weihao Yu, Yunlong Lin, Yixuan Yuan
+           </div>
+           <p></p>
+      
+           [<a href="">Paper</a>]
+           [<a href="">Project</a>]
+           [<a href="">Code</a>]
+            <p>Enhance multimodal fusion via <span style="color: red;">conditional mutual information maximization</span> for balanced cross-modal representation learning.</p>
+          </td>
+      </tbody></table>
+
+      <table class="publication-item" data-category="generation" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> AAAI 2025  </strong> </font> <p></p>
+              <img src="data/images/ukan_framework.jpg"  alt="U-KAN Framework" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://yes-ukan.github.io/">
+              <span class="morphing-text">U-KAN:</span> U-KAN Makes Strong Backbone for Medical Image Segmentation and Generation
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li*</strong>, Xinyu Liu*, Wuyang Li*, Cheng Wang*, Hengyu Liu, Yixuan Yuan
+           </div>
+           <p></p>
+      
+           [<a href="https://export.arxiv.org/abs/2407.05540">ArXiv</a>]
+           [<a href="https://yes-ukan.github.io/">Project</a>]
+           [<a href="https://github.com/CUHK-AIM-Group/U-KAN">Code</a>]
+            <p>The endeavours unveil valuable insights and sheds light on the prospect that with <span style="color: red;">U-KAN, you can make strong backbone</span> for medical image segmentation and generation. <span style="color: red;">Citation 200+, GitHub Star 400+, Invited Oral at VALSE China, 2025</span></p>
+          </td>
+      </tbody></table>
+
+      <table class="publication-item" data-category="perception" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <td style="padding:20px;width:25%;vertical-align:middle">
+          <div class="one" align="center">
+            <font color="#8B4513"> <strong> CVPR 2025  </strong> </font> <p></p>
+            <img src="data/images/TAO.png" alt="Track Any Anomalous Object" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+          </div>
+        </td>
+        <td style="padding:10px;width:75%;vertical-align:middle">
+          <a href="https://tao-25.github.io/">
+            <span class="morphing-text">Track Any Anomalous Object:</span> A Granular Video Anomaly Detection Pipeline
+          </a>
+          <p></p>
+          <div class="is-size-6 publication-authors">
+            Yuzhi Huang*, <strong>Chenxin Li*‡</strong>, Haitao Zhang, Zixu Lin, Yunlong Lin, Hengyu Liu, Wuyang Li, Xinyu Liu, Jiechao Gao, Yue Huang, Xinghao Ding, Yixuan Yuan
+         </div>
+         <p></p>
+         [<a href="https://tao-25.github.io/">Project</a>]
+         [<a href="">Paper</a>]
+         [<a href="">Abstract</a>]
+         [<a href="">Code</a>]
+                      <p>A <span style="color: red;">granular video anomaly detection framework</span> that integrates the detection of multiple fine-grained anomalous objects into a unified framework, achieving state-of-the-art performance.</p>
+        </td>
+    </tbody></table> 
+
+      <table class="publication-item" data-category="generation" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> CVPR 2025  </strong> </font> <p></p>
+              <video id="flexgs-video" width="90%" muted autoplay loop style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+                <source src="data/videos/flexgs.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://flexgs.github.io/">
+              <span class="morphing-text">FlexGS:</span> Train Once, Deploy Everywhere with Many-in-One Flexible 3D Gaussian Splatting
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              Hengyu Liu*, Yifan Wang*, <strong>Chenxin Li*</strong>, Rui Cai, Kai Wang, Wuyang Li, Pavel Molchanov, Panwang Wang, Zhangyang Wang
+           </div>
+           <p></p>
+      
+           [<a href="https://flexgs.github.io/">Project</a>]
+           [<a href="">Paper</a>]
+           [<a href="">Code</a>]
+            <p><span style="color: red;">Train once, deploy everywhere</span> with many-in-one flexible 3D Gaussian splatting for efficient multi-device deployment. <span style="color: red;">Deployed in NVIDIA's on-device scene-reconstruction sequential</span></p>
+          </td>
+      </tbody></table>
+
+
+
     
-                  function proj_9_stop() {
-                    document.getElementById('proj_9').style.opacity = "0";
-                  }
-                  proj_9_stop()
-                </script>
-              </td>
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <a href="https://endora-medvidgen.github.io/">
-                  <papertitle>
-                    GTP-4o: Modality-prompted Heterogeneous Graph Learning
-    for Omni-modal Biomedical Representation
-                  </papertitle>
-                </a>
-                <br>
-                <strong>Chenxin Li</strong>,
-       Xinyu Liu*, Cheng Wang*, Yifan Liu, Weihao Yu, Jing Shao, Yixuan Yuan
-                (* Equal Second-author Contribution)
-                <br>
-                <em>ECCV, 2024 </em>
-                <br> 
-                <a href="https://gtp-4-o.github.io/">[Project]</a> 
-                <a href="">[ArXiv]</a> 
-                <!-- <a href="https://youtu.be/VBw3XtGdRu8?si=F5m9r064IL4shCLA">[Video]</a>  -->
-                <a href="">[Code]</a> 
-                <!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
-                <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
-                <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
-                <p></p>
-                <p> 
-                  <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
-                  <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
-                  A pioneering foray into the intriguing realm of embedding, relating and perceiving the heterogeneous patterns from various biomedical modalities holistically via a graph theory.
-                  An pioneering foray into the intriguing realm of embedding, relating and perceiving the heterogeneous patterns from various biomedical modalities holistically via a graph theory.
-                </p>
-              </td>
-            </tr>
+
+    <table class="publication-item" data-category="multimodal-llms" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <td style="padding:20px;width:25%;vertical-align:middle">
+        <div class="one" align="center">
+          <font color="#8B4513"> <strong> CVPR 2025  </strong> </font> <p></p>
+          <video width="90%" muted autoplay loop style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            <source src="data/videos/jarvisIR-preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </td>
+      <td style="padding:10px;width:75%;vertical-align:middle">
+        <a href="https://cvpr2025-jarvisir.github.io/">
+          <span class="morphing-text">JarvisIR:</span> Elevating Autonomous Driving Perception with Intelligent Image Restoration
+        </a>
+        <p></p>
+        <div class="is-size-6 publication-authors">
+          Yunlong Lin*, Zixu Lin*, Haoyu Chen*, Panwang Pan*, <strong>Chenxin Li</strong>, Sixiang Chen, Kairun Wen, Yeying Jin, Wenbo Li, Xinghao Ding‡
+       </div>
+       <p></p>
+  
+       [<a href="https://arxiv.org/abs/2504.04158">Paper</a>]
+       [<a href="https://cvpr2025-jarvisir.github.io/">Project</a>]
+       [<a href="https://github.com/LYL1015/JarvisIR">Code</a>]
+                 <p>JarvisIR is a <span style="color: red;">VLM-powered intelligent system</span> that dynamically schedules expert models for restoration. <span style="color: red;">Being integrated into tech stack for commercial products</span></p>
+      </td>
+  </tbody></table>
+
+      <table class="publication-item" data-category="generation" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> ICLR 2025  </strong> </font> <p></p>
+              <img src="data/images/stego_1.png" alt="InstantSplamp" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://gaussian-stego.github.io/">
+              <span class="morphing-text">InstantSplamp:</span> Fast and Generalizable Stenography Framework for Generative Gaussian Splatting
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li*</strong>, Hengyu Liu*, Zhiwen Fan, Wuyang Li, Yifan Liu, Panwang Pan, Yixuan Yuan
+           </div>
+           <p></p>
+      
+           [<a href="https://arxiv.org/abs/2407.01301">ArXiv</a>]
+           [<a href="https://gaussian-stego.github.io/">Project</a>]
+           [<a href="https://github.com/CUHK-AIM-Group/GaussianStego">Code</a>]
+            <p>An initial exploration into embedding <span style="color: red;">customizable, imperceptible, and recoverable</span> information within the renders produced by off-the-line 3D generative models, while ensuring minimal impact on the rendered content's quality.</p>
+          </td>
+      </tbody></table>
 
 
-      <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-        <tr onmouseout="proj_5_stop()" onmouseover="proj_5_start()">
-          <td style="padding:20px;width:25%; vertical-align:middle">
-            <div class="one">
-              <div class="two" id='proj_5'>
-                <video  width=180 height="180" muted autoplay loop>
-              <source src="data/videos/result_2.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-              </video></div>
-              <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
-              <video  width=180 height=180 muted autoplay loop>
+
+      <table class="publication-item" data-category="multimodal-llms" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> ECCV 2024  </strong> </font> <p></p>
+              <img src="data/images/gtp1.png" alt="GTP-4o" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://gtp-4-o.github.io/">
+              <span class="morphing-text">GTP-4o:</span> Modality-prompted Heterogeneous Graph Learning for Omni-modal Biomedical Representation
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li</strong>, Xinyu Liu*, Cheng Wang*, Yifan Liu, Weihao Yu, Jing Shao, Yixuan Yuan (* Equal Second-author Contribution)
+           </div>
+           <p></p>
+      
+           [<a href="https://gtp-4-o.github.io/">Project</a>]
+           [<a href="">ArXiv</a>]
+           [<a href="">Code</a>]
+                         <p>A pioneering foray into the intriguing realm of embedding, relating and perceiving the <span style="color: red;">heterogeneous patterns from various biomedical modalities</span> holistically via a graph theory.</p>
+          </td>
+      </tbody></table>
+
+      <table class="publication-item" data-category="generation" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> MICCAI 2024  </strong> </font> <p></p>
+              <video width="90%" muted autoplay loop style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
                 <source src="data/videos/result_1.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             </div>
-            <script type="text/javascript">
-              function proj_5_start() {
-                document.getElementById('proj_5').style.opacity = "1";
-              }
-
-              function proj_5_stop() {
-                document.getElementById('proj_5').style.opacity = "0";
-              }
-              proj_5_stop()
-            </script>
           </td>
-          <td style="padding:20px;width:75%;vertical-align:middle">
+          <td style="padding:10px;width:75%;vertical-align:middle">
             <a href="https://endora-medvidgen.github.io/">
-              <papertitle>
-                Endora: Video Generation Models as Endoscopy Simulators
-              </papertitle>
+              <span class="morphing-text">Endora:</span> Video Generation Models as Endoscopy Simulators
             </a>
-            <br>
-            <strong>Chenxin Li*</strong>,
-            Hengyu Liu*,
-            <a href="https://yifliu3.github.io/">Yifan Liu*</a>,
-            <a href="https://brandonyfeng.github.io/">Brandon Y. Feng</a>,
-            <a href="https://wymancv.github.io/wuyang.github.io/">Wuyang Li</a>,
-            <a href="https://xinyuliu-jeffrey.github.io//">Xinyu Liu</a>,
-            <a href="https://franciszchen.github.io/">Zhen Chen</a>,
-            <a href="https://amandajshao.github.io/">Jing Shao</a>,
-            <a href='https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm'> Yixuan Yuan</a> 
-            <!-- Brandon Y. Feng*,
-            Zhiwen Fan*, 
-            Panwang Pan, 
-            Zhangyang Wang -->
-            (* Equal Contribution)
-            <br>
-            <em>MICCAI, 2024 </em>
-            <br> 
-            <a href="https://endora-medvidgen.github.io/">[Project]</a> 
-            <a href="https://arxiv.org/abs/2403.11050">[ArXiv]</a> 
-            <a href="https://youtu.be/VBw3XtGdRu8?si=F5m9r064IL4shCLA">[Video]</a> 
-            <a href="https://github.com/XGGNet/Endora">[Code]</a> 
-            <!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
-            <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
-            <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
             <p></p>
-            <p> 
-              <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
-              <!-- Reconstruct surgical scene under real-time rendering efficacy (200 FPS real-time, 100x gain), better rendering quality (35+ PSNR), and less training overhead (within 2 min/scene). -->
-              A pioneering exploration into high-fidelity medical video generation on endoscopy scenes
-            </p>
-          </td>
-        </tr>
-   
-        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr onmouseout="proj_6_stop()" onmouseover="proj_6_start()">
-            <td style="padding:20px;width:25%; vertical-align:middle">
-              <div class="one">
-                <div class="two" id='proj_6'>
-                  <img src='data/images/ppline2.png'  width="180" ></div>
-                <img src='data/images/ppline2.png' width="180" >
-              </div>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li*</strong>, Hengyu Liu*, Yifan Liu*, Brandon Y. Feng, Wuyang Li, Xinyu Liu, Zhen Chen, Jing Shao, Yixuan Yuan (* Equal Contribution)
+           </div>
+           <p></p>
       
-              <script type="text/javascript">
-                function proj_6_start() {
-                  document.getElementById('proj_5').style.opacity = "1";
-                }
-  
-                function proj_6_stop() {
-                  document.getElementById('proj_5').style.opacity = "0";
-                }
-                proj_5_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://endora-medvidgen.github.io/">
-                <papertitle>
-                  EndoSparse: Real-Time Sparse View Synthesis of Endoscopic Scenes using Gaussian Splatting
-                </papertitle>
-              </a>
-              <br>
-              <strong>Chenxin Li</strong>,
-              <a href="https://brandonyfeng.github.io/">Brandon Y. Feng*</a>,
-              <a href="https://yifliu3.github.io/">Yifan Liu</a>,
-              Hengyu Liu,
-              Cheng Wang,
-              Weihao Yu,
-              <a href='https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm'> Yixuan Yuan*</a>
-              (* Equal Advising)
-              <br>
-              <em>MICCAI, 2024 </em>
-              <br> 
-              <a href="https://endo-sparse.github.io/">[Project]</a> 
-              <a href="TBD">[ArXiv]</a> 
-              <a href="https://github.com/CUHK-AIM-Group/EndoSparse">[Code]</a> 
-              <p></p>
-              <p> 
-                A first exploration of sparse-view endoscopic scene reconstruction
-              </p>
-            </td>
-          </tr> -->
-  <!-- 
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr onmouseout="proj_7_stop()" onmouseover="proj_7_start()">
-              <td style="padding:20px;width:25%; vertical-align:middle">
-                <div class="one">
-                  <div class="two" id='proj_7'>
-                    <img src='data/images/lgs_1.png'  width="180" ></div>
-                  <img src='data/images/lgs_1.png' width="180" >
-                </div>
-        
-                <script type="text/javascript">
-                  function proj_7_start() {
-                    document.getElementById('proj_5').style.opacity = "1";
-                  }
-    
-                  function proj_7_stop() {
-                    document.getElementById('proj_5').style.opacity = "0";
-                  }
-                  proj_7_stop()
-                </script>
-              </td>
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <a href="https://endora-medvidgen.github.io/">
-                  <papertitle>
-                    LGS: A Light-weight 4D Gaussian Splatting for Efficient Surgical Scene Reconstruction
-                  </papertitle>
-                </a>
-                <br>
-                Hengyu Liu*,
-                Yifan Liu*,
-                <strong>Chenxin Li*</strong>,
-                Wuyang Li,
-                <a href='https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm'> Yixuan Yuan</a> 
-                (* Equal Contribution)
-                <br>
-                <em>MICCAI, 2024 </em>
-                <br> 
-                <a href="https://lgs-endo.github.io/">[Project]</a> 
-                <a href="TBD">[ArXiv]</a> 
-                <a href="https://github.com/CUHK-AIM-Group/LGS">[Code]</a> 
-                <p></p>
-                <p>
-                  A first exploration of endoscopic scene reconstruction in an extremly storage-limited setting.
-                </p>
-              </td>
-            </tr> -->
-       
-     
+           [<a href="https://arxiv.org/abs/2403.11050">ArXiv</a>]
+           [<a href="https://endora-medvidgen.github.io/">Project</a>]
+           [<a href="https://youtu.be/VBw3XtGdRu8?si=F5m9r064IL4shCLA">Video</a>]
+           [<a href="https://github.com/XGGNet/Endora">Code</a>]
+                         <p>A pioneering exploration into <span style="color: red;">high-fidelity medical video generation</span> on endoscopy scenes.</p>
+          </td>
+      </tbody></table>
 
-      <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-        <tr onmouseout="proj_4_stop()" onmouseover="proj_4_start()">
-          <td style="padding:20px;width:25%; vertical-align:middle">
-            <div class="one">
-              <div class="two" id='nerfsuper_image2'>
-                <video  width=180 height="180" muted autoplay loop>
-              <source src="data/videos/pulling_ours.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-              </video></div>
-              <video  width=180 height=180 muted autoplay loop>
-                <source src="data/videos/pulling_gt.mp4" type="video/mp4">
+      <table class="publication-item" data-category="perception" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> NeurIPS 2024  </strong> </font> <p></p>
+              <img src="data/images/asam.png" alt="Flaws can be Applause" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://neurips.cc/virtual/2024/poster/95738">
+              <span class="morphing-text">Flaws can be Applause:</span> Unleashing Potential of Segmenting Ambiguous Objects in SAM
+            </a>
+            <p></p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li*</strong>, Yuzhi Huang*, Wuyang Li, Hengyu Liu, Xinyu Liu, Qing Xu, Zhen Chen, Yue Huang, Yixuan Yuan
+           </div>
+           <p></p>
+      
+           [<a href="https://neurips.cc/virtual/2024/poster/95738">Project</a>]
+           [<a href="https://neurips.cc/media/PosterPDFs/NeurIPS%202024/95738.png?t=1733358488.8302968">Paper</a>]
+           [<a href="">Abstract</a>]
+           [<a href="">Code</a>]
+                         <p>A novel approach that leverages the <span style="color: red;">ambiguity in object boundaries</span> to improve segmentation performance, turning traditional segmentation "flaws" into advantages.</p>
+          </td>
+      </tbody></table>
+
+      
+      <table class="publication-item" data-category="perception" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <td style="padding:20px;width:25%;vertical-align:middle">
+          <div class="one" align="center">
+            <font color="#8B4513"> <strong> ACM MM 2024  </strong> </font> <p></p>
+            <img src="data/images/p2sam.png" alt="P²SAM" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+          </div>
+        </td>
+        <td style="padding:10px;width:75%;vertical-align:middle">
+          <a href="https://dl.acm.org/doi/10.1145/3664647.3681007">
+            <span class="morphing-text">P²SAM:</span> Probabilistically Prompted SAMs Are Efficient Segmentator for Ambiguous Medical Images
+          </a>
+          <p></p>
+          <div class="is-size-6 publication-authors">
+            Yuzhi Huang*, <strong>Chenxin Li*‡</strong>, Zixu Lin, Hengyu Liu, Haote Xu, Yifan Liu, Yue Huang, Xinghao Ding, Yixuan Yuan
+         </div>
+         <p></p>
+    
+         [<a href="https://dl.acm.org/doi/10.1145/3664647.3681007">Project</a>]
+         [<a href="https://dl.acm.org/doi/pdf/10.1145/3664647.3681007">Paper</a>]
+         [<a href="">Abstract</a>]
+         [<a href="">Code</a>]
+                       <p>A <span style="color: red;">probabilistic prompting framework</span> that enhances SAM's performance on ambiguous medical images through uncertainty-aware prompt generation.</p>
+        </td>
+    </tbody></table>
+
+      <table class="publication-item" data-category="generation" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> ICCV 2023  </strong> </font> <p></p>
+              <video width="90%" muted autoplay loop style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+                <source src="data/videos/lego_ren_resize160.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             </div>
-            <script type="text/javascript">
-              function proj_4_start() {
-                document.getElementById('nerfsuper_image2').style.opacity = "1";
-              }
-
-              function proj_4_stop() {
-                document.getElementById('nerfsuper_image2').style.opacity = "0";
-              }
-              proj_4_stop()
-            </script>
           </td>
-          <td style="padding:20px;width:75%;vertical-align:middle">
+          <td style="padding:10px;width:75%;vertical-align:middle">
             <a href="https://xggnet.github.io/StegaNeRF/">
-              <papertitle>
-                EndoGaussian: Gaussian Splatting for Deformable Surgical Scene Reconstruction
-              </papertitle>
+              <span class="morphing-text">StegaNeRF:</span> Embedding Invisible Information within Neural Radiance Fields
             </a>
-            <br>
-            <a href="https://yifliu3.github.io/chen">Yifan Liu*</a>,
-            <strong>Chenxin Li*</strong>,
-            <a href="https://scholar.google.com.hk/citations?user=C6fAQeIAAAAJ&hl=en"> Chen Yang</a>, 
-            <a href='https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm'> Yixuan Yuan</a> 
-            (* Equal Contribution)
-            <br>
-            <em>TMI, 2024 </em>
-            <br> 
-            <a href="https://yifliu3.github.io/EndoGaussian/">[Project]</a> 
-            <a href="https://arxiv.org/abs/2401.12561">[ArXiv]</a> 
-            <a href="https://yifliu3.github.io/EndoGaussian/TBD">[Video]</a> 
-            <a href="https://github.com/yifliu3/EndoGaussian">[Code]</a> 
             <p></p>
-            <p> 
-              Real-time surgical reconstruction with Gaussian Splatting representation
-            </p>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li*</strong>, Brandon Y. Feng*, Zhiwen Fan*, Panwang Pan, Zhangyang Wang (* Equal Contribution)
+           </div>
+           <p></p>
+      
+           [<a href="https://arxiv.org/abs/2212.01602">ArXiv</a>]
+           [<a href="https://xggnet.github.io/StegaNeRF/">Project</a>]
+           [<a href="https://youtu.be/sFdZU2dpqUw">Video</a>]
+           [<a href="https://github.com/XGGNet/StegaNeRF">Code</a>]
+                         <p>Embedding multimodal invisible information (image, video, audio) into distributed visual assets.</p>
           </td>
-        </tr> -->
-
-
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr onmouseout="proj_3_stop()" onmouseover="proj_3_start()">
-            <td style="padding:20px;width:25%; vertical-align:middle">
-              <div class="one">
-                <div class="two" id='nerfsuper_image'>
-                  <video  width=180 height="180" muted autoplay loop>
-                <source src="data/videos/lego_res_resize160.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-                </video></div>
-                <!-- <img src='images/nerf_supervision.jpg' width="160"> -->
-                <video  width=180 height=180 muted autoplay loop>
-                  <source src="data/videos/lego_ren_resize160.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-              <script type="text/javascript">
-                function proj_3_start() {
-                  document.getElementById('nerfsuper_image').style.opacity = "1";
-                }
-
-                function proj_3_stop() {
-                  document.getElementById('nerfsuper_image').style.opacity = "0";
-                }
-                proj_3_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-							<a href="https://xggnet.github.io/StegaNeRF/">
-                <papertitle>StegaNeRF: Embedding Invisible Information within Neural Radiance Fields</papertitle>
-              </a>
-              <br>
-              <strong>Chenxin Li*</strong>,
-              <a href="https://brandonyfeng.github.io/">Brandon Y. Feng*</a>,
-              <a href="https://zhiwenfan.github.io/">Zhiwen Fan*</a>, 
-              <a href="https://paulpanwang.github.io/"> Panwang Pan</a>, 
-              <a href='https://express.adobe.com/page/CAdrFMJ9QeI2y/'> Zhangyang Wang</a> 
-              <!-- Brandon Y. Feng*,
-              Zhiwen Fan*, 
-              Panwang Pan, 
-              Zhangyang Wang -->
-              (* Equal Contribution)
-              <br>
-              <em>International Conference on Computer Vision (<b>ICCV</b>), 2023 </em>
-              <br> 
-							<a href="https://xggnet.github.io/StegaNeRF/">[Project]</a> 
-							<a href="https://arxiv.org/abs/2212.01602">[ArXiv]</a> 
-							<a href="https://youtu.be/sFdZU2dpqUw">[Video]</a> 
-							<a href="https://github.com/XGGNet/StegaNeRF">[Code]</a> 
-							<!-- <a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				 -->
-              <!-- <img src="https://img.shields.io/github/stars/XGGNet/StegaNeRF?style=social"> -->
-              <!-- <img src="https://img.shields.io/github/forks/paulpanwang/Gen6DNeRF?style=social"> -->
-              <p></p>
-              <p> 
-                <!-- An initial exploration of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to the rendered images. -->
-                NeRF with multi-modal IP information instillation
-              </p>
-            </td>
-          </tr>
-
-          
-					
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr onmouseout="proj_2_stop()" onmouseover="proj_2_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='samurai_image2'>
-                  <img src='data/images/KCD-2.png'  width="180" ></div>
-                <img src='data/images/KCD-1.png' width="180" >
-              </div>
-              <script type="text/javascript">
-                function proj_2_start() {
-                  document.getElementById('samurai_image2').style.opacity = "1";
-                }
-
-                function proj_2_stop() {
-                  document.getElementById('samurai_image2').style.opacity = "0";
-                }
-                proj_2_stop() 
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://arxiv.org/abs/2207.05409">
-                <papertitle>Knowledge Condensation Distillation</papertitle>
-              </a>
-              <br>
-              <strong>Chenxin Li</strong>,
-              <a href="https://lmbxmu.github.io/">Mingbao Lin</a>, 
-              Zhiyuan Ding,
-              Nie Lin,
-              Yihong Zhuang,
-              <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a>,
-              <a href="https://scholar.google.com/citations?user=iYEcVaAAAAAJ&hl=zh-CN">Liujuan Cao</a>
-              <br>
-              European Conference on Computer Vision (<b>ECCV</b>), 2022
-              <br>
-              <!-- <a href="https://markboss.me/publication/2022-samurai/">project page</a> /
-              <a href="https://www.youtube.com/watch?v=LlYuGDjXp-8">video</a> /
-              <a href="https://arxiv.org/abs/2205.15768">arXiv</a> -->
-              <a href="https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136710019.pdf">[PDF]</a> 
-                <a href="https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136710019-supp.pdf">[Supp]</a> 
-              <a href="https://arxiv.org/abs/2207.05409">[ArXiv]</a> 
-              <a href="https://github.com/dzy3/KCD">[Code]</a>
-              <!-- <img src="https://img.shields.io/github/stars/dzy3/KCD?style=social"> -->
-              <p></p>
-              <p>
-              <!-- An iterative optimization framework for simultaneous model distillation and knowledge condensation. -->
-              Co-design of dataset and model distillation 
-              </p>
-            </td>
-          </tr>		
-    
-          <!-- <tr onmouseout="proj_1_stop()" onmouseover="proj_1_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='samurai_image'>
-                  <img src='data/images/GVS-2.png' width="180"></div>
-                <img src='data/images/GVS-1.png' width="180">
-              </div>
-              <script type="text/javascript">
-                function proj_1_start() {
-                  document.getElementById('samurai_image').style.opacity = "1";
-                }
-
-                function proj_1_stop() {
-                  document.getElementById('samurai_image').style.opacity = "0";
-                }
-                proj_1_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://arxiv.org/abs/2009.05722">
-                <papertitle>Generator Versus Segmentor: Pseudo-healthy Synthesis</papertitle>
-              </a>
-              <br>
-              <a href="https://www.researchgate.net/profile/Zhang-Yunlong-3">Yunlong Zhang*</a>, 
-              <strong>Chenxin Li*</strong>, 
-              Xin Lin, 
-              <a href="https://scholar.google.com/citations?user=5UDCaIAAAAAJ&hl=en">Liyan Sun</a>, 
-              Yihong Zhuang, 
-              <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a>,
-              <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>
-              (* Equal Contribution)
-              <br>
-              International Conference on Medical Image Computing and Computer Assisted Intervention (<b>MICCAI</b>), 2021
-              <br>
-              <a href="https://link.springer.com/content/pdf/10.1007/978-3-030-87231-1_15.pdf">[PDF]</a> 
-              <a href="https://arxiv.org/abs/2009.05722">[ArXiv]</a> 
-              <a href="https://github.com/Au3C2/GVS">[Code]</a>
-              <p></p>
-              <p>
-                Generative AI for lesion-centric synthesis
-            </td>
-          </tr>	
-          --> 	
-          
-          
-          <!-- <tr onmouseout="pnf_stop()" onmouseover="pnf_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-            <div class="one">
-            <div class="two" id='pnf_image'>
-              <img src='data/images/VM-2.png' width="180"></div>
-            <img src='data/images/VM-1.png' width="180">
-            </div>
-            <script type="text/javascript">
-            function pnf_start() {
-              document.getElementById('pnf_image').style.opacity = "1";
-            }
-  
-            function pnf_stop() {
-              document.getElementById('pnf_image').style.opacity = "0";
-            }
-            pnf_stop()
-            </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://arxiv.org/abs/2103.09097">
-            <papertitle>Consistent Posterior Distributions under Vessel-Mixing: A Regularization for Cross-Domain Retinal Artery/Vein Classification</papertitle>
-            </a> <br>
-              <strong>Chenxin Li</strong>, 
-              <a href="https://www.researchgate.net/profile/Zhang-Yunlong-3">Yunlong Zhang</a>, 
-              Zhehan Liang, 
-              <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a>
-              <!== <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a> ==>
-            <br>
-            IEEE International Conference on Image Processing (<em>ICIP</em>), 2021
-            <br>
-            <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9506148">[PDF]</a> 
-            <a href="https://arxiv.org/abs/2103.09097">[ArXiv]</a> 
-            <p>
-            </p>
-            <p>
-            A task-driven self-supervised approach as Vessel-mixing for retinal vessel segmentation.
-             <!== as Vessel-Mixing. ==>
-            </p>
-            </td>
-            </tr> --> 
-
-                      
-          <!-- <tr onmouseout="survey_stop()" onmouseover="survey_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='survey_image'>
-                  <img src='data/images/HKD-1.png' width="180"></div>
-                <img src='data/images/HKD-2.png' width="180">
-              </div>
-              <script type="text/javascript">
-                function survey_start() {
-                  document.getElementById('survey_image').style.opacity = "1";
-                }
-
-                function survey_stop() {
-                  document.getElementById('survey_image').style.opacity = "0";
-                }
-                survey_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="">
-                <papertitle>Hint-Dynamic Knowledge Distillation</papertitle>
-              </a>
-              <br>
-							Yiyang Liu,
-              <strong> Chenxin Li </strong>,  
-              Xiaotong Tu,  
-              <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>,  
-              <a href="https://huangyue05.github.io/">Yue Huang</a>
-              <!== <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a> ==>
-           
-              <br>
-							<em>IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP), 2023 </em>
-              <br>
-
-              <a href="https://arxiv.org/abs/2211.17059">[ArXiv]</a> 
-              <!== <a href="https://arxiv.org/abs/2205.15768">[code]</a> ==>
-
-              <p></p>
-              <p>
-                A meta-learning based dynamic distillation framework, motivated by the diverse guidance effect of different knowledge hints across the distillation procedure.
-              </p>
-            </td>
-          </tr> -->
-
-
-            						
-          <!-- <tr onmouseout="dualfont_stop()" onmouseover="dualfont_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='dualfont_image'>
-                  <img src='data/images/ULNA-2.png' width="180"></div>
-                <img src='data/images/ULNA-1.png' width="180">
-              </div>
-              <script type="text/javascript">
-                function dualfont_start() {
-                  document.getElementById('dualfont_image').style.opacity = "1";
-                }
-
-                function dualfont_stop() {
-                  document.getElementById('dualfont_image').style.opacity = "0";
-                }
-                dualfont_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3482310">
-                <papertitle>Unsupervised Large-Scale Social Network Alignment via Cross Network Embedding</papertitle>
-              </a>
-              <br>
-              Zhehan Liang, 
-              <a href="https://scholar.google.com.hk/citations?user=itezhEMAAAAJ&hl=en">Yu Rong</a>, 
-              <strong> Chenxin Li </strong>, 
-              <a href="https://www.researchgate.net/profile/Zhang-Yunlong-3">Yunlong Zhang</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a>, 
-              Tingyang Xu, 
-              <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://ranger.uta.edu/~huang/">Junzhou Huang</a>
-              <br>
-              Conference on Information and Knowledge Management (<em>CIKM</em>), 2021
-              <br>
-              <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3482310">[PDF]</a> 
-              <a href="https://github.com/ZheHanLiang/LSNA">[Code]</a> 
-              <!== <img src="https://img.shields.io/github/stars/ZheHanLiang/LSNA?style=social"> ==>
-              <p></p>
-              <p>
-              An unsupervised large-scale network alignment framework leveraging the cross-network information of user profiles.
-
-              </p>
-            </td>
-          </tr> -->
-
-        </tbody>
-      </table>
-
-      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-        <tr>
-          <!-- <td> -->
-            <!-- <heading>Publications</heading> -->
-            <!-- <br> -->
-            <!-- <h3>Journal Paper</h3> -->
-          <!-- </td> -->
-        </tr>
       </tbody></table>
 
-     
-          <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-            <td style="padding:0px;width:100%;vertical-align:middle">
-              <br><h3>Journal Paper</h3>
-            </td>
-          </tr>
-        </tbody></table> -->
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-        
-          <!-- <tr onmouseout="malle_stop()" onmouseover="malle_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='malle_image'>
-                  <img src='data/images/UASS-2.png' width="180"></div>
-                <img src='data/images/UASS-1.png' width="180">
-              </div>
-               <script type="text/javascript">
-                function malle_start() {
-                 document.getElementById('malle_image').style.opacity = "1";
-                }
-
-
-                function malle_stop() {
-                  document.getElementById('malle_image').style.opacity = "0";
-                }
-                malle_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://arxiv.org/abs/2105.14732">
-                <papertitle>Hierarchical Deep Network with Uncertainty-aware Semi-supervised Learning for Vessel Segmentation</papertitle>
-              </a>
-              <br>
-              <strong>Chenxin Li</strong>, 
-              <a href="https://scholar.google.com.hk/citations?user=noVgEXEAAAAJ&hl=zh-CN">Wenao Ma</a>, 
-               <a href="https://scholar.google.com/citations?user=5UDCaIAAAAAJ&hl=en">Liyan Sun</a>, <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, <a href="https://huangyue05.github.io/">Yue Huang</a>, 
-               Guisheng Wang, <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>
-              <br>
-              Neural Computing and Applications (<em>NCA</em>), 2021
-              <br>
-              <a href="https://link.springer.com/article/10.1007/s00521-021-06578-3">[PDF]</a> 
-              <a href="https://arxiv.org/abs/2105.14732">[ArXiv]</a> 
-              <a href="https://github.com/XGGNet/Vessel-Seg">[Code]</a>
-              <!== <img src="https://img.shields.io/github/stars/XGGNet/Vessel-Seg?style=social"> ==>
-
-              <p></p>
-              <p>
-              An uncertainty-aware self-training via decoupling the decision boundary and pseudo-label evaluation with uncertainty modeling.
-              </p>
-            </td>
-          </tr> -->
-					
-
-          <!-- <tr onmouseout="npil_stop()" onmouseover="npil_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='npil_image'>
-                  <img src='data/images/TA-2.png' width="180"></div>
-                <img src='data/images/TA-1.png' width="180">
-              </div>
-              <script type="text/javascript">
-                function npil_start() {
-                  document.getElementById('npil_image').style.opacity = "1";
-                }
-
-                function npil_stop() {
-                  document.getElementById('npil_image').style.opacity = "0";
-                }
-                npil_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://arxiv.org/abs/2106.06908">
-                <papertitle>Domain Generalization on Medical Imaging Classification using Episodic Training with Task Augmentation</papertitle>
-              </a>
-              <br>
-              <strong>Chenxin Li</strong>, Qi Qi, <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, <a href="https://huangyue05.github.io/">Yue Huang</a>, 
-              <a href=" https://scholar.google.com/citations?user=3cAJWoIAAAAJ&hl=zh-CN">Dong Liang</a>,
-              <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>
-              <br>
-							Computers in Biology and Medicine (<em>CBM</em>), 2021
-              <br>
-              <a href="https://www.sciencedirect.com/science/article/abs/pii/S0010482521009380">[PDF]</a> 
-              <a href="https://arxiv.org/abs/2106.06908">[ArXiv]</a> 
-              <a href="https://github.com/XGGNet/Task-Aug">[Code]</a>
-              <!== <img src="https://img.shields.io/github/stars/XGGNet/Task-Aug?style=social"> ==>
-              <p></p>
-              <p>
-              A task augmentation strategy for meta-learning, motivated by the task overfitting problem on domain generalization.
-              <!== , which motivates a task augmentation to alleviate such issue on medical imaging classification. ==>
-              </p>
-            </td>
-          </tr> -->
-
-          <!-- <tr onmouseout="flare_stop()" onmouseover="flare_start()">
-            <td style="padding:20px;width:25%;vertical-align:middle">
-              <div class="one">
-                <div class="two" id='flare_image'>
-                  <img src='data/images/GCNDE-1.png' width="180"></div>
-                <img src='data/images/GCNDE-2.png' width="180">
-              </div>
-              <script type="text/javascript">
-                function flare_start() {
-                  document.getElementById('flare_image').style.opacity = "1";
-                }
-
-                function flare_stop() {
-                  document.getElementById('flare_image').style.opacity = "0";
-                }
-                flare_stop()
-              </script>
-            </td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
-              <a href="https://arxiv.org/abs/2012.05440">
-                <papertitle>Few-shot Medical Image Segmentation using a Global Correlation Network with Discriminative Embedding</papertitle>
-              </a>
-              <br>
-              <a href="https://scholar.google.com/citations?user=5UDCaIAAAAAJ&hl=en">Liyan Sun*</a>, <strong>Chenxin Li*</strong>, <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, <a href="https://huangyue05.github.io/">Yue Huang</a>, Guisheng Wang,
-              <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>, 
-              <a href="http://www.columbia.edu/~jwp2128/">John Paisley</a>
-               (* Equal Contribution)
-              <br>
-							Computers in Biology and Medicine (<em>CBM</em>), 2021
-              <br>
-              <a href="https://www.sciencedirect.com/science/article/pii/S0010482521008611">[PDF]</a> 
-              <a href="https://arxiv.org/abs/2012.05440">[ArXiv]</a> 
-              <a href="https://github.com/XGGNet/GCN-DE">[Code]</a>
-              <!== <img src="https://img.shields.io/github/stars/XGGNet/GCN-DE?style=social"> ==>
-              <p></p>
-              <p>
-                Capturing the global correlation and discriminative embedding across the support and query samples.
-              </p>
-            </td>
-          </tr> -->
-
-        </tbody>
-      </table>
-
-        <br>
-         <!-- <br>  -->
-        
-         <!-- <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-          <tr>
-            <td>
-              <heading>Other Publications</heading>
-            </td>
-          </tr>
-        </tbody></table>
-        
-          <li> 
-            <a href="">
-              <papertitle>Hint-Dynamic Knowledge Distillation</papertitle>
+      <table class="publication-item" data-category="perception" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one" align="center">
+              <font color="#8B4513"> <strong> ECCV 2022  </strong> </font> <p></p>
+              <img src="data/images/KCD-1.png" alt="Knowledge Condensation Distillation" width="90%" style="padding-top:0px;padding-bottom:0px;border-radius:15px;">
+            </div>
+          </td>
+          <td style="padding:10px;width:75%;vertical-align:middle">
+            <a href="https://arxiv.org/abs/2207.05409">
+              <span class="morphing-text">Knowledge Condensation Distillation</span>
             </a>
-            <br>
-            Yiyang Liu*,
-            <strong> Chenxin Li* </strong>,  
-            Xiaotong Tu,  
-            <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>,  
-            <a href="https://huangyue05.github.io/">Yue Huang</a>
-            (* Equal Contribution)
-            <br>
-            <em>IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP), 2023 </em>
-            <br>
-  
-            <a href="https://arxiv.org/abs/2211.17059">[PDF]</a>
-             <a href="https://arxiv.org/abs/2211.17059">[ArXiv]</a> 
             <p></p>
-          </li>
+            <div class="is-size-6 publication-authors">
+              <strong>Chenxin Li</strong>, Mingbao Lin, Zhiyuan Ding, Nie Lin, Yihong Zhu, Xinghao Ding, Yue Huang, Liujuan Cao
+           </div>
+           <p></p>
+      
+           [<a href="https://arxiv.org/abs/2207.05409">ArXiv</a>]
+           [<a href="">Project</a>]
+           [<a href="">Code</a>]
+            <p>Training efficiently and smartly by progressive data distillation.</p>
+          </td>
+      </tbody></table>
 
-          <li> 
-            <a href="https://arxiv.org/abs/2103.09097">
-        <papertitle>Consistent Posterior Distributions under Vessel-Mixing: A Regularization for Cross-Domain Retinal Artery/Vein Classification</papertitle>
-            </a> <br>
-              <strong>Chenxin Li</strong>, 
-              <a href="https://www.researchgate.net/profile/Zhang-Yunlong-3">Yunlong Zhang</a>, 
-              Zhehan Liang, 
-              <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, 
-              <a href="https://huangyue05.github.io/">Yue Huang</a>
-            <br>
-            IEEE International Conference on Image Processing (<em>ICIP</em>), 2021
-            <br>
-            <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9506148">[PDF]</a> 
-            <a href="https://arxiv.org/abs/2103.09097">[ArXiv]</a> 
-            <p>
-            </p>
-          </li>
-       
-          <li> 
-        <a href="https://arxiv.org/abs/2105.14732">
-          <papertitle>Hierarchical Deep Network with Uncertainty-aware Semi-supervised Learning for Vessel Segmentation</papertitle>
-        </a>
-        <br>
-        <strong>Chenxin Li</strong>, 
-        <a href="https://scholar.google.com.hk/citations?user=noVgEXEAAAAJ&hl=zh-CN">Wenao Ma</a>, 
-         <a href="https://scholar.google.com/citations?user=5UDCaIAAAAAJ&hl=en">Liyan Sun</a>, <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, <a href="https://huangyue05.github.io/">Yue Huang</a>, 
-         Guisheng Wang, <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>
-        <br>
-        Neural Computing and Applications (<em>NCA</em>), 2021
-        <br>
-        <a href="https://link.springer.com/article/10.1007/s00521-021-06578-3">[PDF]</a> 
-        <a href="https://arxiv.org/abs/2105.14732">[ArXiv]</a> 
-        <a href="https://github.com/XGGNet/Vessel-Seg">[Code]</a>
-        <p></p>
-        </li>
 
-        <li>
-        <a href="https://arxiv.org/abs/2106.06908">
-          <papertitle>Domain Generalization on Medical Imaging Classification using Episodic Training with Task Augmentation</papertitle>
-        </a>
-        <br>
-        <strong>Chenxin Li</strong>, Qi Qi, <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, <a href="https://huangyue05.github.io/">Yue Huang</a>, 
-        <a href=" https://scholar.google.com/citations?user=3cAJWoIAAAAJ&hl=zh-CN">Dong Liang</a>,
-        <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>
-        <br>
-        Computers in Biology and Medicine (<em>CBM</em>), 2021
-        <br>
-        <a href="https://www.sciencedirect.com/science/article/abs/pii/S0010482521009380">[PDF]</a> 
-        <a href="https://arxiv.org/abs/2106.06908">[ArXiv]</a> 
-        <a href="https://github.com/XGGNet/Task-Aug">[Code]</a>
-        <p></p>
-        </li>
 
-        <li>
-          <a href="https://arxiv.org/abs/2012.05440">
-          <papertitle>Few-shot Medical Image Segmentation using a Global Correlation Network with Discriminative Embedding</papertitle>
-        </a>
-        <br>
-        <a href="https://scholar.google.com/citations?user=5UDCaIAAAAAJ&hl=en">Liyan Sun*</a>, <strong>Chenxin Li*</strong>, <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a>, <a href="https://huangyue05.github.io/">Yue Huang</a>, Guisheng Wang,
-        <a href="https://i.cs.hku.hk/~yzyu/">Yizhou Yu</a>, 
-        <a href="http://www.columbia.edu/~jwp2128/">John Paisley</a>
-         (* Equal Contribution)
-        <br>
-        Computers in Biology and Medicine (<em>CBM</em>), 2021
-        <br>
-        <a href="https://www.sciencedirect.com/science/article/pii/S0010482521008611">[PDF]</a> 
-        <a href="https://arxiv.org/abs/2012.05440">[ArXiv]</a> 
-        <a href="https://github.com/XGGNet/GCN-DE">[Code]</a>
-        <p></p>
-        </li>
 
-      </ul> -->
 
-        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-            <td style="padding:020px;width:100%;vertical-align:middle">
-              <heading>Projects</heading> 
-              <p class="w3-justify">
-              </p> -->
-          <!-- <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
-            <tr>
-              <td>
-                <heading>Project</heading>
-              </td>
-            </tr>
-          </tbody></table> -->
-          <!-- <ul class="b">
 
-              <details><summary><subheading><b>Embedding Information within Neural Radiance Fields</b></subheading></summary>
-                <img style="width:20%;" src="data/videos/lego_ren.gif"> &nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="data/videos/lego_res5.gif">&nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="data/videos/lego_res.gif">&nbsp &nbsp&nbsp&nbsp&nbsp <img style="width:20%;" src="data/videos/lego_rec.gif">
-                  <figcaption>  &nbsp &nbsp Fig1. Rendering Views &nbsp &nbsp &nbsp &nbsp &nbsp  Fig2. Residual Error (x5).  &nbsp &nbsp &nbsp &nbsp  &nbsp  Fig3. Residual Error (x25).  &nbsp &nbsp  Fig4. Recovered Customized Images
-                  </figcaption>
-                  <p class="w3-justify">
-                    Recent advances in  Neural Radiance Field (NeRF) imply a future of widespread visual data distributions through sharing NeRF model weights. 
-                    In <a style="color: #447ec9" href="https://xggnet.github.io/StegaNeRF/">StegaNeRF</a>,
-                    we signify an initial exploration into the novel problem of instilling customizable, imperceptible, and recoverable information to NeRF renderings, with minimal impact to rendered images.
-                    We sincerely hope this work can promote the concerns about the intellectual property of INR/NeRF.
-                    </p>
-        </details>
 
-            <br>
-            <details>
-              <summary><subheading><b>Efficient Knowledge Distillation Algorithms</b></subheading></summary>
-            
-              <p class="w3-justify">
-           
-              <img style="width:35%;" src="data/images/fig2_v8.png">  
-  <img style="width:22%;" src="data/images/task4_mask_rotation_3.png">
-               <img style="width:35%;" src="data/images/v11.png">
-                  <figcaption>  &nbsp Fig1. Knowledge Condensation Distillation &nbsp &nbsp Fig2. Relation of Condensed Knowledge.  &nbsp &nbsp &nbsp Fig3. Hint-Dynamic Distillation.
-                  </figcaption>
-              </p>
-              <p class="w3-justify">
-                Knowledge distillation (KD) plays a key role in developing lightweight deep networks by transferring the dark knowledge from a high-capacity teacher network to strengthen a smaller student one. 
-                In
-                <a href=https://link.springer.com/chapter/10.1007/978-3-031-20083-0_2> KCD </a> (<strong>ECCV'22</strong>),
-                we explore an efficient knowledge distillation framework by co-designing model distillation and knowledge condensation, 
-                which dynamically identifies and summarizes the informative knowledge points as a compact knowledge set across the knowledge transfer. -->
-                <!-- Please see <a href=https://link.springer.com/chapter/10.1007/978-3-031-20083-0_2><u>ECCV 2022</u></a> for more details.
-                 -->
-                <!-- <p>
+ 
 
-                In <a href=https://arxiv.org/abs/2211.17059>HKD</a>, 
-                we investigate the diverse guidance
-                effect from the knowledge of teacher model in different instances and learning stages.
-                The existing literature keeps the fixed learning fashion to handle these knowledge hints.
-                In comparison, we present to leverage the merits of meta-learning to customize a specific distillation fashion for each instance adaptively and dynamically.
-               
-
-              </p>
-
-          </details>
-
-          <br>
-
-          <details>
-            <summary><subheading><b>Data-Efficient Learning for Medical Imaging Analysis</b><subheading></summary> -->
-
-            <!-- <img style="width:96%;" src="images/floorplan_annotation.png"> -->
-            <!-- <p class="w3-justify"> -->
-            <!-- <a style="color: #447ec9" href="https://floorplancad.github.io/">Project Page</a> and <a style="color: #447ec9" href="https://www.aliyun.com/product/ai/HoloWatcher_Introduction">Product Page</a> -->
-            <!-- </p> -->
-            <!-- <img style="width:32%;" src="data/images/Fig12.png">  
-            <img style="width:40%;" src="data/images/图片9.png"> 
-            <img style="width:20%;" src="data/images/图片10.png">
-            <br>
-            <br>
-                <figcaption>  &nbsp &nbsp Fig1. GVS for Pseudo-Healthy Synthesis &nbsp &nbsp &nbsp &nbsp &nbsp Fig2. Uncertainty-Aware Self-Training  &nbsp &nbsp&nbsp &nbsp&nbsp &nbsp &nbsp &nbsp  &nbsp&nbsp &nbsp  Fig3. Enhanced Feature by GCN-DE
-            <p class="w3-justify">
-              <strong>Pseudo-Healthy Synthesis:</strong> As a variant of style-transfer task, synthesizing the healthy counterpart from the lesion regions is a important problem in clinical practice.
-              In <a href=https://arxiv.org/abs/2009.05722>GVS</a> (<strong>MICCAI'21</strong>), we leverage the more accurate lesion attribution by constructing an adversarial learning framework between the pseudo-healthy generator and lesion segmentor.
-              <p> 
-              <strong>Domain Adaptation/Generalization:</strong> 
-              Generalizing the deep models trained on one data source to other datasets is essential issue in practical medical imaging analysis.
-              We present a domain adaptive approach by leveraging the self-supervised strategy called <a href=https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9506148>Vessel-Mixing</a> (ICIP'21),
-              which is driven by the geometry characteristics of retinal vessels.
-
-              We also attempt tp address the domain generalization problem in medical imaging via <a href=https://www.sciencedirect.com/science/article/abs/pii/S0010482521009380>Task-Aug</a> (CBM'21). We investigate the neglected issue summarized as task over-fitting, that is, the meta-learning framework gets over-fitting to the simulated meta-tasks, and present a task augmentation strategy.
-
-              <p> 
-              <strong>Semi-Supervised Learning:</strong> 
-              The existing semi-supervised methods mainly exploit the unlabeled data via a self-labeling strategy.
-              In <a href=https://link.springer.com/article/10.1007/s00521-021-06578-3>UAST</a> (NCA'21), 
-              we present to decouple the unreliable connect between the decision boundary learning and pseudo-label evaluation.
-              We instead leverage an uncertainty-aware self-training paradigm by modeling the accuracy of pseudo-labels via uncertainty modeling.
-              <p> 
-              <strong>Few-shot Learning:</strong> 
-              Existing few-shot segmentation methods tend to fail in the incongruous foreground regions of support and query images.
-              We present a few-shot learning method called <a href=https://www.sciencedirect.com/science/article/pii/S0010482521008611>GCN-DE</a> (CBM'21) which leverages a global correlation capture and discriminative embedding to address the above issue.
-
-        </details> -->
-        <!-- <br> -->
-           <!-- <p>
-            <p> -->
-            <!-- <p> -->
-              <!-- <br> -->
-             <!--           CopyRight-->
-                      <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                          <tbody>
-               <p style="text-align:right;">Modified from <a href="https://jonbarron.info/">Jon Barron</a></p>
-                          </tbody>
-                      </table> -->
-<!--               
-                </td>
-              </tr>
-            </table> -->
 
             <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
               <tr>
               <td style="padding:20px;width:100%;vertical-align:middle">
-                <heading>Professional Activities</heading>
+                <strong>💼 Professional Activities</strong>  <hr>
                 <p><h3>Conference Reviewer</h3> 
                 ICLR, NeurIPS, ICML, CVPR, ICCV, ECCV, EMNLP, AAAI, ACM MM, MICCAI, BIBM (and more)
                 <p><h3>Journal Reviewer</h3> 
                 TIP, DMLR, PR, TNNLS, NCA (and more)
 
-          <br>
-             <p>
-              <p>
-              <p>
                 <br>
-               <!--           CopyRight-->
-                        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                            <tbody>
-                 <p style="text-align:right;">Modified from <a href="https://jonbarron.info/">Jon Barron</a></p>
-                            </tbody>
-                        </table>
-                
-                  </td>
-                </tr>
-              </table>
-  
+                <p>
+                <p>
+                <p>
+                  <br>
 
-        
-          </body>
+              </td>
+            </tr>
+          </tbody></table>
+
+
           
-          </html>
-          
+    
+      </td>
+    </tr>
+  </table>
+
+
+  </div>
+
+  <script>
+    function showCategory(category) {
+      // Get all publication items
+      const publications = document.querySelectorAll('.publication-item');
+      const tabs = document.querySelectorAll('.tab-button');
+      
+      // Remove active class from all tabs
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      document.querySelector(`[data-category="${category}"]`).classList.add('active');
+      
+      // Show/hide publications based on category
+      publications.forEach(pub => {
+        if (category === 'all' || pub.dataset.category === category) {
+          pub.classList.remove('hidden');
+          pub.style.display = 'block';
+        } else {
+          pub.classList.add('hidden');
+          pub.style.display = 'none';
+        }
+      });
+    }
+    
+    // Initialize with all publications shown
+    document.addEventListener('DOMContentLoaded', function() {
+      showCategory('all');
+      
+      // Set FlexGS video playback rate to 6x
+      const flexgsVideo = document.getElementById('flexgs-video');
+      if (flexgsVideo) {
+        flexgsVideo.addEventListener('loadedmetadata', function() {
+          flexgsVideo.playbackRate = 6.0;
+        });
+      }
+    });
+  </script>
+  
+</body>
+
+</html>
