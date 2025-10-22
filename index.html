@@ -177,8 +177,13 @@
   }
 
   /* Unified highlight styles */
-  .role   { color: #0066cc; font-weight: 600; }
+  .role   { color: #4169e1; font-weight: 600; }
   .result { color: #cc0000; }
+
+  .reviewer-title {
+    color: #000000;
+    margin-bottom: 4px;
+  }
 
   /* Rotation animation for the central cycle icon */
   @keyframes rotate {
@@ -213,8 +218,10 @@
               <p>I am a Ph.D. student at <a href="https://www.cuhk.edu.hk/">The Chinese University of Hong Kong</a>, advised by Prof. <a href="https://www.ee.cuhk.edu.hk/~yxyuan/" target="_blank" rel="noopener">Yixuan Yuan</a>. 
                 I received my M.Eng & B.Eng from Xiamen University under Prof. <a href="https://scholar.google.com.hk/citations?user=k5hVBfMAAAAJ&hl=en">Xinghao Ding</a> and Prof. <a href="https://huangyue05.github.io/">Yue Huang</a>. <br><br>
 
-    My research interests include Multimodal Reasoning 🧠 {Multimodal LLM | Agent RL | Alignment} and Multimodal World Modeling 🌍  {Video Diffusion | 3DGS}.
-
+      My research interests include: (i)🧠 <strong>Multimodal Reasoning and Alignment</strong>: 
+    Multimodal LLM understanding and reasoning | Agent and RL | Backbone for multimodal alignment. 
+    (ii) 🌍 <strong>Multimodal World Modeling</strong>: 
+    Multimodal content generation | Video diffusion and 3DGS.
   
     <br><br>
 <!--     
@@ -329,8 +336,9 @@ I warmly welcome discussions on research collaborations, as well as any profound
               <!-- Publication Category Tabs -->
               <div style="margin: 20px 0;">
                 <div class="publication-tabs">
-                  <button class="tab-button" data-category="reasoning" onmouseover="showCategory('reasoning')" onclick="showCategory('reasoning')">🧠 Multimodal Reasoning<br><small>LLM · Agent RL · Alignment</small></button>
-                  <button class="tab-button" data-category="world" onmouseover="showCategory('world')" onclick="showCategory('world')">🌍 Multimodal World Model<br><small>Video Diffusion · 3DGS</small></button>
+                  <button class="tab-button" data-category="all" onmouseover="showCategory('all')" onclick="showCategory('all')">📚 All</button>
+                  <button class="tab-button" data-category="reasoning" onmouseover="showCategory('reasoning')" onclick="showCategory('reasoning')">🧠 Multimodal LLM</button>
+                  <button class="tab-button" data-category="world" onmouseover="showCategory('world')" onclick="showCategory('world')">🌍 World Modeling</button>
                 </div>
               </div>
               <div id="pub-container"></div>
@@ -340,7 +348,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 
 
 
-      <table class="publication-item" data-category="reasoning" data-sort="1" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <table class="publication-item" data-category="reasoning" data-sort="1" data-year="2025" data-allorder="1" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
         <td style="padding:20px;width:25%;vertical-align:middle">
           <div class="one" align="center">
             <font color="#8B4513"> <strong> NeurIPS 2025  </strong> </font> <p></p>
@@ -362,7 +370,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
         </td>
     </tbody></table>
 
-    <table class="publication-item" data-category="world" data-sort="1" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+    <table class="publication-item" data-category="reasoning" data-sort="2" data-year="2025" data-allorder="2" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
       <td style="padding:20px;width:25%;vertical-align:middle">
         <div class="one" align="center">
           <font color="#8B4513"> <strong> Preprint 2025  </strong> </font> <p></p>
@@ -391,7 +399,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
   </tbody></table>
 
 
-  <table class="publication-item" data-category="reasoning" data-sort="3" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+  <table class="publication-item" data-category="reasoning" data-sort="3" data-year="2025" data-allorder="4" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
     <td style="padding:20px;width:25%;vertical-align:middle">
       <div class="one" align="center">
         <font color="#8B4513"> <strong> ICCV 2025  </strong> </font> <p></p>
@@ -415,7 +423,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
     </td>
 </tbody></table>
 
-      <table class="publication-item" data-category="reasoning" data-sort="4" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <table class="publication-item" data-category="reasoning" data-sort="4" data-year="2025" data-allorder="5" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one" align="center">
               <font color="#8B4513"> <strong> NeurIPS 2025  </strong> </font> <p></p>
@@ -441,7 +449,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 
 
 
-    <table class="publication-item" data-category="world" data-sort="1" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+    <table class="publication-item" data-category="world" data-sort="0" data-year="2025" data-allorder="3" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
       <td style="padding:20px;width:25%;vertical-align:middle">
         <div class="one" align="center">
           <font color="#8B4513"> <strong> AAAI 2025  </strong> </font> <p></p>
@@ -458,12 +466,12 @@ I warmly welcome discussions on research collaborations, as well as any profound
        </div>
        <p></p>
   
-       [<a href="https://yes-u-kan.github.io/">Project</a>] [<a href="https://arxiv.org/abs/2406.02918">Paper</a>] [<a href="https://github.com/CUHK-AIM-Group/U-KAN">Code</a>]
-        <!-- <p>The endeavours unveil insights on the prospect that integrating KAN into backbone for both image segmentation and generation. <span style="color: red;">📈 200+ Citations | ⭐ 400+ GitHub Stars | 🎤 Invited Talks at Cambridge & VALSE | 📚 Referenced by KAN2.0</span></p> -->
+       [<a href="https://yes-u-kan.github.io/">Project</a>] [<a href="https://export.arxiv.org/abs/2407.05540">Paper</a>] [<a href="https://github.com/CUHK-AIM-Group/U-KAN">Code</a>] <span style="color: red; background-color: #fff4cc; padding: 0 4px; border-radius: 4px; font-weight: 700;">🏆 <a href="https://resources.paperdigest.org/2025/09/most-influential-aaai-papers-2025-09-version/" target="_blank" rel="noopener">Top 1 most influential papers in AAAI 2025</a></span>
+        <p>The endeavours unveil insights on the prospect that integrating KAN into backbone for both image segmentation and generation. </p>
       </td>
   </tbody></table>
 
-  <table class="publication-item" data-category="reasoning" data-sort="6" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+  <table class="publication-item" data-category="reasoning" data-sort="6" data-year="2025" data-allorder="6" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
     <td style="padding:20px;width:25%;vertical-align:middle">
       <div class="one" align="center">
         <font color="#8B4513"> <strong> CVPR 2025  </strong> </font> <p></p>
@@ -495,7 +503,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 
   
 
-  <table class="publication-item" data-category="reasoning" data-sort="7" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+  <table class="publication-item" data-category="reasoning" data-sort="7" data-year="2025" data-allorder="7" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
     <td style="padding:20px;width:25%;vertical-align:middle">
       <div class="one" align="center">
         <font color="#8B4513"> <strong> CVPR 2025  </strong> </font> <p></p>
@@ -522,7 +530,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 
 
 
-<table class="publication-item" data-category="reasoning" data-sort="8" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+<table class="publication-item" data-category="reasoning" data-sort="8" data-year="2024" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
   <td style="padding:20px;width:25%;vertical-align:middle">
     <div class="one" align="center">
       <font color="#8B4513"> <strong> ECCV 2024  </strong> </font> <p></p>
@@ -546,7 +554,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
   </td>
 </tbody></table>
 
-<table class="publication-item" data-category="reasoning" data-sort="9" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+<table class="publication-item" data-category="reasoning" data-sort="9" data-year="2024" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
   <td style="padding:20px;width:25%;vertical-align:middle">
     <div class="one" align="center">
       <font color="#8B4513"> <strong> NeurIPS 2024  </strong> </font> <p></p>
@@ -570,7 +578,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
   </td>
 </tbody></table>
 
-<table class="publication-item" data-category="reasoning" data-sort="10" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+<table class="publication-item" data-category="reasoning" data-sort="10" data-year="2022" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
   <td style="padding:20px;width:25%;vertical-align:middle">
     <div class="one" align="center">
       <font color="#8B4513"> <strong> ECCV 2022  </strong> </font> <p></p>
@@ -596,7 +604,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 
 
 
-<table class="publication-item" data-category="world" data-sort="1" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+<table class="publication-item" data-category="world" data-sort="1" data-year="2025" data-allorder="8" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
   <td style="padding:20px;width:25%;vertical-align:middle">
     <div class="one" align="center">
       <font color="#8B4513"> <strong> ICLR 2025  </strong> </font> <p></p>
@@ -621,7 +629,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 </tbody></table>
 
 
-<table class="publication-item" data-category="world" data-sort="2" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+<table class="publication-item" data-category="world" data-sort="2" data-year="2025" data-allorder="9" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
   <td style="padding:20px;width:25%;vertical-align:middle">
     <div class="one" align="center">
       <font color="#8B4513"> <strong> CVPR 2025  </strong> </font> <p></p>
@@ -651,7 +659,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 </tbody></table>
 
 
-      <table class="publication-item" data-category="world" data-sort="3" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <table class="publication-item" data-category="world" data-sort="3" data-year="2025" data-allorder="10" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one" align="center">
               <font color="#8B4513"> <strong> NeurIPS 2025  </strong> </font> <p></p>
@@ -679,7 +687,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
 
 
 
-      <table class="publication-item" data-category="world" data-sort="4" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <table class="publication-item" data-category="world" data-sort="4" data-year="2024" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one" align="center">
               <font color="#8B4513"> <strong> MICCAI 2024  </strong> </font> <p></p>
@@ -733,7 +741,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
         </td>
     </tbody></table> -->
 
-      <table class="publication-item" data-category="world" data-sort="5" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+      <table class="publication-item" data-category="world" data-sort="5" data-year="2023" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one" align="center">
               <font color="#8B4513"> <strong> ICCV 2023  </strong> </font> <p></p>
@@ -772,10 +780,10 @@ I warmly welcome discussions on research collaborations, as well as any profound
               <tr>
               <td style="padding:20px;width:100%;vertical-align:middle">
                 <strong>💼 Professional Activities</strong>  <hr>
-                <p><h3>Conference Reviewer</h3> 
-                ICLR, NeurIPS, ICML, CVPR, ICCV, ECCV, EMNLP, AAAI, ACM MM, MICCAI, BIBM (and more)
-                <p><h3>Journal Reviewer</h3> 
-                TIP, DMLR, PR, TNNLS, NCA (and more)
+                <h3 class="reviewer-title">Conference Reviewer</h3>
+                <p>ICLR, NeurIPS, ICML, CVPR, ICCV, ECCV, EMNLP, AAAI, ACM MM, MICCAI, BIBM (and more)</p>
+                <h3 class="reviewer-title">Journal Reviewer</h3>
+                <p>TIP, DMLR, PR, TNNLS, NCA (and more)</p>
               </td>
             </tr>
           </tbody></table>
@@ -791,9 +799,9 @@ I warmly welcome discussions on research collaborations, as well as any profound
                     <img src="data/images/edujourney.png" alt="EduJOurney" width="100%" style="border-radius:10px;">
                   </td>
                   <td style="padding:10px;width:85%;vertical-align:middle">
-                    <h3 style="color: #4285f4; margin-bottom: 10px;">Co-founder & TechLead, ScholaGO Education Technology Company Limited</h3>
+                    <h3 style="color: #000000; margin-bottom: 10px;">Co-founder & TechLead, ScholaGO Education Technology Company Limited</h3>
                     <p>
-                      I co-founded <a href="#" style="color: #4285f4;">ScholaGO Education Technology Company Limited (学旅通教育科技有限公司)</a> to develop innovative LLM-backed educational products that transform static knowledge into immersive, interactive, multimodal experiences. We secured funding from <span style="color: #4285f4;"><strong>HKSTP</strong></span>, <span style="color: #4285f4;"><strong>HK Tech 300</strong></span> government entrepreneurship funds, and <span style="color: #4285f4;"><strong>Alibaba Cloud</strong></span>, aiming to create impactful technologies that enhance education and societal well-being.
+                      I co-founded <a href="#">ScholaGO Education Technology Company Limited (学旅通教育科技有限公司)</a> to develop innovative LLM-backed educational products that transform static knowledge into immersive, interactive, multimodal experiences. We secured funding from <strong>HKSTP</strong>, <strong>HK Tech 300</strong> government entrepreneurship funds, and <strong>Alibaba Cloud</strong>, aiming to create impactful technologies that enhance education and societal well-being.
                     </p>
                   </td>
                 </tr>
@@ -808,11 +816,11 @@ I warmly welcome discussions on research collaborations, as well as any profound
           <td style="padding:20px;width:100%;vertical-align:middle">
             <strong>🎨 Personal Interests</strong>  <hr>
             
-            📚 <strong>Reading:</strong> I dedicate substantial time each week to reading and deep contemplation. I have a particular passion for exploring history, philosophy, and sociology, which I believe has enriched my cognitive perspectives.<br><br>
+            📚 <strong>Reading:</strong> I dedicate substantial time each week to reading and deep contemplation. I have a particular passion for exploring history, philosophy, and sociology, which I believe has enriched my cognitive perspectives significantly.<br><br>
             
             📈 <strong>Investment:</strong> 
-            From a perspective of RL, no things provide more verifiable "rewards" than precise return figures, which enables continuous update of my "policy".
-            From a perspective of unifying understanding and generation, "understanding" investment may benefit future "generating" entrepreneurial ventures?
+            From a reinforcement learning perspective, no things can provide more verifiable rewards than precise return figures, which enables me to continuously refine my decision-making policy.
+            From a synergistic perspective of perception and generation, I guess training investment decision-making abilities (perception tasks) may benefit future entrepreneurial ventures (generation tasks)? Maybe I can answer it in the future.
             
           </td>
         </tr>
@@ -838,7 +846,18 @@ I warmly welcome discussions on research collaborations, as well as any profound
       });
       
       const visible = publications.filter(pub => (category === 'all' || pub.dataset.category === category));
-      visible.sort((a, b) => (Number(a.dataset.sort || 999) - Number(b.dataset.sort || 999)));
+      const priorityMap = { reasoning: 0, world: 1 };
+      visible.sort((a, b) => {
+        const yearDiff = Number(b.dataset.year || 0) - Number(a.dataset.year || 0);
+        if (yearDiff !== 0) return yearDiff;
+        const orderA = Number(a.dataset.allorder || Number.MAX_SAFE_INTEGER);
+        const orderB = Number(b.dataset.allorder || Number.MAX_SAFE_INTEGER);
+        if (orderA !== orderB) return orderA - orderB;
+        const priorityA = priorityMap[a.dataset.category] ?? 9;
+        const priorityB = priorityMap[b.dataset.category] ?? 9;
+        if (priorityA !== priorityB) return priorityA - priorityB;
+        return Number(a.dataset.sort || 999) - Number(b.dataset.sort || 999);
+      });
       visible.forEach(pub => container.appendChild(pub));
     }
     
@@ -849,7 +868,7 @@ I warmly welcome discussions on research collaborations, as well as any profound
         const pubs = Array.from(document.querySelectorAll('.publication-item'));
         pubs.forEach(pub => container.appendChild(pub));
       }
-      showCategory('reasoning');
+      showCategory('all');
       
       // Set FlexGS video playback rate to 6x
       const flexgsVideo = document.getElementById('flexgs-video');
@@ -864,4 +883,3 @@ I warmly welcome discussions on research collaborations, as well as any profound
 </body>
 
 </html>
-
