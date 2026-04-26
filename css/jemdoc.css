@@ -120,8 +120,13 @@ pre, tt {
 }
 
 a, a > tt {
-	color: #4169e1;
+	color: #3a5a8c;
 	text-decoration: none;
+	font-weight: normal !important;
+}
+
+a strong, a b, strong a, b a {
+	font-weight: normal !important;
 }
 
 a:hover {
