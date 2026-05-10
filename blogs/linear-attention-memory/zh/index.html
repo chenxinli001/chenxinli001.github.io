@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear Attention 作为可泛化记忆机制 | Chenxin Li</title>
+  <meta name="description" content="Linear Attention as a Generalizable Memory Mechanism 的中文博客版。">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/linear-attention-memory/zh/">
+  <link rel="alternate" hreflang="en" href="https://chenxinli001.github.io/blogs/linear-attention-memory/">
+  <link rel="alternate" hreflang="zh-CN" href="https://chenxinli001.github.io/blogs/linear-attention-memory/zh/">
+  <meta name="author" content="Chenxin Li">
+  <meta name="citation_title" content="Linear Attention 作为可泛化记忆机制">
+  <meta name="citation_author" content="Chenxin Li">
+  <meta name="citation_author" content="Hao Chen">
+  <meta name="citation_author" content="Xuefeng Hu">
+  <meta name="citation_publication_date" content="2026/04/04">
+  <meta name="citation_online_date" content="2026/04/04">
+  <meta name="citation_fulltext_html_url" content="https://chenxinli001.github.io/blogs/linear-attention-memory/zh/">
+  <meta name="citation_language" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Linear Attention 作为可泛化记忆机制">
+  <meta property="og:description" content="Linear Attention as a Generalizable Memory Mechanism 的中文博客版。">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/linear-attention-memory/zh/">
+  <link rel="stylesheet" href="../../blogs.css">
+  <script>
+    window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../../">Blogs</a><a href="../">English version</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">研究博客</span>
+          <a class="language-pill" href="../">Read in English</a>
+        </div>
+        <h1>Linear Attention 作为可泛化记忆机制</h1>
+        <p class="article-subtitle">Chenxin Li, Hao Chen, Xuefeng Hu</p>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>日期</span><strong>2026 年 4 月 4 日</strong></div>
+          <div><span>状态</span><strong>公开博客草稿</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section"><h2>摘要</h2><p>大语言模型已经在预训练规模化和推理时规模化的推动下快速发展，但它们仍然难以把部署后的经验转化为持久的长期记忆。现有智能体记忆栈通常依赖检索式管线（例如向量数据库、相似度搜索，以及工程化的记忆写入/读取规则），或直接使用长上下文 Softmax 注意力；二者在实践中都能有效工作，但也常受检索噪声、启发式设计选择和二次注意力成本的限制。我们提出一个简单且模块化的替代方案：保留一个强大的 Softmax 注意力<strong>推理模型</strong>来决定<strong>何时</strong>查询记忆，同时用一个<strong>参数化</strong>的线性注意力记忆模型（Kimi-Linear）替代外部 embedding 数据库，使其通过对话完成信息的总结、存储和检索。该思路受到近期长期记忆研究（如 MIRAS、Titans 和 nested learning）的启发，但关注点不同：我们并不设计一个在多层级、多速度上紧耦合更新的多时间尺度系统，而是聚焦于一个易插拔的记忆替换模块，使其兼容当前 LLM 智能体管线。我们在长视频理解任务中结合 M3-Agent 风格的记忆调用进行验证，结果表明线性注意力记忆可以作为一种实用、可扩展的测试时学习基底。</p></section>
+<section class="article-section"><h2>引言</h2>
+<p>大语言模型（LLM）的规模化大致经历了两个阶段：<strong>预训练规模化</strong>通过海量语料和更大的参数量释放涌现能力 [vaswani2017attention]；<strong>推理时规模化</strong>通过扩展上下文窗口、生成中间推理 token 来提升输出质量。然而，这两种范式共享一个关键盲点：一旦预训练结束，模型的参数化知识就被冻结。系统可以回忆训练语料中的信息，也可以处理当前上下文窗口内的 token，但缺少一种内在机制，把新的经验整合为长期记忆。某种意义上，当前 LLM 患有一种<strong>顺行性遗忘</strong>：它们记得预训练阶段的遥远过去，也能感知上下文窗口中的当下，却无法用持久、可更新的记忆把二者连接起来。</p>
+
+<figure class="visual-figure">
+  <figcaption>从静态知识到自适应记忆：三种规模化范式。</figcaption>
+  <svg viewBox="0 0 900 260" role="img" aria-label="Three scaling frontiers: pre-training, inference-time, and test-time memory">
+    <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" /></marker></defs>
+    <line x1="90" y1="140" x2="810" y2="140" class="flow-line" marker-end="url(#arrow)"/>
+    <g class="node"><rect x="70" y="70" width="190" height="110" rx="18"/><text x="165" y="112" text-anchor="middle">预训练规模化</text><text x="165" y="142" text-anchor="middle" class="small">冻结的参数化知识</text></g>
+    <g class="node"><rect x="355" y="70" width="190" height="110" rx="18"/><text x="450" y="112" text-anchor="middle">推理时规模化</text><text x="450" y="142" text-anchor="middle" class="small">长上下文 + 推理</text></g>
+    <g class="node accent"><rect x="640" y="70" width="190" height="110" rx="18"/><text x="735" y="112" text-anchor="middle">测试时训练</text><text x="735" y="142" text-anchor="middle" class="small">经验转化为记忆</text></g>
+  </svg>
+</figure>
+<p><strong>测试时训练作为下一个规模化前沿。</strong> 这一局限指向第三个规模化前沿：<strong>测试时训练</strong>（test-time training, TTT）与持续学习。在这种范式下，模型在处理新数据时动态调整内部状态 [sun2024learning; bell2025future]。它的愿景是让智能体真正从经验中学习：积累情景知识、持续修正世界模型，并在部署过程中逐渐提升能力，而不是发布之后保持静止。</p>
+<p><strong>当前智能体记忆栈的不足。</strong> 为了把记忆扩展到固定上下文窗口之外，许多系统采用检索式管线：把过去信息存入外部记忆（如向量数据库、结构化记忆存储或可由工具访问的知识库），并在推理时通过相似度搜索召回候选内容 [packer2023memgpt; chhikara2025mem0]。这些方法实用且通常效果很强，但其行为容易受工程选择影响，包括切分与索引方式、embedding 模型、top-\(k\) 策略以及检索噪声。另一条路线是继续扩展<strong>长上下文</strong> Softmax 注意力。现代 Transformer 已经可以扩展到百万 token 级上下文，但核心注意力计算仍是 \(O(N^2)\)，在需要近乎无限历史的场景中仍然不足 [vaswani2017attention]。</p>
+
+<figure class="visual-figure">
+  <figcaption>动机：用学习得到的记忆基底替代检索胶水层。</figcaption>
+  <svg viewBox="0 0 900 300" role="img" aria-label="External retrieval stack versus parametric linear-attention memory">
+    <g class="stack left"><rect x="55" y="55" width="320" height="190" rx="20"/><text x="215" y="88" text-anchor="middle">外部检索栈</text><text x="215" y="125" text-anchor="middle" class="small">切块 → embedding → 向量库</text><text x="215" y="158" text-anchor="middle" class="small">top-k 检索 → 重排序</text><text x="215" y="191" text-anchor="middle" class="small">提示词格式化 → 总结</text></g>
+    <path d="M395 150 C445 95, 455 205, 505 150" class="flow-line" marker-end="url(#arrow)"/>
+    <g class="stack right"><rect x="525" y="55" width="320" height="190" rx="20"/><text x="685" y="88" text-anchor="middle">参数化记忆</text><text x="685" y="125" text-anchor="middle" class="small">线性注意力记忆模型</text><text x="685" y="158" text-anchor="middle" class="small">单次前向完成读取 + 总结</text><text x="685" y="191" text-anchor="middle" class="small">可扩展到长历史</text></g>
+  </svg>
+</figure>
+<p><strong>线性注意力与记忆—抽象困境。</strong> 线性注意力模型和现代循环架构——包括状态空间模型（SSM）[gu2024mamba]、RetNet [sun2023retentive]、RWKV [peng2023rwkv] 和 gated linear attention [yang2023gated]——提供了一个有吸引力的替代方向：它们以 \(O(N)\) 复杂度处理序列，并维护固定大小的隐藏状态，因此在理论上适合作为无界长度记忆。然而，这些模型长期面临<strong>记忆—抽象困境</strong>：将整个上下文压缩到固定大小状态会损失细粒度回忆，产生“模糊”的记忆，相比完整 Softmax 注意力推理能力更弱 [qin2022devil; behrouz2025titans]。</p>
+<p><strong>我们的方法：面向智能体的简单、可插拔参数化记忆。</strong> MIRAS [behrouz2025connected]、Titans [behrouz2025titans] 和 nested learning [behrouz2025nested] 等近期工作探索了<strong>一体化</strong>设计，即在多个层级和时间尺度上更新记忆（例如不同模块、不同更新规则和不同速度）。相比之下，我们提出一个更简单的问题：<strong>能否在保持其余智能体管线不变的前提下，用线性注意力模型替代现代智能体中的外部 embedding 数据库？</strong></p>
+<p>具体而言，我们基于 M3-Agent 框架 [long2025m3agent]：其中一个通过强化学习训练的 Softmax 注意力策略模型会学习<strong>何时</strong>调用记忆操作，并通过 embedding 数据库上的余弦相似度搜索检索相关信息。我们保留相同的高层接口，但用线性注意力记忆模型（Kimi-Linear [team2025kimi]）替换 embedding 数据库。该记忆模型通过对话同时完成<strong>保存</strong>和<strong>搜索</strong>记忆：它把长历史逐步总结进参数化状态，并在 RL 策略判断需要记忆时由推理模型进行查询。</p>
+<p><strong>贡献。</strong> 本文主要贡献如下：</p>
+<ol>
+<li>我们形式化了一种模块化、智能体友好的视角：将线性注意力视为<strong>参数化长期记忆</strong>，可以在最小改动现有管线的情况下替换相似度搜索数据库。</li>
+<li>我们在 M3-Agent 风格的 RL 推理模型中加入 Kimi-Linear 记忆模块，通过对话执行记忆写入和读取，从而实例化这一设计。</li>
+<li>我们在长视频理解基准上验证了这种替换的有效性，展示了一条通向可扩展测试时学习的实用途径。</li>
+</ol>
+</section>
+<section class="article-section"><h2>相关工作</h2>
+<p>我们回顾与本文框架汇聚的四条研究线：线性注意力机制、LLM 智能体记忆系统、测试时训练与持续学习，以及具有长期记忆的多模态智能体。</p>
+<h3>线性注意力机制</h3>
+<p>标准 Transformer [vaswani2017attention] 通过 query 与 key 矩阵的 Softmax 归一化点积计算注意力，其复杂度随序列长度 \(N\) 呈 \(O(N^2)\)。大量工作试图在保持表达能力的同时降低这一成本。</p>
+<p><strong>早期线性化。</strong> 早期方法尝试用显式或随机特征映射替代指数核来近似 Softmax 注意力，从而达到 \(O(N)\) 复杂度 [zheng2022linear]。然而，这类方法往往把线性化视为数学便利，而非架构机会，因此常出现明显质量下降 [qin2022devil]。</p>
+<p><strong>状态空间模型与选择性机制。</strong> 状态空间模型（SSM）把序列建模重新表述为连续时间线性动力系统，并离散化以便高效计算。Mamba [gu2024mamba] 引入输入依赖的<strong>选择性</strong>状态转移，使模型能够过滤无关信息并保留关键上下文。在本文采用的记忆框架下，这种选择性可以被视为一种学习得到的保留门。</p>
+<p><strong>循环式线性注意力。</strong> RetNet [sun2023retentive] 将多尺度指数衰减与线性注意力结合，形成基于保留机制的循环结构，同时支持并行训练和 \(O(1)\) 推理记忆。RWKV [peng2023rwkv] 在 Transformer 范式中重新引入经典 RNN 门控，使其在保持线性复杂度的同时扩展到数十亿参数。Gated Linear Attention（GLA）[yang2023gated] 在线性注意力更新中加入数据依赖的门控，提高表达力并保持硬件友好的训练特性。</p>
+<p><strong>Delta rule 及后续发展。</strong> Yang 等人 [yang2024parallelizing] 证明，<strong>delta rule</strong>——通过修正当前预测误差来更新关联记忆——可以沿序列长度并行化，从而高效训练记忆能力强于简单加性（Hebbian）更新的线性 Transformer。Gated Delta Networks [yang2024gateddelta] 进一步将 delta-rule 更新与 Mamba 风格门控结合。近期，Kimi-Linear [team2025kimi] 将高表达力线性注意力扩展到生产级语言模型，在显著降低推理成本的同时达到与 Softmax Transformer 具有竞争力的质量。</p>
+<p><strong>统一框架。</strong> MIRAS 框架 [behrouz2025connected] 提供了统一视角，将任意序列模型分解为四个设计轴：<strong>关联记忆架构</strong>（存储记忆的结构）、<strong>注意力偏置</strong>（内部优化目标，如 delta rule 的 \(\ell_2\) 回归）、<strong>保留门</strong>（遗忘机制）和<strong>学习算法</strong>（更新记忆的优化器）。这种分解揭示出许多线性注意力模型只占据设计空间中的狭窄区域——通常使用矩阵值记忆配合 Hebbian 或 delta-rule 更新——并激发了更丰富、更一体化的设计，例如 Titans [behrouz2025titans]、Atlas [behrouz2025atlas] 和 nested learning [behrouz2025nested] 中的深度神经记忆与高阶优化。本文受这些工作启发，但聚焦于模块化设定：将生产级线性注意力模型作为现有智能体管线中相似度搜索记忆的可插拔替代品。</p>
+<h3>LLM 智能体的记忆机制</h3>
+<p>随着 LLM 智能体被部署到长时程、多会话场景中，超越上下文窗口的持久记忆需求推动了多种外部记忆架构的发展。</p>
+<p><strong>虚拟上下文管理。</strong> MemGPT [packer2023memgpt] 将 LLM 的上下文窗口类比为物理内存，提出受操作系统启发的虚拟记忆层级。模型在主上下文（工作记忆）和外部存储层（长期记忆）之间管理分页，使其能够在原生上下文限制之外完成文档分析和多会话对话。</p>
+<p><strong>结构化持久记忆。</strong> Mem0 [chhikara2025mem0] 从对话中动态抽取并整合关键信息到持久存储中，在长对话基准上相比 baseline 获得 26% 的相对提升，同时将延迟降低 91%。MIRIX [wang2025mirix] 进一步引入六种记忆类型——核心记忆、情景记忆、语义记忆、程序记忆、资源记忆和知识保险库——并由多智能体框架协调，在多模态和对话基准上达到 SOTA 表现。</p>
+<p><strong>基于学习的记忆管理。</strong> 与依赖固定启发式规则不同，近期工作开始训练智能体通过强化学习管理记忆。Mem-\(\alpha\) [wang2025memalpha] 使用 RL 教智能体何时以及如何抽取、存储和更新记忆，并展示了从 30k-token 训练样本泛化到超过 400k token 序列的能力。Memory-R1 [yan2025memory] 为 LLM 配备结构化记忆操作（添加、更新、删除），并通过 PPO 和 GRPO 优化，在仅 152 个训练样本下超过强 baseline。MEM1 [zhou2025mem1] 引入端到端 RL 来联合优化记忆整合与推理，相比更大的指令微调模型取得 3.5\(&times;\) 性能提升和 3.7\(&times;\) 记忆压缩。MemAgent [yu2025memagent] 通过基于覆盖写入的记忆策略，使用多对话 RL 直接优化长文本任务，并能从 32k 训练上下文外推到 3.5M-token 任务，性能下降小于 5%。</p>
+<p><strong>分类法与综述。</strong> Wu 等人 [wu2025human] 全面映射了人类记忆系统（感觉记忆、工作记忆、长期记忆）与 AI 记忆系统的对应关系，并提出 3D-8Q 分类法，三个维度分别是对象（个人 vs. 系统）、形式（参数化 vs. 非参数化）和时间（短期 vs. 长期）。这一分类凸显了一个关键空白：多数当前系统缺少一个可以持续更新的<strong>参数化长期记忆</strong>模块——而这正是我们认为线性注意力应当承担的角色。</p>
+<h3>测试时训练与持续学习</h3>
+<p><strong>测试时训练。</strong> Sun 等人 [sun2024learning] 提出 TTT 框架，用一个机器学习模型——线性模型（TTT-Linear）或两层 MLP（TTT-MLP）——替代 RNN 固定隐藏状态，并在测试序列上通过自监督学习更新其参数。这把循环状态更新重新表述为优化步骤，使隐藏状态的表达力能够随输入复杂度增长。TTT-MLP 在上下文长度增加时仍能持续降低困惑度，而标准 RNN（包括 Mamba）在 16k token 之后无法保持这一特性。</p>
+<p><strong>神经长期记忆。</strong> Titans [behrouz2025titans] 扩展 TTT 概念，引入通过<strong>惊讶度</strong>驱动、带动量梯度更新的神经长期记忆模块。该记忆由深层 MLP 实现：对新颖输入显著更新，对可预测输入只做少量更新。Titans 提出三种集成策略：Memory as Context（MAC）、Memory as Gate（MAG）和 Memory as Layer（MAL）。其中 MAC 特别适合双模型范式，因为它允许线性记忆作为压缩器，为 Softmax 注意力推理窗口提供输入。</p>
+<p><strong>Nested learning 与深层 Transformer。</strong> Behrouz 等人 [behrouz2025nested] 提出<strong>嵌套学习</strong>概念，认为深度学习架构应被理解为多个时间尺度上的嵌套优化问题系统。这一视角产生了 Atlas [behrouz2025atlas]：一种既基于当前 token、也基于过去 token 进行优化的长期记忆模块，突破了此前模型纯在线更新的局限。Atlas 在 10M 上下文长度的 BABILong 基准上取得超过 80% 准确率，显著超过 Transformer 和此前线性循环模型。</p>
+<p><strong>基础模型的持续学习。</strong> Bell 等人 [bell2025future] 指出基础模型时代持续学习的三个关键方向：用于保持知识新鲜度的<strong>持续预训练</strong>（CPT）、用于领域专门化的<strong>持续微调</strong>（CFT），以及用于动态组合专门模块的<strong>持续组合性与编排</strong>（CCO）。作者认为 CCO 代表持续学习的“重生”：它使一个模块化生态成为可能，其中线性注意力记忆模块可以接到冻结的基础模型上，在无需重新训练的情况下提供无限上下文。Dohare 等人 [dohare2023maintaining] 进一步证明，维持<strong>可塑性</strong>——持续学习的能力——是深度持续学习中的根本挑战，这也激励我们设计显式保持适应性的架构。</p>
+<h3>具有长期记忆的多模态智能体</h3>
+<p>长视频理解是测试可扩展记忆的天然场景，因为视频数据是无界的高维多模态流，并且每帧的信息密度天然较低。</p>
+<p><strong>M3-Agent。</strong> Long 等人 [long2025m3agent] 提出 M3-Agent：一个处理连续视觉和音频流的多模态智能体，用以构建和更新以实体为中心的多模态图式长期记忆。该智能体维护两类互补记忆：<strong>情景记忆</strong>（带时间戳的具体事件）与<strong>语义记忆</strong>（抽象化的一般知识）。其关键组件是一个 RL 训练的推理策略，该策略决定<strong>何时</strong>触发记忆操作，并使用基于 embedding 的记忆存储，通过相似度搜索（如余弦相似度）检索候选内容。</p>
+<p>我们的方法直接受到该设计启发：保留 RL 训练的 Softmax 注意力推理模型及其“记忆调用”接口，但将 embedding 数据库替换为参数化线性注意力记忆模型（Kimi-Linear [team2025kimi]）。这一替换使记忆写入/读取可以通过与可学习线性记忆模块的对话完成，而不是只依赖 embedding 检索。</p>
+</section>
+<section class="article-section"><h2>方法</h2>
+<p>我们描述如何用线性注意力记忆模型替换现有多模态智能体中的基于 embedding 的检索模块。设计原则是<strong>模块化</strong>：只改变记忆后端，而保持推理控制器、记忆图构建和评测管线不变。</p>
+
+<figure class="visual-figure">
+  <figcaption>方法：保留推理控制器，只替换记忆后端。</figcaption>
+  <svg viewBox="0 0 900 300" role="img" aria-label="Dual model architecture with softmax reasoning model and linear-attention memory model">
+    <defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" /></marker></defs>
+    <rect x="60" y="80" width="220" height="120" rx="20" class="box"/><text x="170" y="126" text-anchor="middle">用户查询</text><text x="170" y="156" text-anchor="middle" class="small">任务上下文</text>
+    <rect x="340" y="55" width="240" height="170" rx="22" class="box accent"/><text x="460" y="112" text-anchor="middle">Softmax 推理模型</text><text x="460" y="145" text-anchor="middle" class="small">决定何时调用记忆</text><text x="460" y="176" text-anchor="middle" class="small">保持不变</text>
+    <rect x="650" y="80" width="210" height="120" rx="20" class="box"/><text x="755" y="126" text-anchor="middle">最终答案</text><text x="755" y="156" text-anchor="middle" class="small">多轮推理</text>
+    <path d="M280 140 L340 140" class="flow-line" marker-end="url(#arrow2)"/><path d="M580 140 L650 140" class="flow-line" marker-end="url(#arrow2)"/>
+    <rect x="340" y="245" width="240" height="48" rx="14" class="box memory"/><text x="460" y="275" text-anchor="middle">Kimi-Linear 记忆后端</text>
+    <path d="M460 225 L460 245" class="flow-line" marker-end="url(#arrow2)"/><path d="M492 245 C610 230, 620 180, 580 160" class="flow-line" marker-end="url(#arrow2)"/>
+  </svg>
+</figure>
+<h3>双模型架构</h3>
+<p>我们的系统由两个协作语言模型组成，它们承担互补角色：</p>
+<p><strong>推理模型（Softmax 注意力）。</strong> 一个标准 Transformer LLM 作为推理控制器。给定用户查询后，它决定<strong>何时</strong>访问记忆，以及<strong>如何</strong>构造检索请求。在 M3-Agent 框架 [long2025m3agent] 中，该控制器通过强化学习训练以执行多轮推理：每一轮它要么发起一次记忆查询，要么提交最终答案。我们在所有实验中保持该控制器不变，从而隔离记忆后端带来的影响。</p>
+<p><strong>记忆模型（线性注意力）。</strong> 一个线性注意力 LLM 替代 embedding 数据库作为持久记忆存储。它不再把记忆编码为固定维度向量并通过余弦相似度检索，而是通过上下文窗口<strong>读取</strong>完整文本记忆，并用自然语言<strong>回应</strong>相关信息。该设计利用了线性注意力的两个性质：（i）\(O(N)\) 推理复杂度使其能够处理比二次成本 Transformer 更长的记忆上下文；（ii）模型可以同时检索<em>并</em>总结，产生上下文适配的答案，而不是原始记忆片段。</p>
+<p>具体而言，我们使用 Kimi-Linear-48B-A3B [team2025kimi] 作为主要记忆模型。Kimi-Linear 使用 delta attention——一种通过 delta rule（\(\ell_2\) 回归）而非简单加性（Hebbian）累积来更新关联记忆矩阵的线性注意力变体 [yang2024parallelizing]。该模型采用 Mixture-of-Experts（MoE）架构，活跃参数约 3B，支持最高 262k token 的上下文窗口。</p>
+<h3>通过对话执行记忆操作</h3>
+<p>记忆模型为写入和读取提供了简单的对话接口。</p>
+
+<figure class="visual-figure">
+  <figcaption>通过对话执行记忆操作：同一个模型同时写入和读取记忆。</figcaption>
+  <svg viewBox="0 0 900 280" role="img" aria-label="Memory writing and reading through conversation">
+    <g class="node"><rect x="60" y="60" width="190" height="95" rx="18"/><text x="155" y="100" text-anchor="middle">视频片段</text><text x="155" y="128" text-anchor="middle" class="small">原始 caption</text></g>
+    <g class="node"><rect x="350" y="45" width="220" height="125" rx="20"/><text x="460" y="92" text-anchor="middle">线性记忆</text><text x="460" y="122" text-anchor="middle" class="small">将文本作为参数化上下文存储</text></g>
+    <g class="node"><rect x="650" y="60" width="190" height="95" rx="18"/><text x="745" y="100" text-anchor="middle">检索到的总结</text><text x="745" y="128" text-anchor="middle" class="small">自然语言</text></g>
+    <path d="M250 108 L350 108" class="flow-line" marker-end="url(#arrow)"/><path d="M570 108 L650 108" class="flow-line" marker-end="url(#arrow)"/>
+    <text x="300" y="90" text-anchor="middle" class="small">写入</text><text x="610" y="90" text-anchor="middle" class="small">读取</text>
+  </svg>
+</figure>
+<p><strong>记忆写入。</strong> 随着智能体处理视频，它会为每个片段生成文本描述：场景描述、对话转写、人物外观和识别出的实体。这些描述按时间顺序拼接形成记忆文本。我们考虑两种变体：</p>
+<ul>
+<li><strong>原始 caption</strong>：直接使用原始视频 caption，保留所有低层细节。</li>
+<li><strong>结构化记忆</strong>：先由 M3-Agent 的记忆图构建器 [long2025m3agent] 处理 caption，抽取以实体为中心的情景记忆节点和语义记忆节点。</li>
+</ul>
+<p><strong>记忆读取。</strong> 当推理控制器发出查询时，记忆模型接收一个包含完整记忆文本和查询的问题提示，并返回相关信息的自然语言总结。形式化地，给定记忆文本 \(M = [m_1, m_2, \ldots, m_T]\)（其中每个 \(m_t\) 对应一个视频片段）和查询 \(q\)，记忆模型生成：</p>
+<div class="math-block">\[r = f_{\text{mem}}(\mathcal{M}, q),\]</div>
+<p>其中 \(f_{\text{mem}}\) 是线性注意力模型，\(r\) 是检索到的总结。该总结会被追加到控制器上下文中，用于下一步推理。</p>
+<p><strong>与 embedding 检索的对比。</strong> 在标准 M3-Agent 管线中，每个记忆节点都通过文本 embedding 模型（如 <code>text-embedding-3-large</code>）编码为向量 \(\mathbf{e}_i \in \mathbb{R}^d\)。查询时，查询也被编码为 \(e_q\)，然后通过余弦相似度检索 top-\(k\) 节点：</p>
+<div class="math-block">\[\text{top-}k \; \underset{i}{\arg\max} \; \frac{\mathbf{e}_q \cdot \mathbf{e}_i}{\|\mathbf{e}_q\| \|\mathbf{e}_i\|}.\]</div>
+<p>随后，检索到的文本片段被传给控制器。这个两阶段过程（embed → retrieve → read）需要预计算 embedding、维护向量索引，并额外执行总结步骤。相比之下，我们的方法把检索与总结折叠为记忆模型的一次前向传播。不需要预计算、存储或索引 embedding——记忆完全以文本形式存在，并由线性注意力模型消费。</p>
+<h3>复杂度分析</h3>
+<p><strong>推理成本。</strong> 设 \(N\) 为记忆 token 总数。Embedding 检索需要计算 \(N/c\) 次点积（其中 \(c\) 为 chunk 大小），检索成本为 \(O(Nd/c)\)，且还需要一次单独的 LLM 调用进行总结。标准 Transformer 读取完整记忆会产生 \(O(N^2 d)\) 注意力成本。线性注意力通过维护固定大小的状态矩阵 \(\mathbf{S} \in \mathbb{R}^{d \times d}\)，把复杂度降为 \(O(N d^2)\)，即关于序列长度线性：</p>
+<div class="math-block">\[\mathbf{S}_t = \alpha_t \mathbf{S}_{t-1} + \mathbf{k}_t \mathbf{v}_t^\top - \beta_t (\mathbf{k}_t \mathbf{k}_t^\top \mathbf{S}_{t-1}),\]</div>
+<p>其中 \(\alpha_t\) 和 \(\beta_t\) 分别是可学习的保留门和修正门，最后一项实现 delta-rule 修正 [yang2024parallelizing; team2025kimi]。</p>
+<p><strong>显存占用。</strong> Softmax 注意力 Transformer 的 KV cache 会按每层 \(O(N)\) 增长，在固定 GPU 显存预算下限制最大上下文长度。线性注意力为每层维护固定大小状态（\(O(d^2)\)），与序列长度无关。实践中，这意味着 Kimi-Linear 可以在 4\(&times;\)A100 GPU 上处理最高 262k token，而同等规模 Transformer（Qwen3-30B-A3B [yang2025qwen3]）在相同硬件预算下限制在 131k token。</p>
+<p><strong>实际权衡。</strong> 线性注意力方法的单次查询延迟高于 embedding 查找（后者本质上是矩阵—向量乘法），但它消除了 embedding 预计算、向量数据库维护和单独总结调用的需求。对于 M3-Agent 中每个任务通常只查询少数几次记忆（约 1–5 轮）的智能体工作负载，其摊销成本是可比的。</p>
+</section>
+<section class="article-section"><h2>实验与结果</h2>
+<p>我们在 M3-Bench 长视频问答基准 [long2025m3agent] 上评估线性注意力记忆替换方案，并将其与原始基于 embedding 的检索以及标准 Transformer 记忆后端进行比较。</p>
+<h3>实验设置</h3>
+<p><strong>数据集。</strong> 我们使用 M3-Bench 的两个子集：</p>
+<ul>
+<li><strong>M3-Bench-robot</strong>：100 个室内环境中的机器人视角视频，共 1,276 个问答对。每个视频的片段数中位数为 67，覆盖人物理解、空间推理和跨模态问题。</li>
+<li><strong>M3-Bench-web</strong>：920 个来自网络的多样化视频，共 3,214 个问答对，覆盖更广泛的内容类型和难度。</li>
+</ul>
+<p><strong>记忆后端。</strong> 我们比较以下记忆后端，并将它们全部接入同一个 M3-Agent 控制管线：</p>
+<ul>
+<li><strong>Embedding</strong>：原始 M3-Agent 检索方式，使用 <code>text-embedding-3-large</code> embedding 和余弦相似度 top-\(k\) 搜索 [long2025m3agent]。</li>
+<li><strong>Kimi-Linear</strong>：Kimi-Linear-48B-A3B [team2025kimi]（delta attention、MoE、约 3B 活跃参数），通过 vLLM 服务，在 4 张 GPU 上使用 tensor parallelism，最大上下文为 262k token。</li>
+<li><strong>Qwen3-30B-A3B</strong>：Qwen3-30B-A3B-Instruct [yang2025qwen3]（标准 Softmax 注意力、grouped-query attention、MoE、约 3B 活跃参数），最大上下文为 131k token。它作为活跃参数量匹配的 Transformer baseline。</li>
+</ul>
+<p>在线性模型选择的消融实验中，我们还额外测试 <strong>RWKV-x060</strong>（1.6B）[peng2023rwkv] 和 <strong>Falcon3-Mamba</strong>（7B）[gu2024mamba]。</p>
+<p><strong>评测。</strong> 端到端问答准确率由 LLM judge 评估：它比较智能体答案与人工标注真值。对于检索相关消融，我们报告 <strong>Exact Hit@\(k\)</strong>（真值片段是否出现在 top-\(k\) 检索片段中）、<strong>Near Hit</strong>（命中目标 \(\pm 1\) 片段范围）、<strong>MRR</strong>（平均倒数排名）和 <strong>Recall@\(k\)</strong>。</p>
+<p>除非特别说明，所有实验都直接把原始视频 caption 输入记忆模型（summary mode），因为它始终优于使用结构化记忆（见下文消融）。</p>
+<h3>主要结果：端到端问答准确率</h3>
+<p>下表展示了两个 M3-Bench 子集上的端到端问答准确率。</p>
+<figure class="table-figure"><figcaption>M3-Bench 上的端到端问答准确率（%）。所有方法使用相同的 M3-Agent 推理控制器，只有记忆后端不同。</figcaption><div class="table-scroll"><table class="paper-table"><tbody><tr><th><strong>记忆后端</strong></th><th><strong>Robot</strong></th><th><strong>Web</strong></th></tr><tr><td>Embedding (text-embedding-3-large)</td><td>28.8</td><td>47.5</td></tr><tr><td>Qwen3-30B-A3B (softmax attention)</td><td>24.5</td><td>49.8</td></tr><tr><th><strong>Kimi-Linear-48B-A3B</strong> (linear attention)</th><th><strong>28.0</strong></th><th><strong>54.0</strong></th></tr></tbody></table></div></figure>
+
+<figure class="visual-figure chart-figure">
+  <figcaption>主要结果：M3-Bench 上的端到端问答准确率。</figcaption>
+  <svg viewBox="0 0 900 340" role="img" aria-label="Bar chart of M3-Bench robot and web accuracy">
+    <line x1="90" y1="280" x2="835" y2="280" class="axis"/><line x1="90" y1="50" x2="90" y2="280" class="axis"/>
+    <g class="bars">
+      <rect x="145" y="169" width="38" height="111"/><rect x="190" y="97" width="38" height="183"/>
+      <rect x="330" y="185" width="38" height="95"/><rect x="375" y="88" width="38" height="192"/>
+      <rect x="515" y="172" width="38" height="108" class="accent-bar"/><rect x="560" y="72" width="38" height="208" class="accent-bar"/>
+    </g>
+    <text x="186" y="305" text-anchor="middle">Embedding</text><text x="375" y="305" text-anchor="middle">Qwen3</text><text x="558" y="305" text-anchor="middle">Kimi-Linear</text>
+    <text x="710" y="100" class="small">Robot: 28.8 / 24.5 / 28.0</text><text x="710" y="130" class="small">Web: 47.5 / 49.8 / 54.0</text>
+  </svg>
+</figure>
+<p>在 Web 子集上，Kimi-Linear 达到 <strong>54.0%</strong> 准确率，相比 embedding baseline 绝对提升 <strong>+6.5%</strong>，相比 Transformer baseline 提升 +4.2%。在 Robot 子集上，Kimi-Linear（28.0%）与 embedding baseline（28.8%）表现接近，0.8% 的差距处于评测方差范围内。</p>
+<p><strong>讨论。</strong> Kimi-Linear 在 Web 子集上的强表现说明，线性注意力记忆模型在视频内容多样、需要灵活语义理解的场景中尤其有效——这正是刚性 embedding 检索容易漏掉相关信息的场景，因为相关信息未必与查询存在表层词汇重合。在 Robot 子集中，视频更结构化且更重复（室内环境、实体类型稳定），embedding 检索仍具竞争力。</p>
+<h3>消融实验</h3>
+<p><strong>线性记忆为什么有效？检索 vs. 总结。</strong> 从主结果自然引出一个问题：既然线性注意力模型替代了 embedding 数据库，它的端到端问答提升究竟来自更强的<em>检索</em>，更强的<em>总结</em>，还是二者兼有？我们将这两种能力拆开分析。</p>
+<p><strong>检索准确率相近，而非显著更强。</strong> 我们通过绕过推理控制器，直接测试每个后端在给定查询时能否识别正确来源片段，从而隔离检索组件。下表报告了不同上下文长度（候选片段数）下的 Exact Hit@5。</p>
+<figure class="table-figure"><figcaption>M3-Bench-robot 和 M3-Bench-web 上不同上下文长度下的片段检索准确率（Exact Hit@5，%）。</figcaption><div class="table-scroll"><table class="paper-table"><tbody><tr><th><strong>Context</strong></th><th><strong>Robot</strong></th><th><strong>Web</strong></th></tr><tr><td></td><td>Kimi</td><td>Embed.</td><td>Kimi</td><td>Embed.</td></tr><tr><th>10</th><th><strong>56.0</strong></th><th>54.9</th><th>56.5</th><th><strong>64.5</strong></th></tr><tr><th>20</th><th><strong>33.5</strong></th><th>29.7</th><th>37.6</th><th><strong>40.9</strong></th></tr><tr><th>30</th><th><strong>25.8</strong></th><th>19.8</th><th><strong>31.2</strong></th><th>27.4</th></tr><tr><th>50</th><th>12.1</th><th>12.1</th><th>18.3</th><th><strong>21.0</strong></th></tr><tr><th>80</th><th>7.7</th><th><strong>8.8</strong></th><th>15.1</th><th><strong>20.4</strong></th></tr><tr><th>100</th><th>7.1</th><th><strong>8.8</strong></th><th>14.5</th><th><strong>20.4</strong></th></tr></tbody></table></div></figure>
+
+<figure class="visual-figure chart-figure">
+  <figcaption>检索曲线：随着候选上下文增长，Exact Hit@5 下降。</figcaption>
+  <svg viewBox="0 0 900 360" role="img" aria-label="Line chart of Exact Hit at 5 over context length">
+    <line x1="80" y1="300" x2="820" y2="300" class="axis"/><line x1="80" y1="60" x2="80" y2="300" class="axis"/>
+    <polyline points="120,84 250,175 380,204 520,255 660,270 780,273" class="curve accent-line"/>
+    <polyline points="120,88 250,190 380,227 520,255 660,266 780,266" class="curve muted-line"/>
+    <polyline points="120,82 250,159 380,183 520,231 660,244 780,247" class="curve second-line"/>
+    <polyline points="120,52 250,147 380,197 520,220 660,222 780,222" class="curve third-line"/>
+    <text x="120" y="323" text-anchor="middle">10</text><text x="250" y="323" text-anchor="middle">20</text><text x="380" y="323" text-anchor="middle">30</text><text x="520" y="323" text-anchor="middle">50</text><text x="660" y="323" text-anchor="middle">80</text><text x="780" y="323" text-anchor="middle">100</text>
+    <text x="650" y="92" class="small">Web Embed</text><text x="650" y="122" class="small accent-text">Web Kimi</text><text x="650" y="152" class="small">Robot Kimi / Embed</text>
+  </svg>
+</figure>
+<p>两种方法在<strong>检索上大体相当</strong>，并且各有优势：Kimi-Linear 在中等上下文长度下更强（Robot 中 20–30 个片段，提升 +3.8% 到 +6.0%），而 embedding 检索在更长上下文（80+ 片段）下更稳健。没有一种方法完全占优。</p>
+<p><strong>优势主要来自总结能力。</strong> 既然单纯检索准确率无法解释 Kimi-Linear 在 Web 子集上 +6.5% 的端到端问答提升，那么优势应来自模型<em>理解并总结</em>检索上下文的能力——这是纯 embedding 检索本身不具备的能力。Embedding 管线返回原始文本片段，需要推理控制器再去解释；线性注意力模型则生成上下文综合后的答案，降低了控制器负担。</p>
+<p>为了验证这一点，我们直接评估总结质量：给定 20 个事实性查询的相关记忆上下文，要求每个模型生成自然语言答案，并通过关键词匹配验证。</p>
+<figure class="table-figure"><figcaption>20 个事实性查询上的总结问答准确率（%），使用关键词匹配评测。</figcaption><div class="table-scroll"><table class="paper-table"><tbody><tr><th><strong>模型</strong></th><th><strong>准确率</strong></th><th><strong>关键词召回</strong></th></tr><tr><th><strong>Kimi-Linear-48B-A3B</strong></th><th><strong>95.0</strong></th><th><strong>95.0</strong></th></tr><tr><td>RWKV-x060 (1.6B)</td><td>25.0</td><td>25.0</td></tr><tr><td>Falcon3-Mamba (7B)</td><td>5.0</td><td>5.0</td></tr></tbody></table></div></figure>
+<p>Kimi-Linear 达到 95% 准确率，显著超过较小的线性模型。结合前面的检索分析，这一结果支持我们的核心发现：<strong>线性注意力记忆模型的优势并不是来自更强的检索器，而是来自把检索与总结折叠为一步</strong>，从而为推理控制器提供更高质量的信息。</p>
+<p><strong>线性注意力模型选择。</strong> 我们在 Robot 子集的 210 个查询上比较三种线性注意力模型的片段检索表现，以评估模型架构和规模如何影响检索质量。</p>
+<figure class="table-figure"><figcaption>M3-Bench-robot 上不同线性注意力模型的片段检索表现（%）。</figcaption><div class="table-scroll"><table class="paper-table"><tbody><tr><th><strong>模型</strong></th><th><strong>ExactHit</strong></th><th><strong>NearHit</strong></th><th><strong>MRR</strong></th><th><strong>R@5</strong></th><th><strong>R@10</strong></th></tr><tr><th><strong>Kimi-Linear (48B)</strong></th><th><strong>14.76</strong></th><th><strong>19.52</strong></th><th><strong>.049</strong></th><th><strong>8.10</strong></th><th><strong>14.76</strong></th></tr><tr><td>RWKV-x060 (1.6B)</td><td>2.38</td><td>3.81</td><td>.021</td><td>2.38</td><td>2.38</td></tr><tr><td>Falcon3-Mamba (7B)</td><td>1.43</td><td>1.43</td><td>.014</td><td>1.43</td><td>1.43</td></tr></tbody></table></div></figure>
+
+<figure class="visual-figure chart-figure">
+  <figcaption>线性模型选择：Kimi-Linear 在检索指标上显著占优。</figcaption>
+  <svg viewBox="0 0 900 420" role="img" aria-label="Radar chart comparing Kimi Linear, RWKV, and Falcon Mamba">
+    <g transform="translate(450 210)">
+      <polygon points="0,-150 143,-46 88,121 -88,121 -143,-46" class="radar-grid"/>
+      <polygon points="0,-100 95,-31 59,81 -59,81 -95,-31" class="radar-grid"/>
+      <polygon points="0,-50 48,-15 29,40 -29,40 -48,-15" class="radar-grid"/>
+      <line x1="0" y1="0" x2="0" y2="-160" class="axis"/><line x1="0" y1="0" x2="152" y2="-49" class="axis"/><line x1="0" y1="0" x2="94" y2="129" class="axis"/><line x1="0" y1="0" x2="-94" y2="129" class="axis"/><line x1="0" y1="0" x2="-152" y2="-49" class="axis"/>
+      <polygon points="0,-150 143,-46 88,121 -88,121 -143,-46" class="radar-kimi"/>
+      <polygon points="0,-24 28,-9 38,52 -26,36 -23,-7" class="radar-rwkv"/>
+      <polygon points="0,-15 10,-3 23,31 -16,22 -13,-4" class="radar-mamba"/>
+      <text x="0" y="-174" text-anchor="middle">ExactHit</text><text x="178" y="-52" text-anchor="middle">NearHit</text><text x="110" y="155" text-anchor="middle">MRR</text><text x="-110" y="155" text-anchor="middle">R@5</text><text x="-178" y="-52" text-anchor="middle">R@10</text>
+    </g>
+    <text x="70" y="70" class="small accent-text">Kimi-Linear</text><text x="70" y="100" class="small">RWKV-x060</text><text x="70" y="130" class="small">Falcon3-Mamba</text>
+  </svg>
+</figure>
+<p>Kimi-Linear 在所有指标上都大幅超过较小线性模型（ExactHit 相比 RWKV 高 6\(&times;\)，相比 Mamba 高 10\(&times;\)）。这一差距并不只是参数量造成的——Mamba（7B）尽管大于 RWKV（1.6B），表现却更差——说明架构质量（delta attention vs. selective state spaces vs. gated recurrence）以及预训练数据/recipe 至少与规模同等重要。</p>
+<p><strong>原始 caption vs. 结构化记忆。</strong> 我们比较两种记忆写入策略：直接把原始视频 caption 输入线性模型，或先通过 M3-Agent 的结构化实体中心记忆图 [long2025m3agent] 进行处理。结果如下表所示。</p>
+<figure class="table-figure"><figcaption>不同记忆写入策略下的端到端问答准确率（%）。</figcaption><div class="table-scroll"><table class="paper-table"><tbody><tr><th><strong>记忆格式</strong></th><th><strong>准确率</strong></th></tr><tr><th><strong>原始 caption</strong></th><th><strong>31.4</strong></th></tr><tr><td>结构化记忆图</td><td>27.1</td></tr></tbody></table></div></figure>
+<p>原始 caption 相比结构化记忆绝对提升 4.3%。这说明线性注意力模型的长上下文能力足以直接处理原始 caption，而 M3-Agent 中为 embedding 检索设计的结构化记忆处理，在搭配能够理解全文的模型时反而可能引入信息损失。该发现也与本文更广泛的动机一致：用学习得到的计算替代工程化启发式规则 [sutton2019bitter]。</p>
+<h3>上下文长度可扩展性</h3>
+<p>线性注意力相对 Softmax 注意力的一个关键理论优势，是在相同显存预算下可以处理更长上下文。我们在相同硬件（4\(&times;\)A100 80GB GPU）上比较 Kimi-Linear 与 Qwen3-30B-A3B 的最大可行上下文长度，以进行经验验证。</p>
+<figure class="table-figure"><figcaption>相同硬件（4\(&times;\)A100 80GB）下支持的最大上下文长度。</figcaption><div class="table-scroll"><table class="paper-table"><tbody><tr><th><strong>模型</strong></th><th><strong>最大上下文</strong></th><th><strong>约 token 数</strong></th></tr><tr><td>Qwen3-30B-A3B (softmax)</td><td>131k</td><td>\(&sim;\)131k</td></tr><tr><th><strong>Kimi-Linear-48B-A3B</strong></th><th><strong>262k</strong></th><th>\(&sim;\)<strong>262k</strong></th></tr></tbody></table></div></figure>
+<p>在 needle-in-a-haystack 实验中，我们拼接多个视频的记忆来构造超长上下文。Qwen3-30B-A3B 在约 250k token（约 300 个片段）时因显存不足失败，而 Kimi-Linear 仍能继续运行。尽管随着上下文长度增加，两类模型的检索准确率都会下降——这是长上下文推理中的已知挑战 [behrouz2025titans]——线性注意力模型仍保持了处理输入的能力，而 Transformer 无法做到。</p>
+<p>这种 2\(&times;\) 上下文长度优势在长期运行的智能体部署场景中会愈发重要，因为这类智能体会随时间积累庞大的记忆存储。随着线性注意力模型质量继续提升，这种可扩展性差距预计会转化为越来越显著的实践优势。</p>
+</section>
+<section class="article-section"><h2>结论</h2>
+<p>我们提出了一种简单且模块化的方法，为基于 LLM 的智能体配备参数化长期记忆：用一个通过对话执行记忆检索与总结的线性注意力语言模型，替换基于 embedding 的检索数据库。通过保持推理控制器和评测管线不变，我们隔离了记忆后端的影响，并证明这种可插拔替换既实用又有效。</p>
+<p><strong>主要发现。</strong> 在 M3-Bench 长视频理解基准上，Kimi-Linear-48B-A3B 在 Web 子集上达到 54.0% 端到端问答准确率，相比 embedding baseline（47.5%）绝对提升 6.5%，同时在 Robot 子集上表现接近（28.0% vs. 28.8%）。消融实验表明，优势并不来自更高的检索准确率——在线性注意力与 embedding 方法之间，检索表现大体相当——而是来自线性模型能够联合完成检索与总结，生成上下文综合后的答案，而不是原始记忆片段。在线性注意力模型之间，我们发现模型质量非常关键：Kimi-Linear（48B，delta attention）在检索和总结任务上都显著超过 RWKV（1.6B）和 Mamba（7B）。我们还表明，直接向线性模型输入原始 caption 优于结构化记忆预处理，这说明足够强的线性模型可以绕过传统记忆管线中的手工启发式设计——这与“学习得到的计算比工程规则更能随规模扩展”的原则一致 [sutton2019bitter]。</p>
+<p><strong>局限性。</strong> 本研究仍有若干局限。首先，Robot 子集上的性能差距可以忽略不计，说明线性注意力记忆并不一定在所有领域都稳定优于 embedding 检索。其次，虽然线性注意力相比同规模 Transformer 提供了 2\(&times;\) 上下文长度优势，但在极长上下文下，所有模型的检索准确率仍然偏低，未来需要进一步提升长程回忆能力。第三，我们的评测仅限于一个应用领域（长视频理解）；该方法能否泛化到其他智能体任务（如多会话对话、文档分析、具身导航）仍有待验证。</p>
+<p><strong>未来方向。</strong> 本工作引出了若干有前景的方向。线性注意力架构正在快速演进——从简单加性更新，到 delta-rule 修正 [yang2024parallelizing]，再到深度神经记忆 [behrouz2025titans] 和 nested learning [behrouz2025nested]——这表明线性注意力与 Softmax 注意力之间的质量差距会持续缩小，使参数化记忆越来越有竞争力。探索<strong>状态缓存</strong>——跨查询复用线性模型隐藏状态以摊销上下文处理成本——可能显著降低延迟。与基于 RL 的记忆管理 [wang2025memalpha; yan2025memory] 集成，可以让智能体不仅学习何时查询记忆，还学习如何最优地写入并维护参数化记忆存储。更广泛地说，我们将本文视为通向“真正从经验中学习”的智能体的第一步：线性注意力记忆模型不仅是一个检索引擎，也是一种参数化系统，原则上可以通过测试时训练 [sun2024learning] 随着智能体积累新经验而持续更新其记忆表示。</p>
+</section>
+<section class="article-section"><h2>参考文献</h2><ol class="bib-list"><li>Vaswani, Ashish, Shazeer, Noam, Parmar, Niki, Uszkoreit, Jakob, Jones, Llion, Gomez, Aidan N, Kaiser, \Lukasz, Polosukhin, Illia. <em>Attention is All You Need</em>. Advances in Neural Information Processing Systems. 2017</li><li>Sun, Yu, Dong, Xupu, Menon, Shakul, Yuan, Dennis, Ma, Jay, Gupta, Abhishek, Verma, Nikhil, Ge, Yuexiang, Kolter, J Zico, Efros, Alexei A, others. <em>Learning to (Learn at Test Time): RNNs with Expressive Hidden States</em>. arXiv preprint arXiv:2407.04620. 2024</li><li>Bell, Jack, Quarantiello, Luigi, Coleman, Eric Nuertey, Li, Lanpei, Li, Malio, Madeddu, Mauro, Piccoli, Elia, Lomonaco, Vincenzo. <em>The Future of Continual Learning in the Era of Foundation Models: Three Key Directions</em>. arXiv preprint arXiv:2506.03320. 2025</li><li>Packer, Charles, Fang, Vivian, Patil, Shishir G, Lin, Kevin, Wooders, Sarah, Gonzalez, Joseph E. <em>MemGPT: Towards LLMs as Operating Systems</em>. arXiv preprint arXiv:2310.08560. 2023</li><li>Chhikara, Prateek, Khant, Dev, Aryan, Saket, Singh, Taranjeet, Yadav, Deshraj. <em>Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</em>. arXiv preprint arXiv:2504.19413. 2025</li><li>Gu, Albert, Dao, Tri. <em>Mamba: Linear-Time Sequence Modeling with Selective State Spaces</em>. First Conference on Language Modeling. 2024</li><li>Sun, Yutao, Dong, Li, Huang, Shaohan, Ma, Shuming, Xia, Yuqing, Xue, Jilong, Wang, Jianyong, Wei, Furu. <em>Retentive Network: A Successor to Transformer for Large Language Models</em>. arXiv preprint arXiv:2307.08621. 2023</li><li>Peng, Bo, Alcaide, Eric, Anthony, Quentin, Albalak, Alon, Arcadinho, Samuel, Biderman, Stella, Cao, Huanqi, Cheng, Xin, Chung, Michael, Grella, Matteo, others. <em>RWKV: Reinventing RNNs for the Transformer Era</em>. arXiv preprint arXiv:2305.13048. 2023</li><li>Yang, Songlin, Wang, Bailin, Shen, Yikang, Panda, Rameswar, Kim, Yoon. <em>Gated Linear Attention Transformers with Hardware-Efficient Training</em>. arXiv preprint arXiv:2312.06635. 2023</li><li>Qin, Zhen, Han, Xiaodong, Sun, Weixuan, Li, Dongxu, Kong, Lingpeng, Barnes, Nick, Zhong, Yiran. <em>The Devil in Linear Transformer</em>. arXiv preprint arXiv:2210.10340. 2022</li><li>Behrouz, Ali, Zhong, Peilin, Mirrokni, Vahab. <em>Titans: Learning to Memorize at Test Time</em>. arXiv preprint arXiv:2501.00663. 2025</li><li>Behrouz, Ali, Razaviyayn, Meisam, Zhong, Peilin, Mirrokni, Vahab. <em>It's All Connected: A Journey Through Test-Time Memorization, Attentional Bias, Retention, and Online Optimization</em>. arXiv preprint arXiv:2504.13173. 2025</li><li>Behrouz, Ali, Razaviyayn, Meisam, Zhong, Peilin, Mirrokni, Vahab. <em>Nested Learning: The Illusion of Deep Learning Architecture</em>. arXiv preprint arXiv:2512.24695. 2025</li><li>Long, Lin, He, Yichen, Ye, Wentao, Pan, Yiyuan, Lin, Yuan, Li, Hang, Zhao, Junbo, Li, Wei. <em>Seeing, Listening, Remembering, and Reasoning: A Multimodal Agent with Long-Term Memory</em>. arXiv preprint arXiv:2508.09736. 2025</li><li>Team, Kimi, Zhang, Yu, Lin, Zongyu, Yao, Xingcheng, Hu, Jiaxi, Meng, Fanqing, Liu, Chengyin, Men, Xin, Yang, Songlin, Li, Zhiyuan, others. <em>Kimi Linear: An Expressive, Efficient Attention Architecture</em>. arXiv preprint arXiv:2510.26692. 2025</li><li>Zheng, Lin, Wang, Chong, Kong, Lingpeng. <em>Linear Complexity Randomized Self-Attention Mechanism</em>. International Conference on Machine Learning. 2022</li><li>Yang, Songlin, Wang, Bailin, Zhang, Yu, Shen, Yikang, Kim, Yoon. <em>Parallelizing Linear Transformers with the Delta Rule over Sequence Length</em>. Advances in Neural Information Processing Systems. 2024</li><li>Yang, Songlin, Wang, Bailin, Zhang, Yu, Shen, Yikang, Kim, Yoon. <em>Gated Delta Networks: Improving Mamba2 with Delta Rule</em>. arXiv preprint arXiv:2412.06464. 2024</li><li>Behrouz, Ali, Li, Zeman, Kacham, Praneeth, Daliri, Majid, Deng, Yuan, Zhong, Peilin, Razaviyayn, Meisam, Mirrokni, Vahab. <em>Atlas: Learning to Optimally Memorize the Context at Test Time</em>. arXiv preprint arXiv:2505.23735. 2025</li><li>Wang, Yu, Chen, Xi. <em>MIRIX: Multi-Agent Memory System for LLM-Based Agents</em>. arXiv preprint arXiv:2507.07957. 2025</li><li>Wang, Yu, Takanobu, Ryuichi, Liang, Zhiqi, Mao, Yuzhen, Hu, Yuanzhe, McAuley, Julian, Wu, Xiaojian. <em>Mem-$\alpha$: Learning Memory Construction via Reinforcement Learning</em>. arXiv preprint arXiv:2509.25911. 2025</li><li>Yan, Sikuan, Yang, Xiufeng, Huang, Zuchao, Nie, Ercong, Ding, Zifeng, Li, Zonggen, Ma, Xiaowen, Kersting, Kristian, Pan, Jeff Z, Sch\"utze, Hinrich, others. <em>Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning</em>. arXiv preprint arXiv:2508.19828. 2025</li><li>Zhou, Zijian, Qu, Ao, Wu, Zhaoxuan, Kim, Sunghwan, Prakash, Alok, Rus, Daniela, Zhao, Jinhua, Low, Bryan Kian Hsiang, Liang, Paul Pu. <em>MEM1: Learning to Synergize Memory and Reasoning for Efficient Long-Horizon Agents</em>. arXiv preprint arXiv:2506.15841. 2025</li><li>Yu, Hongli, Chen, Tinghong, Feng, Jiangtao, Chen, Jiangjie, Dai, Weinan, Yu, Qiying, Zhang, Ya-Qin, Ma, Wei-Ying, Liu, Jingjing, Wang, Mingxuan, others. <em>MemAgent: Reshaping Long-Context LLM with Multi-Conv RL-based Memory Agent</em>. arXiv preprint arXiv:2507.02259. 2025</li><li>Wu, Yaxiong, Liang, Sheng, Zhang, Chen, Wang, Yichao, Zhang, Yongyue, Guo, Huifeng, Tang, Ruiming, Liu, Yong. <em>From Human Memory to AI Memory: A Survey on Memory Mechanisms in the Era of LLMs</em>. arXiv preprint arXiv:2504.15965. 2025</li><li>Dohare, Shibhansh, Hernandez-Garcia, J Fernando, Rahman, Parash, Mahmood, A Rupam, Sutton, Richard S. <em>Maintaining Plasticity in Deep Continual Learning</em>. arXiv preprint arXiv:2306.13812. 2023</li><li>Yang, An, Li, Anfeng, Yang, Baosong, Zhang, Beichen, Hui, Binyuan, Zheng, Bo, Yu, Bowen, Gao, Chang, Huang, Chengen, Lv, Chenxu, others. <em>Qwen3 technical report</em>. arXiv preprint arXiv:2505.09388. 2025</li><li>Sutton, Richard. <em>The Bitter Lesson</em>. 2019</li></ol></section>
+
+      <section class="article-section">
+        <h2>BibTeX</h2>
+        <pre class="citation-block">@misc{li2026linearattentionmemory,
+  title = {Linear Attention as a Generalizable Memory Mechanism},
+  author = {Li, Chenxin and Chen, Hao and Hu, Xuefeng},
+  year = {2026},
+  month = apr,
+  howpublished = {Blog post},
+  url = {https://chenxinli001.github.io/blogs/linear-attention-memory/}
+}</pre>
+      </section>
+
+      <div class="back-row"><a href="../../">返回 Blogs</a><a href="../../../">返回主页</a></div>
+    </article>
+
+    <section class="discussion-shell">
+      <h2>讨论</h2>
+      <p class="discussion-note">这篇博客用于解读与讨论。</p>
+      <div id="disqus_thread" data-page-title="Linear Attention 作为可泛化记忆机制" data-page-identifier="blogs/linear-attention-memory" data-page-url="https://chenxinli001.github.io/blogs/linear-attention-memory/zh/"></div>
+      <noscript>请启用 JavaScript 以查看由 Disqus 提供的评论。</noscript>
+    </section>
+  </main>
+  <script src="../disqus-config.js"></script>
+  <script src="../disqus-loader.js"></script>
+</body>
+</html>
