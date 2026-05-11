@@ -1123,6 +1123,11 @@ a:hover {
   background: var(--accent-soft);
 }
 
+.hero-actions {
+  justify-content: center;
+  margin-top: 22px;
+}
+
 .meta-grid {
   width: min(620px, 100%);
   margin: 30px auto 0;
