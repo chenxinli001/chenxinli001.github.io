@@ -45,11 +45,11 @@
         <div class="meta-grid compact-meta" aria-label="Article metadata">
           <div><span>日期</span><strong>2026 年 4 月 4 日</strong></div>
           <div><span>状态</span><strong>公开博客草稿</strong></div>
-          <div><span>代码</span><strong><a href="https://github.com/OpenClaudex/linmem">OpenClaudex/LinMem</a></strong></div>
+          <div><span>代码</span><strong><a href="https://github.com/OpenCodexLabs/linmem">OpenCodexLabs/LinMem</a></strong></div>
         </div>
       </header>
 
-      <section class="article-section"><p><strong>代码项目。</strong> 对应实现是 <a href="https://github.com/OpenClaudex/linmem">LinMem</a>：Linear Models as Memorizers for Agents。</p></section>
+      <section class="article-section"><p><strong>代码项目。</strong> 对应实现是 <a href="https://github.com/OpenCodexLabs/linmem">LinMem</a>：Linear Models as Memorizers for Agents。</p></section>
 
       <section class="article-section"><h2>摘要</h2><p>大语言模型已经在预训练规模化和推理时规模化的推动下快速发展，但它们仍然难以把部署后的经验转化为持久的长期记忆。现有智能体记忆栈通常依赖检索式管线（例如向量数据库、相似度搜索，以及工程化的记忆写入/读取规则），或直接使用长上下文 Softmax 注意力；二者在实践中都能有效工作，但也常受检索噪声、启发式设计选择和二次注意力成本的限制。我们提出一个简单且模块化的替代方案：保留一个强大的 Softmax 注意力<strong>推理模型</strong>来决定<strong>何时</strong>查询记忆，同时用一个<strong>参数化</strong>的线性注意力记忆模型（Kimi-Linear）替代外部 embedding 数据库，使其通过对话完成信息的总结、存储和检索。该思路受到近期长期记忆研究（如 MIRAS、Titans 和 nested learning）的启发，但关注点不同：我们并不设计一个在多层级、多速度上紧耦合更新的多时间尺度系统，而是聚焦于一个易插拔的记忆替换模块，使其兼容当前 LLM 智能体管线。我们在长视频理解任务中结合 M3-Agent 风格的记忆调用进行验证，结果表明线性注意力记忆可以作为一种实用、可扩展的测试时学习基底。</p></section>
 <section class="article-section"><h2>引言</h2>

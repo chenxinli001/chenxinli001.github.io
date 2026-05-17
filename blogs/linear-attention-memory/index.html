@@ -45,11 +45,11 @@
         <div class="meta-grid compact-meta" aria-label="Article metadata">
           <div><span>Date</span><strong>April 4, 2026</strong></div>
           <div><span>Status</span><strong>Blog public draft</strong></div>
-          <div><span>Code</span><strong><a href="https://github.com/OpenClaudex/linmem">OpenClaudex/LinMem</a></strong></div>
+          <div><span>Code</span><strong><a href="https://github.com/OpenCodexLabs/linmem">OpenCodexLabs/LinMem</a></strong></div>
         </div>
       </header>
 
-      <section class="article-section"><p><strong>Code companion.</strong> The corresponding implementation is <a href="https://github.com/OpenClaudex/linmem">LinMem</a>: Linear Models as Memorizers for Agents.</p></section>
+      <section class="article-section"><p><strong>Code companion.</strong> The corresponding implementation is <a href="https://github.com/OpenCodexLabs/linmem">LinMem</a>: Linear Models as Memorizers for Agents.</p></section>
 
       <section class="article-section"><h2>Abstract</h2><p>Large language models have advanced through pre-training scaling and inference-time scaling, yet they still struggle to turn post-deployment experience into persistent long-term memory. Existing agent memory stacks commonly rely on retrieval-style pipelines (e.g., vector databases with similarity search and engineered memory write/read rules) or brute-force long-context softmax attention; both can work well in practice, but often face brittleness to retrieval noise, heuristic design choices, and quadratic attention cost. We propose a simple and modular alternative: keep a strong softmax-attention <strong>reasoning model</strong> that decides <strong>when</strong> to query memory, and replace the external embedding database with a <strong>parametric</strong> linear-attention memory model (Kimi-Linear) that can summarize, store, and retrieve information through conversation. Our approach is inspired by recent long-term memory research (e.g., MIRAS, Titans, and nested learning), but differs in scope: instead of designing a tightly integrated multi-timescale system with memory updates at multiple levels and speeds, we focus on an easy-to-plug-in memory replacement compatible with current LLM agent pipelines. We validate this design on long-video understanding with M3-Agent-style memory calling, showing that linear-attention memory can serve as a practical, scalable substrate for test-time learning.</p></section>
 <section class="article-section"><h2>Introduction</h2>
