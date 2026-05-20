@@ -490,7 +490,8 @@ p.pub_link{
   background: #f8fafc;
 }
 
-.opensource-thumb img {
+.opensource-thumb img,
+.opensource-thumb video {
   display: block;
   width: 100%;
   height: 100%;
