@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era | Chenxin Li</title>
+  <meta name="description" content="A project note on Open Claudex Computer Use, an open macOS execution layer for background computer use by Claude Code, Codex, and MCP agents.">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/open-codex-computer-use/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era">
+  <meta property="og:description" content="Why agents need their own background lane for real desktop apps, instead of stealing the user's mouse and keyboard.">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/open-codex-computer-use/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/open-codex-computer-use/assets/cover.png">
+  <link rel="stylesheet" href="../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../">Blogs</a><a href="https://github.com/OpenCodexLabs/open-codex-computer-use" target="_blank" rel="noopener">GitHub</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">Project note</span>
+        </div>
+        <h1>AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era</h1>
+        <p class="article-subtitle">Open Claudex Computer Use is an open macOS execution layer for agents that need to inspect and operate real apps without taking over the user's foreground cursor.</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/open-codex-computer-use" target="_blank" rel="noopener">GitHub: OpenCodexLabs/open-codex-computer-use</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>Date</span><strong>May 21, 2026</strong></div>
+          <div><span>Status</span><strong>Project note</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section">
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Generated cover: a separate agent operation lane for screenshots, Accessibility state, actions, and feedback.</figcaption>
+          <img src="./assets/cover.png" alt="AI-native computer use cover illustration" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>TL;DR</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-codex-computer-use">OpenCodexLabs/open-codex-computer-use</a>.</p>
+        <p>Computer use should not mean that an agent hijacks the user's mouse, blocks the desktop, and leaves no clear observation trail. A better default is background computer use: the agent operates through a local execution layer, sees app state through screenshots and Accessibility, performs actions, and returns post-action state.</p>
+        <p><strong>The key shift is from "agent controls my computer" to "agent has its own visible lane for app operation."</strong></p>
+      </section>
+
+      <section class="article-section">
+        <h2>Why this exists</h2>
+        <p>Agents are no longer limited to text files and terminals. They need to use browsers, note apps, settings panels, enterprise tools, calendars, dashboards, and local utilities. The problem is that the human desktop was not designed for autonomous co-workers.</p>
+        <p>If an agent uses the same mouse and keyboard as the human, the experience is fragile. The user cannot keep working. The agent may lose track of what it did. The recording may be hard to trust. And when a WebView app exposes weak accessibility information, recovery becomes even harder.</p>
+        <p>Open Claudex Computer Use treats desktop control as an execution layer problem. The agent needs a reliable loop: observe the app, choose an action, perform the action, and observe the result.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>What the repo provides</h2>
+        <p>The repository focuses on a local macOS MCP server and an agent-facing tool surface. It is not a complete agent product; it is the part that lets an agent interact with real apps.</p>
+        <table>
+          <thead><tr><th>Layer</th><th>What it provides</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Observation</strong></td><td>Screenshot plus Accessibility tree.</td><td>The agent sees both pixels and semantic UI structure.</td></tr>
+            <tr><td><strong>Action</strong></td><td>Click, scroll, drag, keyboard input, text entry, and accessibility actions.</td><td>The agent can operate native apps, not just web pages.</td></tr>
+            <tr><td><strong>Feedback</strong></td><td>Post-action state after every operation.</td><td>The loop can recover instead of assuming the action worked.</td></tr>
+            <tr><td><strong>Visibility</strong></td><td>App-aware virtual cursor and demo-friendly traces.</td><td>The user can understand what the agent is doing.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>The product value</h2>
+        <p>The value is not just "automation." Traditional desktop automation usually assumes a fixed script. Agent computer use needs a perception-action loop. It needs to inspect the current state, decide what is possible, try an action, and adapt when the UI changes.</p>
+        <p>That makes the execution layer important. A good computer-use layer should make agent actions observable, recoverable, and local. It should give the agent enough structure to act, while keeping the human in control of the real machine.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>How it fits AI-native workflows</h2>
+        <p>In AI-native software work, the boundary between code and UI keeps moving. Sometimes the agent should edit a file. Sometimes it should click a setting. Sometimes it should verify a browser preview, operate a local app, or collect evidence from a tool that has no clean API.</p>
+        <p>Open Claudex Computer Use gives those UI tasks a shared execution lane. Instead of each agent inventing its own desktop-control hack, the harness can call a local MCP server that speaks in app states, actions, and feedback.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>When to use it</h2>
+        <table>
+          <thead><tr><th>Use it when</th><th>Be careful when</th></tr></thead>
+          <tbody>
+            <tr><td>The task requires native macOS app operation.</td><td>The app is self-drawn or exposes weak Accessibility structure.</td></tr>
+            <tr><td>You want local computer use instead of a cloud desktop.</td><td>The action has security, payment, or account-changing consequences.</td></tr>
+            <tr><td>You need demos with visible agent actions.</td><td>A stable API exists and is safer than UI control.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>Final recommendation</h2>
+        <p>The agent era needs a clean distinction between human foreground work and agent background work. If the agent must use real apps, it should do so through an explicit observation-action-feedback loop.</p>
+        <p><strong>Open Claudex Computer Use is a best-practice building block for that loop: local, visible, app-aware, and designed for agent harnesses.</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>Discussion</h2>
+      <p class="discussion-note">Comments are powered by Disqus.</p>
+      <div
+        id="disqus_thread"
+        data-page-title="AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era"
+        data-page-identifier="blogs/open-codex-computer-use"
+        data-page-url="https://chenxinli001.github.io/blogs/open-codex-computer-use/"
+      ></div>
+    </section>
+  </main>
+  <script src="../disqus-config.js"></script>
+  <script src="../disqus-loader.js"></script>
+</body>
+</html>

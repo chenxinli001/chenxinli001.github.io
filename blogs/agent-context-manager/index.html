@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-native Context: A Best Practice for Context Recovery in the Agent Era | Chenxin Li</title>
+  <meta name="description" content="A project note on Agent Context Manager, a review-first context recovery layer for long-running coding-agent work across local harness traces.">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/agent-context-manager/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI-native Context: A Best Practice for Context Recovery in the Agent Era">
+  <meta property="og:description" content="Why AI-native coding work needs reviewable context recovery across agent harnesses, not just another private memory box.">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/agent-context-manager/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/agent-context-manager/assets/cover.png">
+  <link rel="stylesheet" href="../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../">Blogs</a><a href="https://github.com/OpenCodexLabs/agent-context-manager" target="_blank" rel="noopener">GitHub</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">Project note</span>
+        </div>
+        <h1>AI-native Context: A Best Practice for Context Recovery in the Agent Era</h1>
+        <p class="article-subtitle">Agent Context Manager is a small but important layer for long-running agent work: recall old traces, compact current work, and review the result before it enters the active session.</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/agent-context-manager" target="_blank" rel="noopener">GitHub: OpenCodexLabs/agent-context-manager</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>Date</span><strong>May 21, 2026</strong></div>
+          <div><span>Status</span><strong>Project note</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section">
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Generated cover: cross-harness traces become reviewable context jobs, instead of silent memory injection.</figcaption>
+          <img src="./assets/cover.png" alt="AI-native context recovery cover illustration" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>TL;DR</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/agent-context-manager">OpenCodexLabs/agent-context-manager</a>.</p>
+        <p>Agent Context Manager is for people who do real work across more than one coding-agent window. The problem is familiar: you explained the constraints yesterday, debugged the failure in another harness, made a decision in a third session, and then the next agent starts from zero.</p>
+        <p>The core idea is simple: <strong>recall globally, compact locally, apply deliberately.</strong> It treats context as something that should be found, summarized, and reviewed, not something that should be silently shoved into a prompt.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>Why this exists</h2>
+        <p>AI-native work is becoming multi-session by default. A project may pass through Codex, Claude Code, CodeBuddy, Cursor, internal harnesses, browser traces, local notes, and command logs. Each tool may keep its own memory, but the user does not think in tool silos. The user thinks in projects, constraints, mistakes, and decisions.</p>
+        <p>That creates a new kind of friction. The valuable context is already somewhere on the machine, but it is not active at the moment when the next agent needs it. Re-explaining everything by hand is slow. Automatically injecting everything is dangerous. The missing product layer is context recovery with human review.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>What the repo provides</h2>
+        <p>The repository packages this idea as a small `ctx` workflow. It is not trying to become a full agent harness. It is a sidecar layer for context operations.</p>
+        <table>
+          <thead><tr><th>Operation</th><th>What it means</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Recall</strong></td><td>Search old local agent traces for relevant fragments.</td><td>The next session can recover prior decisions without asking the user to restate everything.</td></tr>
+            <tr><td><strong>Compact</strong></td><td>Summarize the current session into a smaller candidate context block.</td><td>Long work can be carried forward without copying the whole transcript.</td></tr>
+            <tr><td><strong>Jobs</strong></td><td>Queue, preview, apply, or discard context results.</td><td>Context stays reviewable before it affects the active agent.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>The product value</h2>
+        <p>The value is not that the agent has "more memory." More memory can make an agent worse if it is stale, irrelevant, or injected without inspection. The value is that the user gets a controllable working set.</p>
+        <p>For a coding agent, the active context should feel like a clean desk. The desk should contain the current goal, the important constraints, the decisions already made, the files already touched, and the open risks. It should not contain every random branch of conversation. Agent Context Manager is a practical way to rebuild that desk from previous work.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>How it fits AI-native workflows</h2>
+        <p>In an AI-native workflow, context is not a static note. It is an operating surface. The agent should be able to ask: where have we discussed this before, what was decided, what should I carry forward, and what should I ignore?</p>
+        <p>That is why review-first matters. The agent can propose a context block, but the user or the next agent can inspect it before applying it. This keeps the system useful without pretending that memory is always correct.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>When to use it</h2>
+        <table>
+          <thead><tr><th>Use it when</th><th>Do not overuse it when</th></tr></thead>
+          <tbody>
+            <tr><td>You switch between multiple coding-agent tools.</td><td>The task is a one-shot edit with no prior project context.</td></tr>
+            <tr><td>You need to recover old decisions, bugs, or constraints.</td><td>The old trace may contain sensitive content you do not want searched.</td></tr>
+            <tr><td>You want compact handoffs between sessions.</td><td>You need a fully automatic memory system with no human review.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>Final recommendation</h2>
+        <p>If agents are going to do serious multi-day work, they need a context recovery layer. Not because the model should remember everything, but because the user should not have to be the only bridge between yesterday's trace and today's task.</p>
+        <p><strong>Agent Context Manager is a small best practice for that gap: search the old work, compact the current work, and apply context deliberately.</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>Discussion</h2>
+      <p class="discussion-note">Comments are powered by Disqus.</p>
+      <div
+        id="disqus_thread"
+        data-page-title="AI-native Context: A Best Practice for Context Recovery in the Agent Era"
+        data-page-identifier="blogs/agent-context-manager"
+        data-page-url="https://chenxinli001.github.io/blogs/agent-context-manager/"
+      ></div>
+    </section>
+  </main>
+  <script src="../disqus-config.js"></script>
+  <script src="../disqus-loader.js"></script>
+</body>
+</html>

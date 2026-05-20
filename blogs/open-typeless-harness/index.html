@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-native Typeless: A Best Practice for Voice Input in the Agent Era | Chenxin Li</title>
+  <meta name="description" content="A project note on Open Typeless Harness, a correction-native voice input loop that turns user edits into local speech skills.">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/open-typeless-harness/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI-native Typeless: A Best Practice for Voice Input in the Agent Era">
+  <meta property="og:description" content="Why voice input should learn from corrections after text lands, not remain a one-shot speech-to-text box.">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/open-typeless-harness/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/open-typeless-harness/assets/cover.png">
+  <link rel="stylesheet" href="../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../">Blogs</a><a href="https://github.com/OpenCodexLabs/open-typeless-harness" target="_blank" rel="noopener">GitHub</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">Project note</span>
+        </div>
+        <h1>AI-native Typeless: A Best Practice for Voice Input in the Agent Era</h1>
+        <p class="article-subtitle">Open Typeless Harness turns dictation into a feedback loop: listen, polish, insert into the focused field, watch corrections, and learn local speech skills.</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/open-typeless-harness" target="_blank" rel="noopener">GitHub: OpenCodexLabs/open-typeless-harness</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>Date</span><strong>May 21, 2026</strong></div>
+          <div><span>Status</span><strong>Project note</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section">
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Generated cover: voice input becomes a correction-native loop with local speech skills.</figcaption>
+          <img src="./assets/cover.png" alt="AI-native typeless voice input cover illustration" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>TL;DR</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-typeless-harness">OpenCodexLabs/open-typeless-harness</a>.</p>
+        <p>Open Typeless Harness starts from a simple frustration: speech-to-text keeps failing on personal vocabulary. Product names, paper terms, repo names, mixed Chinese-English phrases, and tiny style preferences are exactly the things generic dictation misses.</p>
+        <p><strong>The best voice input loop is correction-native.</strong> It should watch what you fix after insertion, turn stable patterns into local speech skills, and make the next dictation better.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>Why this exists</h2>
+        <p>Voice input is usually treated as a one-shot conversion problem: speech goes in, text comes out. That is not how real writing works. Real writing includes correction, naming habits, mixed-language terms, project vocabulary, and context-specific phrasing.</p>
+        <p>For agent-era work, the input layer should adapt to the user's actual writing environment. If I dictate into a browser, an editor, a chat box, or a notes app, I should not have to move into a separate dictation workspace. I should speak where I already type, correct the result normally, and let those corrections become useful signal.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>What the repo provides</h2>
+        <p>The repository frames voice input as a small learning loop rather than a static transcript box.</p>
+        <table>
+          <thead><tr><th>Stage</th><th>What happens</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Listen</strong></td><td>Capture speech and produce an ASR transcript.</td><td>The user can stay in the current writing context.</td></tr>
+            <tr><td><strong>Polish</strong></td><td>Use relevant speech skills and an LLM polish step.</td><td>Personal vocabulary can be applied before insertion.</td></tr>
+            <tr><td><strong>Insert</strong></td><td>Write text into the focused field.</td><td>The app behaves like an input layer, not a separate editor.</td></tr>
+            <tr><td><strong>Learn</strong></td><td>Watch short-window edits after insertion.</td><td>Real corrections become product feedback.</td></tr>
+            <tr><td><strong>Adapt</strong></td><td>Promote stable patterns into local speech skills.</td><td>The next dictation can improve without manual prompt tuning.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>The product value</h2>
+        <p>The value is not that voice input becomes fancy. The value is that it stops repeating the same mistakes. If I always fix a project name, a paper term, or a Chinese-English phrase in the same way, the system should notice and adapt.</p>
+        <p>This turns voice input from a disposable transcript into a local learning surface. The user's corrections become a lightweight training signal for the next piece of writing.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>How it fits AI-native workflows</h2>
+        <p>AI-native work is not only about agents acting on files. It is also about changing how humans provide intent. Voice is a high-bandwidth intent channel, but only if the system can handle messy, personal, project-specific language.</p>
+        <p>Open Typeless Harness fits this gap. It keeps the user in the active app, lets the model clean the transcript, then learns from the exact corrections the user makes after the text lands.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>When to use it</h2>
+        <table>
+          <thead><tr><th>Use it when</th><th>Be careful when</th></tr></thead>
+          <tbody>
+            <tr><td>You dictate technical or mixed-language content often.</td><td>The target field contains private text you do not want monitored.</td></tr>
+            <tr><td>You repeatedly correct the same vocabulary mistakes.</td><td>You need exact legal, medical, or financial transcription.</td></tr>
+            <tr><td>You want voice input inside existing apps.</td><td>A simple keyboard shortcut is enough for the task.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>Final recommendation</h2>
+        <p>Voice input should not stop at transcription. The interesting product primitive is the correction loop: what did the user fix, which fixes repeat, and which ones should become local skills?</p>
+        <p><strong>Open Typeless Harness is a best-practice experiment for that direction: focused-field dictation, LLM polish, post-insertion correction tracking, and local speech skills.</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>Discussion</h2>
+      <p class="discussion-note">Comments are powered by Disqus.</p>
+      <div
+        id="disqus_thread"
+        data-page-title="AI-native Typeless: A Best Practice for Voice Input in the Agent Era"
+        data-page-identifier="blogs/open-typeless-harness"
+        data-page-url="https://chenxinli001.github.io/blogs/open-typeless-harness/"
+      ></div>
+    </section>
+  </main>
+  <script src="../disqus-config.js"></script>
+  <script src="../disqus-loader.js"></script>
+</body>
+</html>
