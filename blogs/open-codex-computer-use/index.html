@@ -38,29 +38,30 @@
       </header>
 
       <section class="article-section">
+        <h2>TL;DR</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-codex-computer-use">OpenCodexLabs/open-codex-computer-use</a>.</p>
+        <p>Open Codex Computer Use starts from a simple product belief: agents need to operate real apps, but they should not have to steal the user's foreground mouse and keyboard to do it.</p>
+        <p>The project turns computer use into a local execution layer: the agent observes screenshots and Accessibility state, acts through a controlled tool surface, receives post-action feedback, and keeps its work visible through a separate background lane.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>The moment that makes this necessary</h2>
+        <p>The old desktop assumption is one user, one cursor, one foreground task. Agent work breaks that assumption. A coding agent may need to check a browser preview, operate Notes, inspect settings, open a dashboard, or interact with an enterprise app that has no clean API.</p>
+        <p>If it shares the same foreground cursor, the human is blocked. If it operates without feedback, the agent drifts. If the app has weak accessibility structure, the agent needs a recovery path. That is why computer use should be a real loop, not a blind macro.</p>
         <figure class="visual-figure generated-image-figure">
-          <figcaption>Generated cover: a separate agent operation lane for screenshots, Accessibility state, actions, and feedback.</figcaption>
-          <img src="./assets/cover.png" alt="AI-native computer use cover illustration" loading="lazy">
+          <figcaption>Figure 1: foreground cursor sharing turns agent work into interruption instead of collaboration.</figcaption>
+          <img src="./assets/problem.png" alt="Human and agent conflicting over the same foreground desktop cursor" loading="lazy">
         </figure>
       </section>
 
       <section class="article-section">
-        <h2>TL;DR</h2>
-        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-codex-computer-use">OpenCodexLabs/open-codex-computer-use</a>.</p>
-        <p>Computer use should not mean that an agent hijacks the user's mouse, blocks the desktop, and leaves no clear observation trail. A better default is background computer use: the agent operates through a local execution layer, sees app state through screenshots and Accessibility, performs actions, and returns post-action state.</p>
-        <p><strong>The key shift is from "agent controls my computer" to "agent has its own visible lane for app operation."</strong></p>
-      </section>
-
-      <section class="article-section">
-        <h2>Why this exists</h2>
-        <p>Agents are no longer limited to text files and terminals. They need to use browsers, note apps, settings panels, enterprise tools, calendars, dashboards, and local utilities. The problem is that the human desktop was not designed for autonomous co-workers.</p>
-        <p>If an agent uses the same mouse and keyboard as the human, the experience is fragile. The user cannot keep working. The agent may lose track of what it did. The recording may be hard to trust. And when a WebView app exposes weak accessibility information, recovery becomes even harder.</p>
-        <p>Open Codex Computer Use treats desktop control as an execution layer problem. The agent needs a reliable loop: observe the app, choose an action, perform the action, and observe the result.</p>
-      </section>
-
-      <section class="article-section">
-        <h2>What the repo provides</h2>
-        <p>The repository focuses on a local macOS MCP server and an agent-facing tool surface. It is not a complete agent product; it is the part that lets an agent interact with real apps.</p>
+        <h2>The core insight</h2>
+        <p>Computer use is not just "click x, type y." For agents, it is perception, action, feedback, and recovery. The execution layer needs to expose enough state for the model to reason about the UI, and enough post-action evidence for it to know whether the action worked.</p>
+        <p>Open Codex Computer Use focuses on that missing layer. It is not a new agent harness. It is the local macOS tool surface that a harness can call when the task leaves files and enters real apps.</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 2: a separate agent operation lane for screenshots, Accessibility state, actions, and feedback.</figcaption>
+          <img src="./assets/cover.png" alt="AI-native computer use cover illustration" loading="lazy">
+        </figure>
         <table>
           <thead><tr><th>Layer</th><th>What it provides</th><th>Why it matters</th></tr></thead>
           <tbody>
@@ -73,15 +74,19 @@
       </section>
 
       <section class="article-section">
-        <h2>The product value</h2>
-        <p>The value is not just "automation." Traditional desktop automation usually assumes a fixed script. Agent computer use needs a perception-action loop. It needs to inspect the current state, decide what is possible, try an action, and adapt when the UI changes.</p>
-        <p>That makes the execution layer important. A good computer-use layer should make agent actions observable, recoverable, and local. It should give the agent enough structure to act, while keeping the human in control of the real machine.</p>
+        <h2>The workflow</h2>
+        <p>The loop is deliberately boring: observe, plan, act, observe again. The boring part matters. Without post-action state, an agent can only guess. Without Accessibility state, it has to over-rely on pixels. Without a visible cursor or trace, the user cannot trust what happened.</p>
+        <p>This is also why local execution matters. A real Mac has real apps, real permissions, real WebViews, and real user state. The execution layer should stay close to that environment while still keeping the agent's lane explicit.</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 3: background computer use as an observe-act-feedback loop, separate from the human foreground lane.</figcaption>
+          <img src="./assets/workflow.png" alt="Open Codex Computer Use observe action feedback workflow" loading="lazy">
+        </figure>
       </section>
 
       <section class="article-section">
-        <h2>How it fits AI-native workflows</h2>
-        <p>In AI-native software work, the boundary between code and UI keeps moving. Sometimes the agent should edit a file. Sometimes it should click a setting. Sometimes it should verify a browser preview, operate a local app, or collect evidence from a tool that has no clean API.</p>
-        <p>Open Codex Computer Use gives those UI tasks a shared execution lane. Instead of each agent inventing its own desktop-control hack, the harness can call a local MCP server that speaks in app states, actions, and feedback.</p>
+        <h2>Why it matters</h2>
+        <p>AI-native workflows keep crossing the boundary between code and interface. The agent may write the implementation, then verify the UI in a browser, then adjust a setting, then collect a screenshot as evidence. A text-only harness is not enough for that work.</p>
+        <p>Open Codex Computer Use gives these UI steps a shared primitive. Instead of every agent inventing its own fragile desktop-control trick, the harness can call a local MCP server that speaks in app states, actions, and feedback.</p>
       </section>
 
       <section class="article-section">
@@ -97,9 +102,9 @@
       </section>
 
       <section class="article-section">
-        <h2>Final recommendation</h2>
+        <h2>The story in one sentence</h2>
         <p>The agent era needs a clean distinction between human foreground work and agent background work. If the agent must use real apps, it should do so through an explicit observation-action-feedback loop.</p>
-        <p><strong>Open Codex Computer Use is a best-practice building block for that loop: local, visible, app-aware, and designed for agent harnesses.</strong></p>
+        <p><strong>Open Codex Computer Use gives agents a local, visible, app-aware operation lane for real macOS work.</strong></p>
       </section>
     </article>
 

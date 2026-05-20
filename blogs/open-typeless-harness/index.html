@@ -38,28 +38,30 @@
       </header>
 
       <section class="article-section">
+        <h2>TL;DR</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-typeless-harness">OpenCodexLabs/open-typeless-harness</a>.</p>
+        <p>Open Typeless Harness starts from a simple frustration: generic speech-to-text keeps failing on the words that matter most to you. Project names, paper terms, product names, mixed Chinese-English phrases, and personal writing habits are exactly where normal dictation feels dumb.</p>
+        <p>The project asks a different question: what if voice input learned from the edits you actually make after the text lands?</p>
+      </section>
+
+      <section class="article-section">
+        <h2>The moment that makes this necessary</h2>
+        <p>The pain is not that dictation makes one mistake. The pain is that it makes the same mistake tomorrow. You say a repo name, fix it. You say a paper abbreviation, fix it. You mix Chinese and English, fix it again. The system sees none of that correction history.</p>
+        <p>That means the user becomes the learning loop manually. Every correction is a tiny training signal, but ordinary voice input throws it away.</p>
         <figure class="visual-figure generated-image-figure">
-          <figcaption>Generated cover: voice input becomes a correction-native loop with local speech skills.</figcaption>
-          <img src="./assets/cover.png" alt="AI-native typeless voice input cover illustration" loading="lazy">
+          <figcaption>Figure 1: ordinary speech-to-text repeats the same personal vocabulary mistakes because corrections are not remembered.</figcaption>
+          <img src="./assets/problem.png" alt="Voice input repeatedly failing on personal vocabulary and technical terms" loading="lazy">
         </figure>
       </section>
 
       <section class="article-section">
-        <h2>TL;DR</h2>
-        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-typeless-harness">OpenCodexLabs/open-typeless-harness</a>.</p>
-        <p>Open Typeless Harness starts from a simple frustration: speech-to-text keeps failing on personal vocabulary. Product names, paper terms, repo names, mixed Chinese-English phrases, and tiny style preferences are exactly the things generic dictation misses.</p>
-        <p><strong>The best voice input loop is correction-native.</strong> It should watch what you fix after insertion, turn stable patterns into local speech skills, and make the next dictation better.</p>
-      </section>
-
-      <section class="article-section">
-        <h2>Why this exists</h2>
-        <p>Voice input is usually treated as a one-shot conversion problem: speech goes in, text comes out. That is not how real writing works. Real writing includes correction, naming habits, mixed-language terms, project vocabulary, and context-specific phrasing.</p>
-        <p>For agent-era work, the input layer should adapt to the user's actual writing environment. If I dictate into a browser, an editor, a chat box, or a notes app, I should not have to move into a separate dictation workspace. I should speak where I already type, correct the result normally, and let those corrections become useful signal.</p>
-      </section>
-
-      <section class="article-section">
-        <h2>What the repo provides</h2>
-        <p>The repository frames voice input as a small learning loop rather than a static transcript box.</p>
+        <h2>The core insight</h2>
+        <p>Voice input should not be a separate writing box. It should be an input layer over the field where you already work. Speak into the current app, let the model polish the transcript, insert it into the focused field, then watch the short-window edits that follow.</p>
+        <p>Those edits are the real product signal. Stable corrections can become local speech skills. Ambiguous corrections can stay reviewable. The loop gets better without asking the user to become a prompt engineer.</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 2: voice input becomes a correction-native loop with local speech skills.</figcaption>
+          <img src="./assets/cover.png" alt="AI-native typeless voice input cover illustration" loading="lazy">
+        </figure>
         <table>
           <thead><tr><th>Stage</th><th>What happens</th><th>Why it matters</th></tr></thead>
           <tbody>
@@ -73,15 +75,19 @@
       </section>
 
       <section class="article-section">
-        <h2>The product value</h2>
-        <p>The value is not that voice input becomes fancy. The value is that it stops repeating the same mistakes. If I always fix a project name, a paper term, or a Chinese-English phrase in the same way, the system should notice and adapt.</p>
-        <p>This turns voice input from a disposable transcript into a local learning surface. The user's corrections become a lightweight training signal for the next piece of writing.</p>
+        <h2>The workflow</h2>
+        <p>The workflow is a feedback loop: listen, polish, insert, learn, adapt. Each step is small, but together they change the product category from "speech-to-text" to correction-native input.</p>
+        <p>The important boundary is that this is still an input layer, not an autonomous agent. It should write into the field the user is using, learn from the user's edits, and keep local vocabulary under user control.</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 3: listen, polish, insert, watch corrections, and feed stable patterns back into local speech skills.</figcaption>
+          <img src="./assets/workflow.png" alt="Open Typeless Harness correction-native voice input workflow" loading="lazy">
+        </figure>
       </section>
 
       <section class="article-section">
-        <h2>How it fits AI-native workflows</h2>
-        <p>AI-native work is not only about agents acting on files. It is also about changing how humans provide intent. Voice is a high-bandwidth intent channel, but only if the system can handle messy, personal, project-specific language.</p>
-        <p>Open Typeless Harness fits this gap. It keeps the user in the active app, lets the model clean the transcript, then learns from the exact corrections the user makes after the text lands.</p>
+        <h2>Why it matters</h2>
+        <p>AI-native work is not only about agents acting on files. It is also about changing how humans express intent. Voice is high-bandwidth, but only if the system understands personal vocabulary and context-specific phrasing.</p>
+        <p>Open Typeless Harness makes voice input feel less like a one-shot transcription service and more like a local writing habit that improves with use.</p>
       </section>
 
       <section class="article-section">
@@ -97,9 +103,9 @@
       </section>
 
       <section class="article-section">
-        <h2>Final recommendation</h2>
+        <h2>The story in one sentence</h2>
         <p>Voice input should not stop at transcription. The interesting product primitive is the correction loop: what did the user fix, which fixes repeat, and which ones should become local skills?</p>
-        <p><strong>Open Typeless Harness is a best-practice experiment for that direction: focused-field dictation, LLM polish, post-insertion correction tracking, and local speech skills.</strong></p>
+        <p><strong>Open Typeless Harness turns dictation into a local learning loop built from the edits you actually make.</strong></p>
       </section>
     </article>
 
