@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era | Chenxin Li</title>
-  <meta name="description" content="A project note on Open Claudex Computer Use, an open macOS execution layer for background computer use by Claude Code, Codex, and MCP agents.">
+  <title>Open Codex Computer Use | Chenxin Li</title>
+  <meta name="description" content="A local macOS execution layer that lets agents inspect and operate real apps in the background.">
   <link rel="canonical" href="https://chenxinli001.github.io/blogs/open-codex-computer-use/">
   <meta name="author" content="Chenxin Li">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era">
-  <meta property="og:description" content="Why agents need their own background lane for real desktop apps, instead of stealing the user's mouse and keyboard.">
+  <meta property="og:title" content="Open Codex Computer Use">
+  <meta property="og:description" content="A local macOS execution layer that lets agents inspect and operate real apps in the background.">
   <meta property="og:url" content="https://chenxinli001.github.io/blogs/open-codex-computer-use/">
   <meta property="og:image" content="https://chenxinli001.github.io/blogs/open-codex-computer-use/assets/cover.png">
   <link rel="stylesheet" href="../blogs.css?v=20260512-phoneclaw">
@@ -26,8 +26,8 @@
         <div class="eyebrow-row">
           <span class="eyebrow">Project note</span>
         </div>
-        <h1>AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era</h1>
-        <p class="article-subtitle">Open Claudex Computer Use is an open macOS execution layer for agents that need to inspect and operate real apps without taking over the user's foreground cursor.</p>
+        <h1>Open Codex Computer Use</h1>
+        <p class="article-subtitle">A local macOS execution layer that lets agents inspect and operate real apps in the background.</p>
         <div class="panel-actions hero-actions">
           <a href="https://github.com/OpenCodexLabs/open-codex-computer-use" target="_blank" rel="noopener">GitHub: OpenCodexLabs/open-codex-computer-use</a>
         </div>
@@ -55,7 +55,7 @@
         <h2>Why this exists</h2>
         <p>Agents are no longer limited to text files and terminals. They need to use browsers, note apps, settings panels, enterprise tools, calendars, dashboards, and local utilities. The problem is that the human desktop was not designed for autonomous co-workers.</p>
         <p>If an agent uses the same mouse and keyboard as the human, the experience is fragile. The user cannot keep working. The agent may lose track of what it did. The recording may be hard to trust. And when a WebView app exposes weak accessibility information, recovery becomes even harder.</p>
-        <p>Open Claudex Computer Use treats desktop control as an execution layer problem. The agent needs a reliable loop: observe the app, choose an action, perform the action, and observe the result.</p>
+        <p>Open Codex Computer Use treats desktop control as an execution layer problem. The agent needs a reliable loop: observe the app, choose an action, perform the action, and observe the result.</p>
       </section>
 
       <section class="article-section">
@@ -81,7 +81,7 @@
       <section class="article-section">
         <h2>How it fits AI-native workflows</h2>
         <p>In AI-native software work, the boundary between code and UI keeps moving. Sometimes the agent should edit a file. Sometimes it should click a setting. Sometimes it should verify a browser preview, operate a local app, or collect evidence from a tool that has no clean API.</p>
-        <p>Open Claudex Computer Use gives those UI tasks a shared execution lane. Instead of each agent inventing its own desktop-control hack, the harness can call a local MCP server that speaks in app states, actions, and feedback.</p>
+        <p>Open Codex Computer Use gives those UI tasks a shared execution lane. Instead of each agent inventing its own desktop-control hack, the harness can call a local MCP server that speaks in app states, actions, and feedback.</p>
       </section>
 
       <section class="article-section">
@@ -99,7 +99,7 @@
       <section class="article-section">
         <h2>Final recommendation</h2>
         <p>The agent era needs a clean distinction between human foreground work and agent background work. If the agent must use real apps, it should do so through an explicit observation-action-feedback loop.</p>
-        <p><strong>Open Claudex Computer Use is a best-practice building block for that loop: local, visible, app-aware, and designed for agent harnesses.</strong></p>
+        <p><strong>Open Codex Computer Use is a best-practice building block for that loop: local, visible, app-aware, and designed for agent harnesses.</strong></p>
       </section>
     </article>
 
@@ -108,7 +108,7 @@
       <p class="discussion-note">Comments are powered by Disqus.</p>
       <div
         id="disqus_thread"
-        data-page-title="AI-native Computer Use: A Best Practice for Background App Operation in the Agent Era"
+        data-page-title="Open Codex Computer Use"
         data-page-identifier="blogs/open-codex-computer-use"
         data-page-url="https://chenxinli001.github.io/blogs/open-codex-computer-use/"
       ></div>
