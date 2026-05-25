@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile-on-Mobile Agent Loop | Chenxin Li</title>
+  <meta name="description" content="A Labs note on using a phone-side Codex session to ask desktop Codex to operate the same Android phone GUI through USB ADB.">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/mobile-on-mobile-agent-loop/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mobile-on-Mobile Agent Loop">
+  <meta property="og:description" content="The phone is not only the controller. It can also be the real GUI surface that the agent operates.">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/mobile-on-mobile-agent-loop/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/mobile-on-mobile-agent-loop/assets/cover.svg">
+  <link rel="stylesheet" href="../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../">Blogs</a><a href="https://github.com/OpenCodexLabs/open-codex-mobile/blob/main/Docs/experiments/mobile-on-mobile-agent-loop.md" target="_blank" rel="noopener">Experiment</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">Labs note</span>
+        </div>
+        <h1>Mobile-on-Mobile Agent Loop</h1>
+        <p class="article-subtitle">A small experiment where a phone-side Codex session asks desktop Codex to operate the same Android phone GUI through USB ADB.</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/open-codex-mobile/blob/main/Docs/experiments/mobile-on-mobile-agent-loop.md" target="_blank" rel="noopener">Experiment note</a>
+          <a href="https://github.com/OpenCodexLabs/open-codex-mobile/blob/main/Docs/workflows/mobile-gui-agent-loop.md" target="_blank" rel="noopener">Workflow</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>Date</span><strong>May 26, 2026</strong></div>
+          <div><span>Status</span><strong>Labs note</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section lead-section">
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 1: the phone sends intent, the desktop executes, USB ADB operates the same phone, and screenshots close the loop.</figcaption>
+          <img src="./assets/cover.svg" alt="Mobile-on-Mobile Agent Loop cover diagram" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>TL;DR</h2>
+        <p>This is not a product launch. It is a small Open Codex Labs experiment around a strange but useful loop: <strong>the phone can be both the agent control surface and the target GUI surface.</strong></p>
+        <p>The user starts from a phone-side Codex session. Desktop Codex receives the task. The desktop uses USB ADB to operate the same Android phone. The phone app returns a real GUI result. Screenshots and UI state provide evidence. The answer comes back to the phone-side conversation.</p>
+        <p>In one sentence: <strong>mobile control does not have to stop at supervising a desktop agent; it can trigger a desktop agent to act on the mobile GUI itself.</strong></p>
+      </section>
+
+      <section class="article-section">
+        <h2>The odd moment</h2>
+        <p>Most mobile-agent products treat the phone as a remote control. You check status, approve commands, add context, and read the final answer. That already changes the agent workflow, because the human no longer has to sit in front of the desktop while a long task is running.</p>
+        <p>This experiment adds one more turn. The same phone that sends the instruction also becomes the thing being operated. The desktop remains the trusted execution machine, but the action surface is the Android phone GUI: a real app, a real screen, real buttons, real state.</p>
+        <p>That distinction matters. Many useful tasks live behind mobile apps, weak APIs, local permissions, or app-only interfaces. If an agent can safely operate a phone GUI with evidence, those tasks can enter an agent workflow before a clean API exists.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>The loop</h2>
+        <p>The implementation was deliberately simple. No special mobile automation framework was needed for the first proof. USB ADB was enough to open an app, capture screenshots, inspect UI state, tap, type, and verify the result.</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 2: the minimal mobile-on-mobile loop.</figcaption>
+          <img src="./assets/workflow.svg" alt="Phone Codex to desktop Codex to USB ADB to same phone GUI workflow" loading="lazy">
+        </figure>
+        <table>
+          <thead><tr><th>Role</th><th>What it does</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Phone-side Codex</strong></td><td>Captures user intent and receives the final result.</td><td>The phone stays the lightweight control surface.</td></tr>
+            <tr><td><strong>Desktop Codex</strong></td><td>Runs local tools, ADB, screenshots, and verification.</td><td>The trusted machine remains the executor.</td></tr>
+            <tr><td><strong>USB ADB</strong></td><td>Bridges actions into the Android GUI.</td><td>The experiment avoids network complexity and keeps the loop reproducible.</td></tr>
+            <tr><td><strong>Same phone GUI</strong></td><td>Provides the real app state and visual result.</td><td>The agent acts on the environment the user actually cares about.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>The demo</h2>
+        <p>I used a deliberately ordinary task: open a map app on the connected phone, search for a redacted destination, read a route or ride estimate, and stop before any irreversible action. The public screenshots are redacted because location, distance, time, and map context can all become personal information.</p>
+        <p>The point of the demo was not the specific route. The point was that the agent operated a real phone app and came back with evidence from the same device that initiated the request.</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>Figure 3: redacted evidence from the live run. The screenshots preserve the shape of the loop without exposing the destination or route details.</figcaption>
+          <img src="./assets/evidence-collage.png" alt="Redacted screenshots showing phone Codex, map search result, route estimate, and ride estimate evidence" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>What this changes</h2>
+        <p>The important result is not that ADB can click a phone. That has been true for years. The interesting result is the product shape: <strong>a mobile agent session can delegate execution to a desktop agent, which can then operate the same mobile GUI and report back.</strong></p>
+        <p>That suggests a broader division of labor. The phone is good at intent, supervision, quick approval, and final reading. The desktop is good at trusted execution, local tools, files, logs, and long-running work. The phone GUI is good at representing app-only tasks that do not yet have a clean API.</p>
+        <p>Once these pieces are connected, the mobile app stops being only a chat box. It becomes a real action surface in the agent workflow.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>Why I would not start with MCP</h2>
+        <p>It is tempting to immediately turn this into an MCP server, a reusable skill, or a polished mobile-control product. I would not start there.</p>
+        <p>The first reusable unit is the workflow, not the protocol. The agent needs a safe rhythm: take a screenshot, inspect UI state, perform one small action, take another screenshot, stop at irreversible boundaries, and summarize the evidence. Without that rhythm, a nicer tool interface only makes unsafe automation easier.</p>
+        <table>
+          <thead><tr><th>Layer</th><th>When it is enough</th><th>When to promote it</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Raw ADB workflow</strong></td><td>One phone, one experiment, human-supervised tasks.</td><td>When the steps repeat and need guardrails.</td></tr>
+            <tr><td><strong>Skill</strong></td><td>Codify safe operating habits and stop conditions.</td><td>When multiple agents should reuse the same procedure.</td></tr>
+            <tr><td><strong>MCP</strong></td><td>Expose stable tools such as screenshot, dump UI, tap, type, open app.</td><td>When several clients or devices need the same interface.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>Safety boundaries</h2>
+        <p>This kind of loop should stay conservative. It is fine to open an app, search, read a result, and collect screenshots. It is not fine to silently place orders, pay, send messages, change account settings, grant new permissions, or handle sensitive content without explicit user confirmation.</p>
+        <p>The same applies to publishing traces. Phone screenshots often contain more personal data than expected: location, account state, notification icons, map context, local IPs, nearby places, and historical app state. The public artifact should be redacted by default.</p>
+      </section>
+
+      <section class="article-section">
+        <h2>The story in one sentence</h2>
+        <p>Mobile-on-Mobile Agent Loop is a small experiment, but it points to a useful future primitive: the phone can be the place where intent starts, the desktop can be the place where execution happens, and the same phone GUI can be the real-world surface the agent operates.</p>
+        <p><strong>The phone is not only a remote control for agents. Sometimes it is the environment.</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>Discussion</h2>
+      <p class="discussion-note">Comments are powered by Disqus.</p>
+      <div
+        id="disqus_thread"
+        data-page-title="Mobile-on-Mobile Agent Loop"
+        data-page-identifier="blogs/mobile-on-mobile-agent-loop"
+        data-page-url="https://chenxinli001.github.io/blogs/mobile-on-mobile-agent-loop/"
+      ></div>
+    </section>
+  </main>
+  <script src="../disqus-config.js"></script>
+  <script src="../disqus-loader.js"></script>
+</body>
+</html>
