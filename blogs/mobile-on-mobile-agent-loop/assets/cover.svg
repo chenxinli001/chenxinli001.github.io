@@ -1,53 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">Mobile-on-Mobile Agent Loop</title>
-  <desc id="desc">A warm editorial diagram showing phone Codex, desktop Codex, USB ADB, and the same phone GUI in a closed loop.</desc>
-  <defs>
-    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#fffdf8"/>
-      <stop offset="1" stop-color="#f1e7dc"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#5a3322" flood-opacity="0.14"/>
-    </filter>
-  </defs>
+  <desc id="desc">A clean editorial cover with four numbered cards: phone Codex, desktop Codex, USB ADB, and same phone GUI.</desc>
   <rect width="1200" height="675" fill="#fafaf7"/>
-  <path d="M0 561 C196 522 321 641 526 594 C751 542 856 603 1200 543 L1200 675 L0 675 Z" fill="#efe6dc"/>
-  <text x="76" y="86" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="19" font-weight="700" letter-spacing="4">OPEN CODEX LABS NOTE</text>
-  <text x="76" y="152" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="72" font-weight="500">Mobile-on-Mobile</text>
-  <text x="76" y="226" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="72" font-weight="500">Agent Loop</text>
-  <text x="80" y="273" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="23" font-weight="300">Phone intent. Desktop execution. Real phone GUI evidence.</text>
+  <rect x="58" y="50" width="1084" height="575" rx="28" fill="#ffffff" stroke="#ded6cc"/>
 
-  <g filter="url(#shadow)">
-    <rect x="710" y="82" width="250" height="452" rx="42" fill="url(#paper)" stroke="#cbbfb5" stroke-width="2"/>
-    <rect x="734" y="122" width="202" height="338" rx="26" fill="#ffffff" stroke="#ded6cc"/>
-    <circle cx="835" cy="492" r="18" fill="#efe6dc" stroke="#cbbfb5"/>
-    <text x="835" y="201" text-anchor="middle" fill="#1a1a1a" font-family="Outfit, Inter, sans-serif" font-size="24" font-weight="700">Phone Codex</text>
-    <text x="835" y="242" text-anchor="middle" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="18">send task</text>
-    <rect x="772" y="282" width="126" height="42" rx="21" fill="#f5eeee" stroke="#8b2323"/>
-    <text x="835" y="309" text-anchor="middle" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="16" font-weight="700">controller</text>
+  <text x="100" y="114" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="18" font-weight="700" letter-spacing="4">LABS NOTE</text>
+  <text x="100" y="178" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="58" font-weight="500">Mobile-on-Mobile</text>
+  <text x="100" y="238" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="58" font-weight="500">Agent Loop</text>
+  <text x="103" y="280" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="21" font-weight="300">Phone intent, desktop execution, same-phone GUI evidence.</text>
+
+  <g font-family="Outfit, Inter, sans-serif">
+    <g transform="translate(100 345)">
+      <rect width="475" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
+      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">01</text>
+      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">Phone Codex</text>
+      <text x="92" y="68" fill="#5a5a5a" font-size="15">The mobile session captures the user's intent.</text>
+    </g>
+    <g transform="translate(625 345)">
+      <rect width="415" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
+      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">02</text>
+      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">Desktop Codex</text>
+      <text x="92" y="68" fill="#5a5a5a" font-size="15">The local machine executes the task.</text>
+    </g>
+    <g transform="translate(100 470)">
+      <rect width="475" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
+      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">03</text>
+      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">USB ADB</text>
+      <text x="92" y="68" fill="#5a5a5a" font-size="15">ADB becomes the phone GUI control bridge.</text>
+    </g>
+    <g transform="translate(625 470)">
+      <rect width="415" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
+      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">04</text>
+      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">Same Phone GUI</text>
+      <text x="92" y="68" fill="#5a5a5a" font-size="15">The real app returns screenshot evidence.</text>
+    </g>
   </g>
 
-  <g filter="url(#shadow)">
-    <rect x="214" y="344" width="300" height="148" rx="28" fill="#ffffff" stroke="#cbbfb5" stroke-width="2"/>
-    <text x="364" y="401" text-anchor="middle" fill="#1a1a1a" font-family="Outfit, Inter, sans-serif" font-size="28" font-weight="700">Desktop Codex</text>
-    <text x="364" y="439" text-anchor="middle" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="18">executor on local machine</text>
-  </g>
-
-  <g filter="url(#shadow)">
-    <rect x="656" y="374" width="326" height="118" rx="26" fill="#ffffff" stroke="#cbbfb5" stroke-width="2"/>
-    <text x="819" y="424" text-anchor="middle" fill="#1a1a1a" font-family="Outfit, Inter, sans-serif" font-size="26" font-weight="700">Same Phone GUI</text>
-    <text x="819" y="459" text-anchor="middle" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="18">real app, screenshot proof</text>
-  </g>
-
-  <path d="M710 252 C604 240 525 278 477 337" fill="none" stroke="#8b2323" stroke-width="4" stroke-linecap="round"/>
-  <path d="M491 334 L464 354 L470 321" fill="#8b2323"/>
-  <text x="570" y="260" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="17" font-weight="700">task</text>
-
-  <path d="M514 421 L650 421" fill="none" stroke="#8b2323" stroke-width="4" stroke-linecap="round"/>
-  <path d="M650 421 L620 405 L620 437" fill="#8b2323"/>
-  <text x="570" y="402" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="17" font-weight="700">USB ADB</text>
-
-  <path d="M834 374 C850 315 856 276 851 236" fill="none" stroke="#8b2323" stroke-width="4" stroke-linecap="round"/>
-  <path d="M851 236 L836 267 L869 261" fill="#8b2323"/>
-  <text x="894" y="316" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="17" font-weight="700">evidence</text>
+  <text x="100" y="590" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="18" font-weight="300">The phone is not only the remote control. In this loop, it is also the environment.</text>
 </svg>
