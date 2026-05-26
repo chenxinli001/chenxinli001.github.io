@@ -27,7 +27,7 @@
           <span class="eyebrow">Labs note</span>
         </div>
         <h1>Mobile-on-Mobile Agent Loop</h1>
-        <p class="article-subtitle">A small experiment where a phone-side Codex session asks desktop Codex to operate the same Android phone GUI through USB ADB.</p>
+        <p class="article-subtitle">A simple phone-GUI workflow where a phone-side Codex session asks desktop Codex to operate the same Android phone through USB ADB, without using any dedicated mobile GUI agent.</p>
         <div class="panel-actions hero-actions">
           <a href="https://github.com/OpenCodexLabs/open-codex-mobile/blob/main/Docs/experiments/mobile-on-mobile-agent-loop.md" target="_blank" rel="noopener">Experiment note</a>
           <a href="https://github.com/OpenCodexLabs/open-codex-mobile/blob/main/Docs/workflows/mobile-gui-agent-loop.md" target="_blank" rel="noopener">Workflow</a>
@@ -47,7 +47,8 @@
 
       <section class="article-section">
         <h2>TL;DR</h2>
-        <p>This is not a product launch. It is a small Open Codex Labs experiment around a strange but useful loop: <strong>the phone can be both the agent control surface and the target GUI surface.</strong></p>
+        <p><strong>Experiment:</strong> <a href="https://github.com/OpenCodexLabs/open-codex-mobile/blob/main/Docs/experiments/mobile-on-mobile-agent-loop.md" target="_blank" rel="noopener">OpenCodexLabs/open-codex-mobile · Mobile-on-Mobile Agent Loop</a>.</p>
+        <p>This is not a product launch, and it is not a full mobile GUI agent. It is a simple phone-GUI workflow built from Codex on the phone, Codex on the desktop, USB ADB, screenshots, and human-visible verification. The useful loop is: <strong>the phone can be both the agent control surface and the target GUI surface.</strong></p>
         <p>The user starts from a phone-side Codex session. Desktop Codex receives the task. The desktop uses USB ADB to operate the same Android phone. The phone app returns a real GUI result. Screenshots and UI state provide evidence. The answer comes back to the phone-side conversation.</p>
         <p>In one sentence: <strong>mobile control does not have to stop at supervising a desktop agent; it can trigger a desktop agent to act on the mobile GUI itself.</strong></p>
       </section>
