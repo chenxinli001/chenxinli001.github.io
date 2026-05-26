@@ -79,11 +79,11 @@
 
       <section class="article-section">
         <h2>The demo</h2>
-        <p>I used a deliberately ordinary task: open a map app on the connected phone, search for a redacted destination, read a route or ride estimate, and stop before any irreversible action. The public screenshots are redacted because location, distance, time, and map context can all become personal information.</p>
+        <p>I used a deliberately ordinary task: open a map app on the connected phone, search for a destination, read a route or ride estimate, and stop before any irreversible action. The public screenshots keep the map flow visible; only local infrastructure details in the control screenshot are masked.</p>
         <p>The point of the demo was not the specific route. The point was that the agent operated a real phone app and came back with evidence from the same device that initiated the request.</p>
         <figure class="visual-figure generated-image-figure">
-          <figcaption>Figure 3: redacted evidence from the live run. The screenshots preserve the shape of the loop without exposing the destination or route details.</figcaption>
-          <img src="./assets/evidence-collage.png" alt="Redacted screenshots showing phone Codex, map search result, route estimate, and ride estimate evidence" loading="lazy">
+          <figcaption>Figure 3: evidence from the live run. The map screenshots keep the real app flow visible, while the control screenshot hides local infrastructure details.</figcaption>
+          <img src="./assets/evidence-collage.png" alt="Screenshots showing phone Codex, map search result, route estimate, and ride estimate evidence" loading="lazy">
         </figure>
       </section>
 
@@ -111,7 +111,7 @@
       <section class="article-section">
         <h2>Safety boundaries</h2>
         <p>This kind of loop should stay conservative. It is fine to open an app, search, read a result, and collect screenshots. It is not fine to silently place orders, pay, send messages, change account settings, grant new permissions, or handle sensitive content without explicit user confirmation.</p>
-        <p>The same applies to publishing traces. Phone screenshots often contain more personal data than expected: location, account state, notification icons, map context, local IPs, nearby places, and historical app state. The public artifact should be redacted by default.</p>
+        <p>The same applies to publishing traces. Phone screenshots often contain more personal data than expected: location, account state, notification icons, map context, local IPs, nearby places, and historical app state. The public artifact should be reviewed deliberately, and infrastructure details should be masked when they are not part of the point.</p>
       </section>
 
       <section class="article-section">
