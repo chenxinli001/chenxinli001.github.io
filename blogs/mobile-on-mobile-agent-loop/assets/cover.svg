@@ -1,40 +1,78 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">Mobile-on-Mobile Agent Loop</title>
-  <desc id="desc">A clean editorial cover with four numbered cards: phone Codex, desktop Codex, USB ADB, and same phone GUI.</desc>
-  <rect width="1200" height="675" fill="#fafaf7"/>
-  <rect x="58" y="50" width="1084" height="575" rx="28" fill="#ffffff" stroke="#ded6cc"/>
+  <desc id="desc">A single phone is shown as both the Codex control surface and the GUI target, connected through desktop Codex and USB ADB.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbfaf5"/>
+      <stop offset="1" stop-color="#eee8de"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#f5efe4"/>
+    </linearGradient>
+    <linearGradient id="map" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dff1e7"/>
+      <stop offset="0.56" stop-color="#dcecf7"/>
+      <stop offset="1" stop-color="#f8ead8"/>
+    </linearGradient>
+  </defs>
 
-  <text x="100" y="114" fill="#8b2323" font-family="Outfit, Inter, sans-serif" font-size="18" font-weight="700" letter-spacing="4">LABS NOTE</text>
-  <text x="100" y="178" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="58" font-weight="500">Mobile-on-Mobile</text>
-  <text x="100" y="238" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="58" font-weight="500">Agent Loop</text>
-  <text x="103" y="280" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="21" font-weight="300">Phone intent, desktop execution, same-phone GUI evidence.</text>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1022" cy="112" r="176" fill="#dce8da" opacity="0.45"/>
+  <circle cx="178" cy="572" r="206" fill="#e9dbcf" opacity="0.5"/>
+  <rect x="54" y="44" width="1092" height="587" rx="34" fill="#ffffff" opacity="0.58" stroke="#ded6cc"/>
 
-  <g font-family="Outfit, Inter, sans-serif">
-    <g transform="translate(100 345)">
-      <rect width="475" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
-      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">01</text>
-      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">Phone Codex</text>
-      <text x="92" y="68" fill="#5a5a5a" font-size="15">The mobile session captures the user's intent.</text>
-    </g>
-    <g transform="translate(625 345)">
-      <rect width="415" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
-      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">02</text>
-      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">Desktop Codex</text>
-      <text x="92" y="68" fill="#5a5a5a" font-size="15">The local machine executes the task.</text>
-    </g>
-    <g transform="translate(100 470)">
-      <rect width="475" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
-      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">03</text>
-      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">USB ADB</text>
-      <text x="92" y="68" fill="#5a5a5a" font-size="15">ADB becomes the phone GUI control bridge.</text>
-    </g>
-    <g transform="translate(625 470)">
-      <rect width="415" height="92" rx="16" fill="#fbfbf8" stroke="#d6cec4" stroke-width="2"/>
-      <text x="30" y="56" fill="#8b2323" font-size="24" font-weight="800">04</text>
-      <text x="92" y="42" fill="#1a1a1a" font-size="24" font-weight="700">Same Phone GUI</text>
-      <text x="92" y="68" fill="#5a5a5a" font-size="15">The real app returns screenshot evidence.</text>
-    </g>
+  <g transform="translate(92 92)">
+    <text x="0" y="0" fill="#8b2323" font-family="Avenir Next, Outfit, sans-serif" font-size="18" font-weight="800" letter-spacing="4">LABS NOTE</text>
+    <text x="0" y="72" fill="#171514" font-family="Georgia, Newsreader, serif" font-size="61" font-weight="500">Mobile-on-Mobile</text>
+    <text x="0" y="136" fill="#171514" font-family="Georgia, Newsreader, serif" font-size="61" font-weight="500">Agent Loop</text>
+    <text x="3" y="184" fill="#5b554e" font-family="Avenir Next, Outfit, sans-serif" font-size="22">One phone controls itself through desktop Codex.</text>
   </g>
 
-  <text x="100" y="590" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="18" font-weight="300">The phone is not only the remote control. In this loop, it is also the environment.</text>
+  <g transform="translate(92 340)">
+    <rect x="0" y="0" width="242" height="112" rx="24" fill="#fffaf2" stroke="#d8cec2" stroke-width="2"/>
+    <text x="26" y="38" fill="#8b2323" font-family="Avenir Next, Outfit, sans-serif" font-size="15" font-weight="900" letter-spacing="2">DESKTOP CODEX</text>
+    <text x="26" y="72" fill="#171514" font-family="Avenir Next, Outfit, sans-serif" font-size="24" font-weight="800">executes</text>
+    <text x="26" y="96" fill="#655d55" font-family="Avenir Next, Outfit, sans-serif" font-size="15">tools, logs, verification</text>
+  </g>
+
+  <g transform="translate(392 360)">
+    <rect x="0" y="0" width="174" height="74" rx="22" fill="#fffaf2" stroke="#d8cec2" stroke-width="2"/>
+    <text x="28" y="32" fill="#8b2323" font-family="Avenir Next, Outfit, sans-serif" font-size="15" font-weight="900" letter-spacing="2">USB ADB</text>
+    <text x="28" y="56" fill="#655d55" font-family="Avenir Next, Outfit, sans-serif" font-size="15">GUI bridge</text>
+  </g>
+
+  <g transform="translate(674 62)">
+    <rect x="0" y="0" width="356" height="552" rx="52" fill="#211e1b"/>
+    <rect x="18" y="19" width="320" height="514" rx="38" fill="url(#screen)"/>
+    <rect x="132" y="34" width="92" height="9" rx="5" fill="#211e1b" opacity="0.22"/>
+
+    <text x="48" y="82" fill="#8b2323" font-family="Avenir Next, Outfit, sans-serif" font-size="14" font-weight="900" letter-spacing="2">SAME PHONE · ROLE 1</text>
+    <text x="48" y="112" fill="#171514" font-family="Avenir Next, Outfit, sans-serif" font-size="24" font-weight="800">Codex control surface</text>
+    <rect x="42" y="133" width="272" height="82" rx="22" fill="#ffffff" stroke="#ded3c8"/>
+    <text x="64" y="164" fill="#332e2a" font-family="Avenir Next, Outfit, sans-serif" font-size="17" font-weight="700">“Operate this phone GUI.”</text>
+    <text x="64" y="190" fill="#6a6159" font-family="Avenir Next, Outfit, sans-serif" font-size="14">intent starts on the phone</text>
+
+    <path d="M48 252 H308" stroke="#ded3c8" stroke-width="2"/>
+    <text x="48" y="294" fill="#8b2323" font-family="Avenir Next, Outfit, sans-serif" font-size="14" font-weight="900" letter-spacing="2">SAME PHONE · ROLE 2</text>
+    <text x="48" y="324" fill="#171514" font-family="Avenir Next, Outfit, sans-serif" font-size="24" font-weight="800">real GUI target</text>
+    <rect x="42" y="346" width="272" height="142" rx="24" fill="url(#map)" stroke="#bfd2c7"/>
+    <path d="M62 404 C94 368 126 386 164 350 C202 314 232 344 292 318" fill="none" stroke="#64a976" stroke-width="8" opacity="0.66"/>
+    <path d="M58 444 C110 416 138 440 182 408 C210 388 240 394 300 364" fill="none" stroke="#70a8d2" stroke-width="7" opacity="0.66"/>
+    <circle cx="106" cy="420" r="14" fill="#2f74ff"/>
+    <circle cx="238" cy="362" r="14" fill="#e3483e"/>
+    <rect x="78" y="502" width="200" height="17" rx="9" fill="#ffffff" opacity="0.96"/>
+  </g>
+
+  <path d="M333 354 C452 244 560 174 667 158" fill="none" stroke="#8b2323" stroke-width="4" stroke-linecap="round"/>
+  <path d="M658 150 L684 155 L662 171 Z" fill="#8b2323"/>
+  <path d="M566 392 C610 382 641 370 672 342" fill="none" stroke="#8b2323" stroke-width="4" stroke-linecap="round"/>
+  <path d="M665 335 L689 333 L675 354 Z" fill="#8b2323"/>
+  <path d="M674 478 C552 524 420 507 330 438" fill="none" stroke="#8b2323" stroke-width="4" stroke-linecap="round"/>
+  <path d="M334 451 L310 428 L343 429 Z" fill="#8b2323"/>
+
+  <g transform="translate(92 548)">
+    <rect x="0" y="0" width="424" height="52" rx="26" fill="#ffffff" stroke="#ded6cc"/>
+    <text x="26" y="34" fill="#171514" font-family="Avenir Next, Outfit, sans-serif" font-size="20" font-weight="800">Phone = controller + target GUI.</text>
+  </g>
 </svg>
