@@ -195,6 +195,13 @@ a:hover {
   margin: 7px 0 0;
 }
 
+.blog-entry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
 .blog-zh {
   color: var(--muted);
 }
