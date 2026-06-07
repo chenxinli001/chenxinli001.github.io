@@ -317,31 +317,6 @@ a:hover {
   margin-top: 16px;
 }
 
-.section-mini-label {
-  color: var(--muted);
-  font-size: 0.78rem !important;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.article-section blockquote {
-  max-width: 900px;
-  margin: 18px auto;
-  padding: 14px 18px;
-  color: var(--accent-strong);
-  background: var(--accent-soft);
-  border-left: 4px solid var(--accent);
-  border-radius: 14px;
-}
-
-.article-section code {
-  padding: 0.1em 0.3em;
-  border-radius: 5px;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-}
-
 .lead-section {
   margin-top: 0;
 }
