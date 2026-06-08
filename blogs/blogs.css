@@ -317,6 +317,56 @@ a:hover {
   margin-top: 16px;
 }
 
+.section-mini-label {
+  color: var(--muted);
+  font-size: 0.78rem !important;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.article-section blockquote {
+  max-width: 900px;
+  margin: 18px auto;
+  padding: 14px 18px;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 14px;
+}
+
+.article-section code {
+  padding: 0.1em 0.3em;
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.article-dedication {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.thesis-snapshot {
+  display: grid;
+  gap: 10px;
+  max-width: 900px;
+  margin: 24px auto 0;
+  padding: 22px 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: 22px;
+  background: var(--surface);
+}
+
+.thesis-snapshot p {
+  margin: 0;
+  font-size: clamp(1.12rem, 2.2vw, 1.45rem);
+  line-height: 1.45;
+}
+
 .lead-section {
   margin-top: 0;
 }
@@ -432,6 +482,156 @@ a:hover {
 .zh-article .article-section p,
 .zh-article .feature-card li {
   line-height: 1.9;
+}
+
+.chapter-index-page .lead-section {
+  margin-top: 34px;
+}
+
+.chapter-start-actions {
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.chapter-start-actions a,
+.chapter-link {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255, 250, 241, 0.72);
+  padding: 10px 16px;
+  color: var(--accent-strong);
+  font-size: 0.94rem;
+  text-decoration: none;
+}
+
+.chapter-start-actions a:hover,
+.chapter-link:hover {
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.chapter-directory > p {
+  max-width: 900px;
+  margin: 0 auto 18px;
+  color: var(--muted);
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chapter-card {
+  display: grid;
+  gap: 7px;
+  min-height: 162px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(255, 250, 241, 0.88), rgba(239, 230, 216, 0.48));
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.chapter-card:hover {
+  border-color: var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.chapter-card span,
+.chapter-count {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.chapter-card strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  font-weight: 560;
+  line-height: 1.2;
+}
+
+.chapter-card em {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-style: normal;
+  line-height: 1.65;
+}
+
+.chapter-hero {
+  padding-bottom: 20px;
+}
+
+.chapter-count {
+  margin: 24px 0 0;
+}
+
+.chapter-progress {
+  overflow: hidden;
+  width: min(520px, 100%);
+  height: 8px;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.chapter-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+}
+
+.chapter-reading-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  max-width: 900px;
+  margin: 24px auto 34px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.chapter-reading-card.bottom {
+  margin-top: 42px;
+  margin-bottom: 0;
+}
+
+.chapter-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  text-align: center;
+}
+
+.chapter-link.prev {
+  justify-self: start;
+}
+
+.chapter-link.next {
+  justify-self: end;
+}
+
+.chapter-link.disabled {
+  border-color: var(--line);
+  color: var(--faint);
+  cursor: default;
+}
+
+.chapter-section {
+  padding-top: 6px;
 }
 
 @media (max-width: 760px) {
@@ -1397,6 +1597,16 @@ a:hover {
 
   .meta-grid {
     grid-template-columns: 1fr;
+  }
+
+  .chapter-grid,
+  .chapter-reading-card {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-link.prev,
+  .chapter-link.next {
+    justify-self: stretch;
   }
 
   .meta-grid div,
