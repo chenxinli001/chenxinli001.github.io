@@ -118,6 +118,16 @@
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
+  .project-item td,
+  .publication-item td {
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+  }
+
+  #pub-container {
+    margin-bottom: 20px;
+  }
+
   .publication-item.hidden {
     display: none;
   }
@@ -361,7 +371,7 @@ My recent interest lies in scaling digital automation agents, especially CLI age
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
         <tr>
           <td style="padding:20px;padding-top:0px;padding-bottom:10px;width:100%;vertical-align:middle">
-            <strong id="open-agent-labs">🛠️ Open Agent Labs</strong> [<a href="https://github.com/OpenCodexLabs" target="_blank" rel="noopener">Organization</a>] <hr>
+            <strong id="open-agent-labs">🛠️ Open Agent Labs</strong> [<a href="https://github.com/OpenCodexLabs" target="_blank" rel="noopener">Org</a>] <hr>
             <p class="w3-justify" style="margin-top:8px;">
               I build agent tools that help people work smarter by turning repetitive, inefficient workflows into AI-native experiences.
             </p>
@@ -370,59 +380,34 @@ My recent interest lies in scaling digital automation agents, especially CLI age
                 <span class="opensource-thumb"><img src="data/images/openclaudex-demo.gif" alt="Open Codex Computer Use preview"></span>
                 <span class="opensource-copy">
                   <span class="opensource-title">Open Codex Computer Use</span>
-                  <span class="opensource-desc">A MCP enabling agents operate your computer in parallel without interrupting your work.</span>
-                  <span class="opensource-tags">Computer-use MCP · Background GUI</span>
+                  <span class="opensource-desc">Background computer-use MCP for agents.</span>
                 </span>
               </a>
               <a class="opensource-card" href="https://github.com/OpenCodexLabs/open-codex-mobile" target="_blank" rel="noopener">
                 <span class="opensource-thumb"><img src="https://raw.githubusercontent.com/OpenCodexLabs/open-codex-mobile/main/assets/open-codex-mobile-og.png" alt="Open Codex Mobile cover"></span>
                 <span class="opensource-copy">
                   <span class="opensource-title">Open Codex Mobile</span>
-                  <span class="opensource-desc">Remotely control Codex running on your computer from a mobile app.</span>
-                  <span class="opensource-tags">Mobile Coding · Human-Agent 24/7</span>
+                  <span class="opensource-desc">Control desktop Codex from a mobile app.</span>
                 </span>
               </a>
               <a class="opensource-card" href="https://github.com/OpenCodexLabs/open-typeless-harness" target="_blank" rel="noopener">
                 <span class="opensource-thumb"><video src="https://raw.githubusercontent.com/OpenCodexLabs/open-typeless-harness/main/docs/assets/open-typeless-harness-demo.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Open Typeless Harness demo"></video></span>
                 <span class="opensource-copy">
                   <span class="opensource-title">Open Typeless Harness</span>
-                  <span class="opensource-desc">An end-to-end self-improving voice-coding harness for speech-based vibe coding.</span>
-                  <span class="opensource-tags">Vibe-Coding to Voice-Coding · Voice-Coding Harness</span>
+                  <span class="opensource-desc">Voice-coding harness for vibe coding.</span>
                 </span>
               </a>
               <a class="opensource-card" href="https://github.com/OpenCodexLabs/agent-context-manager" target="_blank" rel="noopener">
                 <span class="opensource-thumb"><img src="data/images/agent-context-manager-cover.png" alt="Agent Context Manager cover"></span>
                 <span class="opensource-copy">
                   <span class="opensource-title">Agent Context Manager</span>
-                  <span class="opensource-desc">Keep coding-agent work coherent across sessions, tools, context resets, and different harnesses or entrypoints.</span>
-                  <span class="opensource-tags">Global Context Compression/Recall · Cross-Agent Harness</span>
-                </span>
-              </a>
-              <a class="opensource-card" href="https://github.com/OpenCodexLabs/linmem" target="_blank" rel="noopener">
-                <span class="opensource-thumb"><img src="https://chenxinli001.github.io/blogs/linear-attention-memory/assets/dual-model-architecture.png" alt="LinMem modular dual-model memory pipeline"></span>
-                <span class="opensource-copy">
-                  <span class="opensource-title">LinMem</span>
-                  <span class="opensource-desc">Explore linear models as lightweight memory modules for agents.</span>
-                  <span class="opensource-tags">Linear Model · Agent Memory</span>
-                </span>
-              </a>
-              <a class="opensource-card" href="https://github.com/OpenCodexLabs/ai-native-slides" target="_blank" rel="noopener">
-                <span class="opensource-thumb"><img src="data/images/ai-native-slides-cover.png" alt="AI-native Slides cover"></span>
-                <span class="opensource-copy">
-                  <span class="opensource-title">AI-native Slides</span>
-                  <span class="opensource-desc">Turn rough ideas into slides optimized for agent-side operation and editing.</span>
-                  <span class="opensource-tags">Agent-Friendly Slides Making</span>
-                </span>
-              </a>
-              <a class="opensource-card" href="https://github.com/OpenCodexLabs/openreview-agent" target="_blank" rel="noopener">
-                <span class="opensource-thumb"><img src="data/images/openreview-agent-cover.png" alt="OpenReview Agent cover"></span>
-                <span class="opensource-copy">
-                  <span class="opensource-title">OpenReview Agent</span>
-                  <span class="opensource-desc">Reduce brittle manual steps in OpenReview submission and venue-transfer workflows.</span>
-                  <span class="opensource-tags">OpenReview Automation</span>
+                  <span class="opensource-desc">Cross-session context for coding agents.</span>
                 </span>
               </a>
             </div>
+            <p style="margin-top: 10px;">
+              More: <a href="https://github.com/OpenCodexLabs/linmem" target="_blank" rel="noopener">LinMem</a>: lightweight agent memory; <a href="https://github.com/OpenCodexLabs/ai-native-slides" target="_blank" rel="noopener">AI-native Slides</a>: agent-friendly slides; <a href="https://github.com/OpenCodexLabs/openreview-agent" target="_blank" rel="noopener">OpenReview Agent</a>: OpenReview automation.
+            </p>
           </td>
         </tr>
       </tbody></table>
@@ -435,7 +420,7 @@ My recent interest lies in scaling digital automation agents, especially CLI age
         </td>
         <td style="padding:10px;width:75%;vertical-align:middle">
           <a class="project-title" href="">
-            IRBlenderAgent: Evaluating Vision-Language Model Scene Understanding as Agentic Inverse Rendering
+            IRBlender: Evaluating Vision-Language Model Scene Understanding as Agentic Inverse Rendering
           </a>
           <div class="is-size-6 publication-authors">
             Parker Liu*, Chenxin Li*, Zhengxin Li, Yipeng Wu, Wuyang Li, Zhiqin Yang, Zhenyuan Zhang, Yunlong Lin, Sirui Han, Brandon Y. Feng
@@ -518,30 +503,16 @@ My recent interest lies in scaling digital automation agents, especially CLI age
 
         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
           <tr>
-            <td style="padding:40px;padding-bottom:10px;width:100%;vertical-align:middle">
+            <td style="padding:20px;padding-bottom:10px;width:100%;vertical-align:middle">
               <strong>🧭 Selected Experience</strong> [<a href="https://www.linkedin.com/in/chenxin-li-a47861250/" target="_blank" rel="noopener">LinkedIn</a>] <hr>
 
               <ul style="margin: 0; padding-left: 18px;">
-                <li style="margin-bottom: 6px;"><strong>ByteDance Seed</strong>: Visual coding agent and CLI agent</li>
-                <li style="margin-bottom: 6px;"><strong>Tencent AI Lab</strong>: Tool-use and coding agents for Blender manipulation</li>
-                <li style="margin-bottom: 6px;"><strong>Ant Ling</strong>: Agent memory and context compression</li>
-                <li style="margin-bottom: 6px;"><strong>Giga AI</strong>: World model for embodied brains</li>
-                <li style="margin-bottom: 6px;"><strong>JoinQuant</strong>: Agentic RL for quant alpha-factor mining</li>
+                <li style="margin-bottom: 6px;"><strong>ByteDance Seed</strong>, Intern: Visual coding agent and CLI agent</li>
+                <li style="margin-bottom: 6px;"><strong>Tencent Hunyuan</strong>, Intern: Computer-use and phone-use agent</li>
+                <li style="margin-bottom: 6px;"><strong>Tencent AI Lab</strong>, Intern: Tool-use and coding agents for Blender manipulation</li>
+                <li style="margin-bottom: 6px;"><strong>Ant Ling</strong>, Intern: Agent memory and context compression</li>
+                <li style="margin-bottom: 6px;"><strong>ScholaGO</strong>, Co-founder, 2024: Agent for Education; co-founded <a href="https://www.tempb.com/companies/scholago-education-technology-company-limited/" target="_blank" rel="noopener">ScholaGO Education Technology Company Limited (学旅通教育科技有限公司)</a> to build LLM-powered multimodal learning products, supported by HKSTP, HK Tech 300, and Alibaba Cloud</li>
               </ul>
-
-              <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto; margin-top: 15px;"><tbody>
-                <tr style="padding:0px">
-                  <td style="padding:10px;width:15%;vertical-align:middle">
-                    <img src="data/images/edujourney.png" alt="ScholaGO" width="100%" style="border-radius:10px;">
-                  </td>
-                  <td style="padding:10px;width:85%;vertical-align:middle">
-                    <h4 style="color: #000000; margin-bottom: 10px;"><strong>ScholaGO (Co-founder)</strong>: LLM4Education Startup</h4>
-                    <p>
-Co-founded <a href="https://www.tempb.com/companies/scholago-education-technology-company-limited/" target="_blank" rel="noopener">ScholaGO Education Technology Company Limited (学旅通教育科技有限公司)</a>, building LLM-powered education products for immersive, interactive, multimodal learning. Supported by <em>HKSTP</em>, <em>HK Tech 300</em>, and <em>Alibaba Cloud</em>.
-                    </p>
-                  </td>
-                </tr>
-              </tbody></table>
             </td>
           </tr>
         </tbody></table>
@@ -552,7 +523,7 @@ Co-founded <a href="https://www.tempb.com/companies/scholago-education-technolog
 		                <strong>🎓 Professional Activities</strong>  <hr>
 		                <ul style="margin: 0; padding-left: 18px;">
 		                  <li><strong>Workshop Organizer:</strong> <a href="https://aim-fm.github.io/" target="_blank" rel="noopener">AIM-FM: Advancements In Foundation Models Towards Intelligent Agents</a> (NeurIPS 2024)</li>
-		                  <li><strong>Talks:</strong> "UKAN" at VALSE Summit (Jun 2025) and DAMTP, University of Cambridge (Jul 2024)</li>
+		                  <li><strong>Talks:</strong> VALSE Summit (Jun 2025) and DAMTP, University of Cambridge (Jul 2024)</li>
 		                  <li><strong>Conference Reviewer:</strong> ICLR, NeurIPS, ICML, ACL, CVPR, ICCV, ECCV, EMNLP, AAAI, ACM MM</li>
 		                  <li><strong>Journal Reviewer:</strong> Nature Machine Intelligence, PAMI, TIP, DMLR, PR, TNNLS</li>
 		                </ul>
