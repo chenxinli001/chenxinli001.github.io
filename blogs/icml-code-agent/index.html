@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>来自 ICML 的态势感知：关于 Code Agent | Chenxin Li</title>
-  <meta name="description" content="从 ICML 现场信号出发，分析 Code Agent 为什么成为第一个成熟的 Agent 训练任务模板。">
+  <title>An ICML Field Note on Code Agents | Chenxin Li</title>
+  <meta name="description" content="A field note from ICML on why Code Agent became the most concrete template for training agent capabilities.">
   <link rel="canonical" href="https://chenxinli001.github.io/blogs/icml-code-agent/">
+  <link rel="alternate" hreflang="en" href="https://chenxinli001.github.io/blogs/icml-code-agent/">
+  <link rel="alternate" hreflang="zh-CN" href="https://chenxinli001.github.io/blogs/icml-code-agent/zh/">
   <meta name="author" content="Chenxin Li">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="来自 ICML 的态势感知：关于 Code Agent">
-  <meta property="og:description" content="Code Agent 的热，指向的是 Agent 训练任务如何被定义：可执行、可反馈、可验证、可沉淀轨迹。">
+  <meta property="og:title" content="An ICML Field Note on Code Agents">
+  <meta property="og:description" content="Code Agent is becoming a concrete template for agent tasks: executable, feedback-rich, verifiable, and able to leave training trajectories.">
   <meta property="og:url" content="https://chenxinli001.github.io/blogs/icml-code-agent/">
   <meta property="og:image" content="https://chenxinli001.github.io/blogs/icml-code-agent/assets/code-agent-icml-cover.jpg">
   <link rel="stylesheet" href="../blogs.css?v=20260713-icml-code-agent">
@@ -336,118 +338,118 @@
   </style>
 </head>
 <body>
-  <main class="page-shell article-page zh-article icml-code-page">
+  <main class="page-shell article-page icml-code-page">
     <nav class="site-topbar" aria-label="Primary navigation">
       <a class="brand-link" href="../../">Chenxin Li</a>
-      <div class="topbar-links"><a href="../">Blogs</a><a href="#start">开始阅读</a></div>
+      <div class="topbar-links"><a href="../">Blogs</a><a href="./zh/">中文</a><a href="#start">Start reading</a></div>
     </nav>
 
     <article class="article-shell">
       <header class="article-hero">
-        <h1>来自 ICML 的态势感知：关于 Code Agent</h1>
-        <p class="article-subtitle">Code Agent 为什么成了这轮 Agent 讨论的中心？更重要的问题是：Agent 时代怎么定义可训练任务。</p>
-        <p class="publication-byline">Chenxin Li · 2026 年 7 月</p>
+        <h1>An ICML Field Note on Code Agents</h1>
+        <p class="article-subtitle">Why did Code Agent become the center of this round of Agent discussion? The deeper question is how the Agent era defines trainable tasks.</p>
+        <p class="publication-byline">Chenxin Li · July 2026</p>
       </header>
 
       <section class="article-section lead-section" id="start">
         <figure class="visual-figure generated-image-figure hero-cover">
-          <figcaption>图 1：Code Agent 的基本循环：理解任务、修改代码、运行反馈，再进入下一轮。</figcaption>
+          <figcaption>Figure 1: the basic Code Agent loop: understand the task, change code, run feedback, and enter the next iteration.</figcaption>
           <img src="./assets/code-agent-icml-cover.jpg" alt="ICML conference hall with researchers discussing code agents around laptops showing repositories, tests and debugging loops" loading="eager">
         </figure>
-        <div class="thesis-snapshot" aria-label="核心判断">
-          <p><strong>共识</strong> 大家对 Code Agent 的共识集中且确定：专项任务 Agent 里，它的商业前景和被训练出来的概率都很高。</p>
-          <p><strong>态势</strong> Agent 任务正在进入“一纵多横”的态势。纵向看能否提升模型智能上限；横向看是否有真实经济价值、商业价值和商业闭环。Code Agent 目前同时占住这两个层面，所以动量很大。</p>
-          <p><strong>纵向</strong> 值得训练、值得拿来提升模型智能上限的“纵向”任务，至少要满足两个基本条件：足够长程，足够好 verify。</p>
-          <p><strong>横向</strong> 适合横向扩展的任务，通常要有真实业务需求、清楚经济价值和可接入的工具 / 流程；最好还能被整理成 Code-like environment，让 Agent 可以执行、观察、验证和复盘。</p>
-          <p><strong>路径</strong> 接下来要分两条线看：纵向继续找新的可 scale 训练场；横向把更多高价值任务改造成 Code-like environment。</p>
+        <div class="thesis-snapshot" aria-label="Core thesis">
+          <p><strong>Consensus</strong> The consensus around Code Agent feels unusually concentrated and concrete: among specialized-task agents, it has both a high commercial ceiling and a high chance of being trainable.</p>
+          <p><strong>Map</strong> Agent tasks are moving into a one-vertical, many-horizontal pattern. Vertically, the question is whether a task can raise the intelligence ceiling of models. Horizontally, the question is whether it has real economic value, business value, and a business loop. Code Agent currently touches both.</p>
+          <p><strong>Vertical</strong> A vertical task worth training on, and worth using to lift the model's Agent capability, needs at least two properties: it must be long-horizon, and it must be easy to verify.</p>
+          <p><strong>Horizontal</strong> A horizontal task usually needs real demand, clear economic value, and an accessible tool or workflow surface. Ideally, it can also be shaped into a Code-like environment where the Agent can act, observe, verify, and replay.</p>
+          <p><strong>Path</strong> The next step is to watch two lines at once: vertically, keep looking for new scalable training fields; horizontally, reshape more high-value tasks into Code-like environments.</p>
         </div>
       </section>
 
-      <section class="article-section publication-toc" aria-label="目录">
-        <h2>阅读路线</h2>
+      <section class="article-section publication-toc" aria-label="Table of contents">
+        <h2>Reading route</h2>
         <ol class="toc-list">
-          <li><a href="#signal"><span>01</span> ICML上的Code Agent: 共识如此集中且确定</a></li>
-          <li><a href="#why"><span>02</span> Agent任务的“阡陌纵横”</a></li>
-          <li><a href="#shape"><span>03</span> Code 进可“纵”，退可“横”</a></li>
-          <li><a href="#players"><span>04</span> 新的横向任务从 Code 长出</a></li>
-          <li><a href="#future-horizontal"><span>05</span> 态势感知（I）：更多 Task 接入 Code Agent 的横向体系</a></li>
-          <li><a href="#future-vertical"><span>06</span> 态势感知（II）：现有横向任务有潜力成为未来的纵向</a></li>
-          <li><a href="#strategy"><span>07</span> 竞争策略：和“共识错开15 度夹角”</a></li>
+          <li><a href="#signal"><span>01</span> Code Agents at ICML: unusually concentrated consensus</a></li>
+          <li><a href="#why"><span>02</span> The vertical and horizontal map of Agent tasks</a></li>
+          <li><a href="#shape"><span>03</span> Code can go vertical and expand horizontal</a></li>
+          <li><a href="#players"><span>04</span> New horizontal tasks are growing out of Code</a></li>
+          <li><a href="#future-horizontal"><span>05</span> Field sensing (I): more tasks joining the Code Agent horizontal system</a></li>
+          <li><a href="#future-vertical"><span>06</span> Field sensing (II): today's horizontal tasks may become tomorrow's vertical tasks</a></li>
+          <li><a href="#strategy"><span>07</span> Competitive strategy: stand 15 degrees away from consensus</a></li>
         </ol>
       </section>
 
       <section class="article-section" id="signal">
-        <h2>ICML上的Code Agent: 共识如此集中且确定</h2>
-        <p>七月的首尔很热，空气里有潮湿的海风，也有会场空调和咖啡混在一起的味道。ICML 的大厅里，人群从 poster 区流到走廊，再从走廊流回一张张临时拼出来的小桌。有人抱着电脑讲 eval，有人在白板前画 RL pipeline，也有人只是站在扶梯口，把一个还没成形的想法讲给刚认识的人听。</p>
-        <p>在这种嘈杂里，一个信号反而变得很清楚：话题总会绕回 Code。做开发者工具的人在谈 Code Agent，模型公司在谈 Code RL，聊模型能力、评测、infra、量化和金融场景、研究流程自动化的人，最后也很容易落到同一个问题：如果要训出一个真正能做事的专项 Agent，Code 是不是眼下最确定的入口？</p>
-        <p>这种确定性有点少见。过去两年，很多 Agent 叙事都很大：通用助理、全能员工、自动公司。但到了真实讨论里，大家其实更关心一个朴素的问题：它能不能先在一个任务域里稳定创造价值？Code Agent 在这里显得扎实。软件工程本身就是高价值工作，量化、金融、企业 infra、内部工具链里也到处都是代码和胶水流程。一个面向专项任务的 Code Agent 只要能稳定工作，就会直接变成生产力。</p>
-        <p>我印象比较深的是和一个量化公司的人聊天。他说他们老板这次下场很直接：在当前阶段，投入多少钱、多久能覆盖成本、能不能迅速转成利润，这件事的确定性空前高。过去很多 Agent 故事还停在愿景里，但 Code 不一样，它直接贴着生产系统、研究流程和交易 infra。一旦能把一部分工程、研究、调试和维护链路稳定自动化，账是可以算出来的，所以资金和团队会更快入场。</p>
+        <h2>Code Agents at ICML: unusually concentrated consensus</h2>
+        <p>Seoul in July was hot. The air had a damp coastal smell, mixed with conference-room air conditioning and coffee. Inside the ICML hall, people moved from the poster area into the corridors, then back to small tables that looked temporarily assembled for one more conversation. Some people were explaining evals over laptops. Some were drawing RL pipelines on whiteboards. Some were standing near the escalators, trying an unfinished thought on someone they had just met.</p>
+        <p>Inside that noise, one signal became clearer: the conversation kept returning to Code. Developer-tool teams were talking about Code Agents. Model companies were talking about Code RL. Conversations about model capability, evaluation, infra, quant and finance workflows, and research automation all tended to land on the same question: if we want to train a specialized Agent that can actually do work, is Code the most certain entry point right now?</p>
+        <p>This degree of certainty feels rare. Over the past two years, many Agent narratives were large: universal assistants, AI employees, automated companies. In real conversations, people cared about a more basic question: can it create value reliably inside one task domain first? Code Agent feels grounded here. Software engineering is already high-value work. Quant, finance, enterprise infra, and internal toolchains are full of code and glue workflows. If a specialized Code Agent works reliably, it becomes productivity directly.</p>
+        <p>One conversation with someone from a quant firm stayed with me. He said his boss was entering the space very directly because the current stage has an unusually clear path from spending to profit coverage: how much to invest, how quickly the cost can be covered, and whether the output can turn into profit. Many Agent stories still sit at the level of vision. Code is closer to production systems, research workflows, and trading infra. Once part of the engineering, research, debugging, and maintenance chain can be automated reliably, the math becomes visible, and money and teams move faster.</p>
         <figure class="visual-figure generated-image-figure conference-photo">
-          <figcaption>图 2：ICML 现场交流中，Code、Agent、评测与训练环境反复交织。</figcaption>
+          <figcaption>Figure 2: at ICML, Code, Agent, evaluation, and training environments kept crossing in hallway conversations.</figcaption>
           <img src="./assets/seoul-conference-atmosphere.jpg" alt="Conference atmosphere in Seoul with researchers and laptops" loading="lazy">
         </figure>
-        <p>所以这次在 ICML 上，我听到的是一种收束：很多原本分散的路线，开始承认 Code Agent 是一个足够清楚的任务模板。它既有商业价值，也有训练价值；既能做真实事情，也能沉淀 trajectory；既能服务一个明确场景，又能逼出模型的长链路执行能力。</p>
-        <p>进一步看，很多新任务正在顺着 Code Agent 的能力长出来。Cyber 网络安全、EDA / 电路设计、Science / research task、生物制药、Auto Research，都在尝试把自己的任务整理成可执行、可验证、可复盘的形式。它们现在看起来像横向应用，但如果任务足够长程、反馈足够清楚，也可能慢慢长成新的纵向训练场。Code 的热度真正重要的地方在于，它让大家第一次比较具体地看见：Agent 任务到底应该长什么样。</p>
+        <p>What I heard at ICML was a kind of convergence. Many previously scattered routes are beginning to recognize Code Agent as a sufficiently concrete task template. It has commercial value and training value. It does real work and leaves trajectories. It serves a clear task domain and also pressures models to develop long-horizon execution capability.</p>
+        <p>New tasks are also growing along the capability surface of Code Agent. Cybersecurity, EDA and circuit design, science and research tasks, biopharma, and Auto Research are all trying to organize their work into executable, verifiable, replayable forms. For now they look like horizontal applications. If the tasks become long enough and the feedback becomes clear enough, some of them may grow into new vertical training fields. The important part of Code's heat is that it gives people a more concrete picture of what an Agent task should look like.</p>
       </section>
 
       <section class="article-section" id="why">
-        <h2>Agent任务的“阡陌纵横”</h2>
-        <p>我现在更愿意用“一纵多横”来看 Agent 任务。纵向看的是模型智能上限：一个任务能不能持续训练模型的长链路执行、工具使用、状态追踪、错误恢复和验证意识。横向看的是经济价值和业务厚度：这个任务域有没有真实需求、真实预算、真实流程，能不能变成可持续的生产力。</p>
-        <p>Code 的特别之处，是它同时站住了纵向和横向。横向看，软件工程、量化、金融、企业 infra 都有真实高价值任务；纵向看，Code 又是一个可验证、长程、反馈密集、能规模化构造任务的训练环境。应用价值和训练价值两边都很强。</p>
-        <div class="reason-grid" aria-label="四层原因">
-          <div class="reason-card"><em>01</em><strong>真实任务分布</strong><span>issue、测试、迁移、重构、调试和维护持续发生，任务不会停在少数 benchmark 题目里。</span></div>
-          <div class="reason-card"><em>02</em><strong>反馈细且便宜</strong><span>lint、type check、compile error、unit test、runtime error、CI、diff review 都能给局部反馈。</span></div>
-          <div class="reason-card"><em>03</em><strong>天然 long-horizon</strong><span>真实 coding task 要读 repo、定位文件、跨文件修改、运行测试、debug、再修正，天然拉成长链路。</span></div>
-          <div class="reason-card"><em>04</em><strong>可兼容任务模板</strong><span>很多 Agent 任务可以被改造成 CoT / Code-like 形式，从而被 Code 的执行模板兼容。</span></div>
+        <h2>The vertical and horizontal map of Agent tasks</h2>
+        <p>I now find it more useful to view Agent tasks through a one-vertical, many-horizontal frame. The vertical axis is the model intelligence ceiling: can this task continuously train long-horizon execution, tool use, state tracking, error recovery, and verification awareness? The horizontal axis is economic value and task depth: does this domain have real demand, real budgets, real workflows, and a path to sustained productivity?</p>
+        <p>Code is special because it stands on both axes. Horizontally, software engineering, quant, finance, and enterprise infra all contain real high-value tasks. Vertically, Code is also verifiable, long-horizon, feedback-rich, and scalable as a training environment. Its application value and training value are both strong.</p>
+        <div class="reason-grid" aria-label="Four reasons">
+          <div class="reason-card"><em>01</em><strong>Real task distribution</strong><span>Issues, tests, migrations, refactors, debugging, and maintenance keep happening. The tasks do not stop at a few benchmark problems.</span></div>
+          <div class="reason-card"><em>02</em><strong>Dense and cheap feedback</strong><span>Lint, type checks, compile errors, unit tests, runtime errors, CI, and diff review all provide local feedback.</span></div>
+          <div class="reason-card"><em>03</em><strong>Naturally long-horizon</strong><span>Real coding tasks require reading the repo, finding files, making cross-file changes, running tests, debugging, and revising.</span></div>
+          <div class="reason-card"><em>04</em><strong>Reusable task template</strong><span>Many Agent tasks can be reshaped into CoT / Code-like forms and become compatible with Code's execution template.</span></div>
         </div>
-        <div class="reason-deep-dive" aria-label="四层原因展开">
+        <div class="reason-deep-dive" aria-label="Four reasons in depth">
           <div class="reason-block">
-            <h3>第一层：任务足够真实，也足够多</h3>
-            <p>一个训练场如果没有真实经济价值，很难长期产生足够多、足够复杂、足够真实的任务。软件工程刚好相反：公司每天都有 issue、迁移、测试、重构、调试、集成、部署、代码审查和系统维护。这些任务本来就在真实生产里发生，有自然的需求和成本。</p>
-            <p>这点很重要。Agent 训练需要任务分布，几个漂亮样例不够。Code 的优势是任务分布天然存在，而且任务本身有代价、有上下文、有历史约束。量化、金融、企业软件、数据平台和内部 infra 也有大量业务代码和胶水代码，Code 因此连接着真实组织运行，而不只停在开源 repo 题目里。</p>
+            <h3>Layer 1: the tasks are real, and there are many of them</h3>
+            <p>A training field without real economic value will struggle to produce enough complex, realistic tasks over time. Software engineering is the opposite. Companies deal with issues, migrations, tests, refactors, debugging, integrations, deployment, code review, and system maintenance every day. These tasks already exist in production, with natural demand and cost.</p>
+            <p>This matters. Agent training needs a task distribution; a handful of nice examples is not enough. Code's advantage is that the distribution already exists, and the tasks carry cost, context, and historical constraints. Quant, finance, enterprise software, data platforms, and internal infra also contain large volumes of business code and glue code. Code therefore connects directly to how organizations operate, not just to open-source repo puzzles.</p>
           </div>
 
           <div class="reason-block">
-            <h3>第二层：反馈最密，也最便宜</h3>
-            <p>Agent 做完一个动作之后，最需要的是可靠反馈。很多现实任务的反馈很慢、很贵、很模糊：写一份战略报告对不对，要过很久才知道；做一个销售动作有没有用，要等客户反应；甚至 GUI 自动化任务，也经常只有稀疏的成功或失败。</p>
-            <p>Code 的优势在于反馈极其密集。lint、type check、compile error、unit test、runtime error、CI、diff review、benchmark regression，每一步都能告诉 Agent：哪里错了、错得多具体、下一步该往哪个方向修。更关键的是，这些反馈多数已经存在于工程系统里，不需要重新发明一套评价机制。</p>
-            <p>训练会直接吃这类反馈：它可以变成 reward、trajectory、repair data，也可以用来分析模型到底卡在定位、修改、验证还是错误恢复上。对 Agent 来说，反馈越密，越容易把一次失败变成下一步动作，避免只得到一个笼统的错。</p>
+            <h3>Layer 2: the feedback is dense and cheap</h3>
+            <p>After an Agent takes an action, it needs reliable feedback. Many real-world tasks have slow, expensive, vague feedback. A strategy report may take months to prove useful. A sales action depends on customer response. Even GUI automation often receives only a sparse success or failure signal.</p>
+            <p>Code has unusually dense feedback. Lint, type checks, compile errors, unit tests, runtime errors, CI, diff review, and benchmark regressions all tell the Agent where it went wrong, how specific the failure is, and where the next repair might go. Most of this feedback already exists in engineering systems. We do not need to invent an evaluation mechanism from scratch.</p>
+            <p>Training can consume this feedback directly. It can become reward, trajectory data, repair data, or a diagnostic lens for whether the model is stuck at localization, modification, verification, or recovery. For an Agent, dense feedback makes it easier to turn one failure into the next action instead of receiving a single vague wrong answer.</p>
           </div>
 
           <div class="reason-block">
-            <h3>第三层：真实任务天然是 long-horizon</h3>
-            <p>很多 Agent 能力不会在单轮 chatbot 里自然长出来。上下文选择、计划调整、工具调用、错误恢复、状态追踪、验证意识，这些能力只有在长链路任务中才会暴露。真实软件工程刚好就是这样的任务：读 issue、理解 repo、定位文件、跨文件修改、运行测试、根据错误回头修，再检查有没有破坏其他路径。</p>
-            <p>传统代码补全关心下一段 token 或下一段函数；Code Agent 关心的是一个持续变化的工作状态。它要知道自己改过什么、为什么改、下一步验证什么、失败后如何回滚或换方向。这类能力更接近“执行者”，不像普通问答模型。</p>
-            <p>Code Agent 的意义还在于给模型提供了一个复杂、可验证、能反复失败和修正的环境。这个环境越真实，越能逼出 Agent 需要的长链路执行能力。</p>
+            <h3>Layer 3: real tasks are naturally long-horizon</h3>
+            <p>Many Agent capabilities do not naturally appear in single-turn chat. Context selection, plan adjustment, tool calling, error recovery, state tracking, and verification awareness only become visible in long-chain tasks. Real software engineering has exactly this shape: read the issue, understand the repo, locate the files, modify across files, run tests, follow the error back, and check whether other paths broke.</p>
+            <p>Traditional code completion cares about the next token or the next function. Code Agent cares about a changing work state. It needs to know what it changed, why it changed it, what to verify next, and how to roll back or try another direction after failure. This is closer to an executor than a question-answering model.</p>
+            <p>The meaning of Code Agent is that it gives the model a complex, verifiable environment where it can fail, recover, and revise repeatedly. The more realistic that environment becomes, the more pressure it places on the long-horizon execution capabilities Agents need.</p>
           </div>
 
           <div class="reason-block">
-            <h3>第四层：Code格式是最通用的Agent和环境模板</h3>
-            <p>Code 的通用性来自很多 Agent 动作本来就可以被代码化，并不要求所有任务最后都写成 Python。MCP / Tool Use 是一个例子：外部系统被包装成 typed tools 以后，Agent 可以用接近写代码的方式调用日历、数据库、浏览器、内部系统和业务 API。GUI 也是类似的：点击、输入、拖拽、读取页面状态，看起来是界面操作，但如果抽象成 action schema、UI state 和 replay trace，本质上也能进入 Code-style loop。</p>
-            <p>视觉任务也有类似趋势。很多 vision 任务可以通过代码组织成检测、裁剪、OCR、坐标定位、工具调用和验证的流程。像 Kimi 的 zero-vision 思路，本质上也是把视觉问题拆成可执行步骤，让模型通过代码和工具去处理视觉信息，避免把视觉理解完全压在一次端到端回答里。</p>
-            <p>更底层地看，数字世界里的环境本来就是用 Code 搭起来的。网页、App、数据库、文档系统、交易系统、实验平台、企业工作流，所谓“环境”通常是一组由代码定义的状态、接口和规则。Agent 要进入这些环境，最自然的中间层往往还是 Code：用代码调用工具，用代码读取状态，用代码改变世界，再用代码或规则验证结果。</p>
-            <p>所以 Code Agent 真正留下的是一种 Agent 任务模板和环境模板：任务被放进一个可操作的数字环境，Agent 通过 action 改变状态，verifier 判断结果，trajectory 留下来继续训练。谁能把自己的任务域整理成这个模板，谁就更容易接入下一阶段的 Agent 能力。</p>
+            <h3>Layer 4: Code is the most general Agent and environment template</h3>
+            <p>Code is general because many Agent actions can already be code-shaped. This does not mean every task must end as Python. MCP / Tool Use is one example: once external systems are wrapped as typed tools, the Agent can call calendars, databases, browsers, internal systems, and business APIs in a way that resembles writing code. GUI is similar. Clicks, typing, dragging, and reading page state look like interface operations, but once they become action schemas, UI state, and replay traces, they can enter a Code-style loop.</p>
+            <p>Vision tasks show the same tendency. Many vision problems can be organized through detection, cropping, OCR, coordinate localization, tool calling, and verification. Kimi's zero-vision style is one example of this broader direction: break a vision problem into executable steps and let the model use code and tools to process visual information, instead of compressing visual understanding into one end-to-end answer.</p>
+            <p>At a deeper level, the digital world's environments are built with code. Websites, apps, databases, document systems, trading systems, experiment platforms, and enterprise workflows are all states, interfaces, and rules defined by software. When an Agent enters these environments, the natural middle layer is often still Code: use code to call tools, read state, change the world, and verify the result through code or rules.</p>
+            <p>Code Agent therefore leaves behind an Agent task template and an environment template. A task enters an operable digital environment. The Agent changes state through actions. A verifier judges the result. The trajectory is kept for future training. Any task domain that can organize itself into this template will be easier to connect to the next stage of Agent capability.</p>
               <figure class="visual-figure loop-figure">
-                <figcaption>图 3：Code-style Agent loop：任务进入数字环境，Agent 调用工具、操作界面、处理视觉信息，并留下可复盘轨迹。</figcaption>
+                <figcaption>Figure 3: Code-style Agent loop: a task enters a digital environment; the Agent calls tools, operates interfaces, processes visual information, and leaves replayable trajectories.</figcaption>
                 <svg viewBox="0 0 980 430" role="img" aria-label="Code-style Agent loop diagram">
                   <defs>
                     <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#5e2e14"></path></marker>
                   </defs>
                   <rect x="28" y="52" width="168" height="86" rx="8"></rect>
-                  <text x="112" y="88" text-anchor="middle" class="label">任务 / Goal</text>
-                  <text x="112" y="114" text-anchor="middle" class="detail">目标、约束、上下文</text>
+                  <text x="112" y="88" text-anchor="middle" class="label">Task / Goal</text>
+                  <text x="112" y="114" text-anchor="middle" class="detail">goal, constraints, context</text>
 
                   <rect x="272" y="52" width="176" height="86" rx="8" class="soft"></rect>
                   <text x="360" y="88" text-anchor="middle" class="label">Digital Env</text>
-                  <text x="360" y="114" text-anchor="middle" class="detail">工具、界面、状态</text>
+                  <text x="360" y="114" text-anchor="middle" class="detail">tools, UI, state</text>
 
                   <rect x="524" y="52" width="176" height="86" rx="8"></rect>
                   <text x="612" y="88" text-anchor="middle" class="label">Agent Action</text>
-                  <text x="612" y="114" text-anchor="middle" class="detail">MCP、GUI、vision tool</text>
+                  <text x="612" y="114" text-anchor="middle" class="detail">MCP, GUI, vision tools</text>
 
                   <rect x="776" y="52" width="176" height="86" rx="8" class="soft"></rect>
                   <text x="864" y="88" text-anchor="middle" class="label">Verifier</text>
-                  <text x="864" y="114" text-anchor="middle" class="detail">测试、指标、回放、规则</text>
+                  <text x="864" y="114" text-anchor="middle" class="detail">tests, metrics, replay, rules</text>
 
                   <path d="M196 95 H268" class="flow-line" marker-end="url(#arrow)"></path>
                   <path d="M448 95 H520" class="flow-line" marker-end="url(#arrow)"></path>
@@ -456,11 +458,11 @@
 
                   <rect x="174" y="260" width="210" height="96" rx="8"></rect>
                   <text x="279" y="298" text-anchor="middle" class="label">State Change</text>
-                  <text x="279" y="324" text-anchor="middle" class="detail">系统状态被真实改动</text>
+                  <text x="279" y="324" text-anchor="middle" class="detail">world state is changed</text>
 
                   <rect x="594" y="260" width="210" height="96" rx="8" class="soft"></rect>
                   <text x="699" y="298" text-anchor="middle" class="label">Trajectory Data</text>
-                  <text x="699" y="324" text-anchor="middle" class="detail">action、observation、failure、repair</text>
+                  <text x="699" y="324" text-anchor="middle" class="detail">action, observation, failure, repair</text>
 
                   <path d="M784 138 C790 204 740 230 704 258" class="flow-line" marker-end="url(#arrow)"></path>
                   <path d="M612 138 C610 202 440 248 386 292" class="flow-line" marker-end="url(#arrow)"></path>
@@ -468,130 +470,130 @@
                   <path d="M699 260 C640 212 488 192 370 140" class="flow-line" marker-end="url(#arrow)"></path>
                 </svg>
               </figure>
-            <p>这点和 LM 时代有一个类比。LLM 能统一很多任务，是因为写作、翻译、总结、问答、推理都能被压到 token prediction 和 chat 交互里。Agent 时代也需要类似的统一外壳。现在最成熟的外壳是 Code 这种可执行工作循环：它把任务、环境、行动、验证和轨迹放到同一个闭环里。</p>
+            <p>There is an analogy to the LM era. LLMs unified many tasks because writing, translation, summarization, Q&A, and reasoning could be compressed into token prediction and chat interaction. The Agent era also needs a shared outer form. The most mature one today is the executable work loop that Code provides: task, environment, action, verification, and trajectory inside one cycle.</p>
           </div>
         </div>
       </section>
 
       <section class="article-section" id="shape">
-        <h2>Code 进可“纵”，退可“横”</h2>
-        <p>所以 Code 这件事最有意思的地方，在于它同时站在两个方向上。往纵向看，它是训练 Agent 能力的环境；往横向看，它又是一个真实、昂贵、高频的生产任务域。这也是为什么大家会在 ICML 的不同讨论里反复绕回 Code：它能同时解释训练和商业。</p>
-        <p>先说“进可纵”。一个好的纵向训练场，至少要足够长程、足够好 verify。Code 两个条件都很强：真实任务需要读 repo、理解上下文、跨文件修改、运行测试、debug、回滚，再确认有没有破坏其他路径。这里面每一步都在考模型的规划、状态追踪、工具调用和错误恢复。模型只靠单轮聊天，很难稳定长出这些能力；但放进工程环境里，它必须一边做事，一边根据反馈修正自己。</p>
-        <p>这也是 Code 对训练有吸引力的原因。它给模型一个持续变化的工作现场。Agent 今天改了哪些文件，为什么这么改，测试为什么失败，下一步是补依赖、改逻辑还是回滚，这些都会变成 trajectory。对训练来说，这比一个最终分数更有价值，因为中间过程本身就能告诉你模型卡在哪里。</p>
-        <p>再说“退可横”。Code 本身就是很厚的商业任务域。软件工程、量化、金融、企业 infra、数据平台、研究工具链，都有大量读代码、改代码、调系统、接工具、维护流程的工作。这些工作本来就在组织里发生，组织每天都要付钱解决。只要 Code Agent 能稳定吃掉其中一部分，价值就很直接。</p>
-        <p>所以 Code 的位置很特殊：它往上可以变成训练模型 Agent 能力的纵向场景，往外可以变成覆盖真实工作流的横向场景。很多方向只能回答其中一个问题：要么商业价值很清楚，但训练信号太弱；要么评测很清楚，但离真实生产太远。Code 现在难得的是，两边都能回答，所以它才会成为这一轮 Agent 讨论里最集中的共识。</p>
+        <h2>Code can go vertical and expand horizontal</h2>
+        <p>The most interesting thing about Code is that it stands in both directions. Vertically, it is an environment for training Agent capabilities. Horizontally, it is a real, expensive, frequent production task domain. That is why people in different ICML conversations kept returning to Code: it explains both training and business.</p>
+        <p>Start with the vertical side. A good vertical training field needs to be long-horizon and easy to verify. Code is strong on both. Real tasks require reading the repo, understanding context, modifying across files, running tests, debugging, rolling back, and checking whether other paths broke. Every step tests planning, state tracking, tool use, and error recovery. A model will not reliably grow these capabilities through single-turn chat. In an engineering environment, it has to act and revise itself through feedback.</p>
+        <p>This is why Code is attractive for training. It gives the model a changing work site. Which files did the Agent change today, why did it change them, why did the tests fail, should the next step be dependency repair, logic repair, or rollback? All of this becomes trajectory. For training, this is more valuable than a final score because the intermediate process shows where the model is stuck.</p>
+        <p>The horizontal side is just as important. Code is a thick commercial task domain. Software engineering, quant, finance, enterprise infra, data platforms, and research toolchains all involve reading code, changing code, debugging systems, connecting tools, and maintaining workflows. These jobs already happen inside organizations, and organizations already pay to solve them. If a Code Agent can reliably absorb part of this work, the value is direct.</p>
+        <p>So Code occupies a rare position. It can move upward into a vertical scene for training Agent capability, and outward into a horizontal scene for covering real workflows. Many directions can answer only one side: commercial value may be clear but the training signal is weak, or evaluation may be clear but the task is far from production. Code currently answers both sides, which is why it became the most concentrated consensus in this round of Agent discussion.</p>
       </section>
 
       <section class="article-section" id="players">
-        <h2>新的横向任务从 Code 长出</h2>
-        <p>横向的变化也很明显。很多任务开始学习 Code 的任务组织方式。它们把原本松散的业务流程，改写成更像工程任务的形态：有环境，有工具，有中间状态，有结果检查，也有失败后的修正路径。这个变化比“给行业套一个 chatbot”更重要。</p>
-        <p>我在现场更明显看到的是几类外溢。第一类是 Auto Research，大家在想怎么把研究过程拆成可执行、可追踪、可验证的 Agent 工作流；第二类是 Cyber，安全任务本来就有扫描、利用、修复、验证和复现，天然接近 Code Agent 的工作循环；第三类是 EDA / 电路设计，RTL、仿真、综合、约束、timing 和验证本来就是强工具链环境；第四类是 Bioscience，尤其是生物制药，它有实验、数据、脚本、指标和复现链路；第五类是更广义的 Science，很多科研流程也在被重新整理成可执行、可追踪的任务环境。</p>
-        <ol class="observation-list" aria-label="横向任务观察">
-          <li><strong>Auto Research</strong><span>这里看到的是把选题、检索、实验脚本、数据分析、图表、报告和复现串成工作流。它更接近“研究过程自动化”，单点问答只能覆盖很小一部分。</span></li>
-          <li><strong>Cyber</strong><span>安全任务天然有工具链、沙箱、扫描、利用、修复和验证，链路长，反馈也更清楚，所以很容易被拿来对齐 Code Agent 的工作循环。</span></li>
-          <li><strong>EDA / 电路设计</strong><span>电路设计有 RTL、netlist、仿真、综合、约束、timing closure 和 formal verification。Agent 如果能进入这套工具链，反馈会比很多开放任务硬得多。</span></li>
-          <li><strong>Bioscience / 生物制药</strong><span>生物制药有实验设计、数据处理、脚本、指标、复现和合规约束。如果这些流程被整理成环境，就会很接近新的 Agent 任务场。</span></li>
-          <li><strong>其他 Science</strong><span>更广义的科学研究也在往这个方向靠：文献、数据、实验记录、模拟、分析脚本和报告，可以被串成更长的执行链路。</span></li>
+        <h2>New horizontal tasks are growing out of Code</h2>
+        <p>The horizontal change is also visible. Many tasks are learning Code's way of organizing work. They are taking loose business processes and reshaping them into something more like engineering tasks: an environment, tools, intermediate state, result checks, and repair paths after failure. This shift matters more than placing a chatbot on top of an industry.</p>
+        <p>The spillover I saw most clearly falls into several groups. First is Auto Research: people are trying to break research into executable, traceable, verifiable Agent workflows. Second is Cyber: security already has scanning, exploitation, repair, verification, and reproduction, making it naturally close to the Code Agent loop. Third is EDA and circuit design: RTL, simulation, synthesis, constraints, timing, and verification already live inside a strong toolchain. Fourth is Bioscience, especially biopharma, with experiments, data, scripts, metrics, and reproduction chains. Fifth is broader Science, where many research workflows are being reorganized into executable, traceable task environments.</p>
+        <ol class="observation-list" aria-label="Horizontal task observations">
+          <li><strong>Auto Research</strong><span>The interesting part is turning topic selection, search, experiment scripts, data analysis, figures, reports, and reproduction into a workflow. It is closer to research-process automation; one-shot Q&A only covers a small part.</span></li>
+          <li><strong>Cyber</strong><span>Security tasks naturally have toolchains, sandboxes, scanning, exploitation, repair, and verification. The chain is long, and the feedback is clearer, so it maps well to the Code Agent work loop.</span></li>
+          <li><strong>EDA / circuit design</strong><span>Circuit design has RTL, netlists, simulation, synthesis, constraints, timing closure, and formal verification. If an Agent can enter this toolchain, the feedback is harder than many open-ended tasks.</span></li>
+          <li><strong>Bioscience / biopharma</strong><span>Biopharma involves experiment design, data processing, scripts, metrics, reproduction, and compliance constraints. Once these processes are organized into environments, they become close to new Agent task fields.</span></li>
+          <li><strong>Other Science</strong><span>Broader scientific research is moving in the same direction: literature, data, experiment logs, simulations, analysis scripts, and reports can be chained into longer execution paths.</span></li>
         </ol>
-        <p>这些方向现在看起来是横向外溢：它们先接住真实业务需求，先解决具体场景里的效率问题。但它们真正值得看的地方，是有没有可能沉淀出稳定任务分布。如果一个领域里每天都有高价值任务发生，而且任务过程能被记录、验证和复盘，它就不会只是一个 demo 场景，而会开始靠近 Code 的位置。</p>
-        <p>所以“从 Code 长出”指的是新的任务域正在被 Code 的格式重新组织。所有事情不需要都变成写代码；关键是把自己的领域改造成 Agent 可以长期工作的环境。</p>
+        <p>These directions currently look like horizontal spillover. They first absorb real demand and solve efficiency problems in specific scenes. The real question is whether they can produce stable task distributions. If a field has high-value tasks happening every day, and the task process can be recorded, verified, and replayed, it will begin to move closer to Code rather than remain a demo scene.</p>
+        <p>That is what I mean by growing out of Code. New task domains are being reorganized by Code's format. They do not all need to become software development. The key is whether the domain can become an environment where Agents can work for a long time.</p>
       </section>
 
       <section class="article-section" id="future-horizontal">
-        <h2>态势感知（I）：更多 Task 接入 Code Agent 的横向体系</h2>
-        <p>接下来几个月，横向会先变得更热。更多任务会接入 Code Agent 的横向体系：Auto Research、Cyber、EDA / 电路设计、数据分析、科研实验、生物制药、GUI / Browser。它们不一定一开始就是新的训练场，但会先学习 Code Agent 的任务组织方式：把任务拆成可执行步骤，把环境状态暴露出来，把反馈和验证接进工作流。</p>
-        <p>这里的“接入”要把真实工作流拆开，放进一个 Agent 能够持续工作的环境里。任务入口要清楚，工具调用要稳定，中间状态要能被看见，最后结果要能被检查。只有这样，Agent 才会从一次性回答变成在任务场里反复行动。</p>
-        <p>所以这条线看的是真实任务域能否被改造成 Code-like environment。比如 GUI 方向要解决的是状态表示和回放，Cyber 要解决的是安全边界和可复现环境，EDA 要解决的是工具链接入、仿真反馈、约束生成和 timing closure，Bio / Science 要解决的是实验流程和指标验证，数据分析要解决的是数据、脚本、图表和结论之间的闭环。这些问题看起来很工程，但正是横向任务能不能进入 Agent 体系的门槛。</p>
-        <p>横向任务越厚，越能提供真实需求、真实预算、真实流程，也越有机会反过来成为模型能力增长的燃料。短期看，它们会先以工具、MCP、workflow、harness 的形式接进来；长期看，其中少数任务如果积累出稳定环境和稳定反馈，就可能继续往纵向走。</p>
+        <h2>Field sensing (I): more tasks joining the Code Agent horizontal system</h2>
+        <p>Over the next few months, the horizontal side will heat up first. More tasks will join the Code Agent horizontal system: Auto Research, Cyber, EDA and circuit design, data analysis, scientific experiments, biopharma, GUI and browser tasks. They may not become new training fields at the beginning. They will first learn Code Agent's task organization method: split work into executable steps, expose environment state, and connect feedback and verification into the workflow.</p>
+        <p>This kind of joining requires taking real workflows apart and placing them inside an environment where an Agent can continue working. The task entry needs to be clear. Tool calls need to be stable. Intermediate state needs to be visible. The final result needs to be checkable. Only then does the Agent move from one-time answering into repeated action inside a task field.</p>
+        <p>This line is about whether real task domains can be reshaped into Code-like environments. GUI needs state representation and replay. Cyber needs safety boundaries and reproducible environments. EDA needs toolchain access, simulation feedback, constraint generation, and timing closure. Bio and Science need experiment workflows and metric verification. Data analysis needs a loop across data, scripts, charts, and conclusions. These sound like engineering problems, but they are the gate that determines whether a horizontal task can enter the Agent system.</p>
+        <p>The thicker a horizontal task becomes, the more it provides real demand, real budgets, and real workflows. It also becomes more likely to feed model capability growth. In the short run, these tasks will enter as tools, MCP surfaces, workflows, and harnesses. In the long run, a small number of them may accumulate stable environments and stable feedback, then continue moving toward the vertical side.</p>
         <figure class="visual-figure lane-figure">
-          <figcaption>图 4：一纵多横：纵向看能否成为可 scale 的 Agent 训练场，横向看真实任务域。</figcaption>
+          <figcaption>Figure 4: one vertical and many horizontals: vertically, can the task become a scalable Agent training field; horizontally, how thick is the real task domain?</figcaption>
           <svg viewBox="0 0 980 430" role="img" aria-label="Vertical and horizontal axes for future agent opportunities">
             <defs>
               <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#5e2e14"></path></marker>
             </defs>
             <rect x="580" y="54" width="320" height="128" rx="10" class="target-zone"></rect>
-            <text x="740" y="80" text-anchor="middle" class="target-label">横纵都强：下一代训练场</text>
-            <text x="740" y="106" text-anchor="middle" class="detail">真实任务域 + scale Agent 能力</text>
+            <text x="740" y="80" text-anchor="middle" class="target-label">Strong on both axes</text>
+            <text x="740" y="106" text-anchor="middle" class="detail">real domain + scalable Agent training</text>
 
             <path d="M130 360 H910" class="axis-line" marker-end="url(#arrow2)"></path>
             <path d="M130 360 V42" class="axis-line" marker-end="url(#arrow2)"></path>
-            <text x="910" y="398" text-anchor="end" class="axis-title">横向：真实任务域更厚</text>
-            <text x="148" y="34" class="axis-title">纵向：训练能力更强</text>
-            <text x="150" y="384" class="axis-caption">任务分布薄</text>
-            <text x="770" y="384" class="axis-caption">高价值任务域</text>
-            <text x="22" y="332" class="axis-caption">训练信号弱</text>
+            <text x="910" y="398" text-anchor="end" class="axis-title">Horizontal: thicker real task domain</text>
+            <text x="148" y="34" class="axis-title">Vertical: stronger training value</text>
+            <text x="150" y="384" class="axis-caption">thin task distribution</text>
+            <text x="770" y="384" class="axis-caption">high-value task domain</text>
+            <text x="22" y="332" class="axis-caption">weak training signal</text>
             <text x="22" y="92" class="axis-caption">verified / long-horizon</text>
 
             <rect x="205" y="238" width="210" height="74" rx="8"></rect>
-            <text x="310" y="268" text-anchor="middle" class="label">Demo / 噪声区</text>
-            <text x="310" y="292" text-anchor="middle" class="detail">难验证，轨迹也弱</text>
+            <text x="310" y="268" text-anchor="middle" class="label">Demo / noise zone</text>
+            <text x="310" y="292" text-anchor="middle" class="detail">hard to verify, weak traces</text>
 
             <rect x="560" y="244" width="228" height="78" rx="8"></rect>
-            <text x="674" y="274" text-anchor="middle" class="label">横向任务域</text>
-            <text x="674" y="298" text-anchor="middle" class="detail">需求真，任务密</text>
+            <text x="674" y="274" text-anchor="middle" class="label">Horizontal domain</text>
+            <text x="674" y="298" text-anchor="middle" class="detail">real demand, dense tasks</text>
 
             <rect x="220" y="86" width="230" height="80" rx="8"></rect>
-            <text x="335" y="118" text-anchor="middle" class="label">纵向训练场</text>
-            <text x="335" y="142" text-anchor="middle" class="detail">可验证，能 scale</text>
+            <text x="335" y="118" text-anchor="middle" class="label">Vertical training field</text>
+            <text x="335" y="142" text-anchor="middle" class="detail">verifiable, scalable</text>
 
             <rect x="610" y="194" width="118" height="58" rx="8" class="soft"></rect>
             <text x="669" y="218" text-anchor="middle" class="label">Cyber</text>
-            <text x="669" y="238" text-anchor="middle" class="detail">安全 / 工具链</text>
+            <text x="669" y="238" text-anchor="middle" class="detail">security / toolchain</text>
 
             <rect x="735" y="202" width="132" height="58" rx="8" class="soft"></rect>
             <text x="801" y="226" text-anchor="middle" class="label">Data / Research</text>
-            <text x="801" y="246" text-anchor="middle" class="detail">脚本 / 指标</text>
+            <text x="801" y="246" text-anchor="middle" class="detail">scripts / metrics</text>
 
             <rect x="662" y="122" width="138" height="48" rx="8" class="soft"></rect>
             <text x="731" y="142" text-anchor="middle" class="label">Code Agent</text>
-            <text x="731" y="160" text-anchor="middle" class="detail">已验证交叉点</text>
+            <text x="731" y="160" text-anchor="middle" class="detail">validated crossing point</text>
 
             <rect x="480" y="132" width="118" height="58" rx="8"></rect>
             <text x="539" y="156" text-anchor="middle" class="label">GUI</text>
-            <text x="539" y="176" text-anchor="middle" class="detail">等 verifier</text>
+            <text x="539" y="176" text-anchor="middle" class="detail">waiting for verifier</text>
 
             <rect x="332" y="182" width="152" height="58" rx="8"></rect>
             <text x="408" y="206" text-anchor="middle" class="label">Verified Research</text>
-            <text x="408" y="226" text-anchor="middle" class="detail">任务还要收敛</text>
+            <text x="408" y="226" text-anchor="middle" class="detail">task still converging</text>
           </svg>
         </figure>
-        <p>这也是为什么 MCP / Tool Use 会变得重要。它们更像横向接入的基础设施：把外部系统包装成 typed tools，让非代码任务更容易进入 Code Agent 式循环。有价值的横向扩张，会让 Agent 在更多真实环境里做事，而不只是知道更多行业名词。</p>
+        <p>This is also why MCP and Tool Use matter. They are more like horizontal-access infrastructure: wrap external systems as typed tools so non-code tasks can enter a Code Agent style loop. Valuable horizontal expansion lets Agents work in more real environments, instead of merely knowing more industry nouns.</p>
       </section>
 
       <section class="article-section" id="future-vertical">
-        <h2>态势感知（II）：现有横向任务有潜力成为未来的纵向</h2>
-        <p>第二条线更关键：现有横向任务会不会长成新的纵向。Code Agent 已经演示过一次：一个高价值应用任务，也可以变成训练模型 Agent 能力的主战场。下一次交叉点，可能来自 Auto Research，也可能来自 Cyber、EDA / 电路设计、生物制药、科学研究或别的任务域。</p>
-        <p>关键在于哪个方向能从应用变成训练环境。横向任务先解决商业问题，纵向任务则要反过来抬高模型能力上限。一个任务域要完成这次升级，必须能不断产生高质量 trajectory，能给出自动反馈，能反复训练，并且能随着数据和环境扩展持续 scale。</p>
-        <p>筛选标准很硬：任务必须好验证，链路必须够长，失败必须能归因。好验证意味着结果可以通过测试、回放、指标、规则或外部环境状态判断；链路够长意味着任务要跨多个步骤暴露规划和错误恢复；失败能归因，才有可能把一次失败变成下一轮训练材料。</p>
-        <p>这个升级通常不会一步到位。一个横向任务会先以产品或工具形态出现，解决一个具体场景里的效率问题；然后慢慢长出 harness、任务生成、环境回放、verifier 和数据记录；最后才可能变成训练场。真正的分水岭，是它能不能从“帮人做一次事”，变成“持续产生可训练的任务分布”。</p>
-        <div class="candidate-grid" aria-label="候选方向">
-          <div class="candidate-card"><strong>Auto Research</strong><span>研究流程足够长，能覆盖检索、实验、数据、脚本、图表和报告。难点是任务定义、反馈验证和结果复现。</span></div>
-          <div class="candidate-card"><strong>Cyber</strong><span>有工具链、沙箱、扫描、利用、修复、验证，天然适合训练长链路执行。难点是合规、复现和环境构造。</span></div>
-          <div class="candidate-card"><strong>EDA / 电路设计</strong><span>有 RTL、netlist、仿真、综合、PPA、约束和时序验证，反馈硬、链路长。难点是工具链门槛高、数据封闭和设计空间巨大。</span></div>
-          <div class="candidate-card"><strong>Bioscience / 生物制药</strong><span>有实验设计、数据处理、脚本、指标和复现链路。难点是任务标准化、反馈噪声、实验成本和合规边界。</span></div>
-          <div class="candidate-card"><strong>其他 Science</strong><span>文献、数据、模拟、分析脚本和报告可以组成长链路科研任务。难点是 verifier 不够硬、环境差异大和任务定义发散。</span></div>
+        <h2>Field sensing (II): today's horizontal tasks may become tomorrow's vertical tasks</h2>
+        <p>The second line is more important: can today's horizontal tasks grow into new vertical tasks? Code Agent has already demonstrated one version of this. A high-value application task can become a main field for training model Agent capability. The next crossing point may come from Auto Research, Cyber, EDA and circuit design, biopharma, scientific research, or another task domain.</p>
+        <p>The key question is which direction can move from application into training environment. Horizontal tasks first solve business problems. Vertical tasks then lift the model capability ceiling. For a task domain to make that upgrade, it needs to continuously produce high-quality trajectories, provide automatic feedback, support repeated training, and scale with data and environment expansion.</p>
+        <p>The filter is hard. The task must be verifiable, the chain must be long enough, and failure must be attributable. Verifiable means the result can be judged through tests, replay, metrics, rules, or external environment state. Long enough means the task spans multiple steps and exposes planning and error recovery. Attributable failure makes it possible to turn one failure into training material for the next round.</p>
+        <p>This upgrade usually will not happen in one step. A horizontal task first appears as a product or tool that solves efficiency in one concrete scene. Then it gradually grows harnesses, task generation, environment replay, verifiers, and data logging. Only after that can it become a training field. The real dividing line is whether it moves from helping a person do one task to continuously producing a trainable task distribution.</p>
+        <div class="candidate-grid" aria-label="Candidate directions">
+          <div class="candidate-card"><strong>Auto Research</strong><span>The research process is long enough to cover search, experiments, data, scripts, figures, and reports. The hard parts are task definition, feedback verification, and result reproduction.</span></div>
+          <div class="candidate-card"><strong>Cyber</strong><span>Toolchains, sandboxes, scanning, exploitation, repair, and verification make it naturally suited for long-horizon execution training. Compliance, reproduction, and environment construction are difficult.</span></div>
+          <div class="candidate-card"><strong>EDA / circuit design</strong><span>RTL, netlists, simulation, synthesis, PPA, constraints, and timing verification provide hard feedback and long chains. The barriers are toolchain complexity, closed data, and a huge design space.</span></div>
+          <div class="candidate-card"><strong>Bioscience / biopharma</strong><span>Experiment design, data processing, scripts, metrics, and reproduction chains are present. The hard parts are task standardization, noisy feedback, experiment cost, and compliance boundaries.</span></div>
+          <div class="candidate-card"><strong>Other Science</strong><span>Literature, data, simulations, analysis scripts, and reports can form long-chain research tasks. The main issues are weak verifiers, environment variance, and diffuse task definitions.</span></div>
         </div>
-        <p>这几类和前面的横向观察是同一组，只是这里换一个问题看：谁最可能从横向应用升级成纵向训练场。Auto Research 的优势是链路长、环节多、天然需要工具协作，但要先把任务定义和结果验证做硬；Cyber 的优势是 verifier 相对清楚，工具链也成熟，但环境复现和合规边界会很难；EDA / 电路设计的优势是反馈硬、工具链强、任务价值高，但工具和数据壁垒也很高；Bioscience / 生物制药的价值厚，难点是实验反馈慢、噪声大、标准化成本高；其他 Science 则需要先把科研流程收敛成更硬的任务定义。</p>
-        <p>所以我不会只看某个方向有没有大模型 demo，而会看它有没有开始形成“环境工程”。有没有标准化的任务入口，能不能稳定复现同一个场景，失败之后能不能知道错在计划、工具、数据还是验证，轨迹能不能被留下来继续训练。没有这些东西，横向任务再热也只是应用层；有了这些东西，它才有机会变成纵向能力的燃料。</p>
-        <p>所以未来几个月我会更关注这类信号：某个横向任务是否开始出现稳定环境、稳定 verifier、稳定 trajectory。只要这三件事同时出现，它就可能从应用层机会继续长成新的纵向训练场。</p>
+        <p>These are the same categories as the earlier horizontal observations, seen through a different question: who is most likely to move from horizontal application to vertical training field? Auto Research has long chains and many steps, but must harden task definition and result verification. Cyber has relatively clear verifiers and mature tools, while reproducible environments and compliance boundaries are hard. EDA and circuit design have hard feedback, strong toolchains, and high task value, but also high barriers in tools and data. Bioscience and biopharma have thick value, with slow experimental feedback, noisy signals, and high standardization cost. Other Science needs to compress research workflows into harder task definitions first.</p>
+        <p>So I would look past the LLM demo and check for environment engineering: standardized task entry, stable reproduction of the same scene, the ability to locate whether failure came from planning, tools, data, or verification, and trajectories that can be kept for training. Without this, a hot horizontal task stays at the application layer. With this, it can become fuel for vertical capability.</p>
+        <p>Over the next few months, I will pay more attention to these signals: stable environments, stable verifiers, and stable trajectories appearing inside a horizontal task. When all three appear together, the task may move beyond application opportunity and grow into a new vertical training field.</p>
       </section>
 
       <section class="article-section" id="strategy">
-        <h2>竞争策略：和“共识错开15 度夹角”</h2>
-        <p>这个判断最后会落到一个很实际的问题：如果 Code Agent 已经成为共识，新的位置在哪里？我觉得可以和共识错开 15 度：离 Code 足够近，能继承它的任务模板、工具链和训练信号；同时避开最拥挤的中心，在新的任务域里形成差异化。</p>
-        <p>Code Agent 证明了一个真实任务域可以同时具备商业价值和训练价值。软件工程是第一个成熟例子，因为它有真实预算、强工具链、硬反馈、可验证结果，也能留下长链路 trajectory。这个模式一旦成立，竞争策略就分成两条：一条往纵向走，继续找能抬高模型能力上限的训练任务；一条往横向走，把更多真实任务接入 Code 这个通用 Agent / 环境模板。</p>
-        <p>纵向策略，是压住下一个能够 scale up Agent 智能上限的训练任务。这个任务必须足够长程，能暴露规划、工具调用、状态追踪和错误恢复；也必须有稳定环境、硬 verifier 和可复盘轨迹，否则就很难成为训练场。SWE 是当前最清楚的样板，后面可能轮到 Cyber、EDA / 电路设计、Auto Research 或其他科学任务。</p>
-        <p>能持续生产高质量训练信号的方向更值得压注。Cyber 如果能解决合规和复现，就有沙箱、扫描、利用、修复、验证这条长链路；EDA 如果能接入工具链，就有 RTL、仿真、综合、约束和 timing closure 的硬反馈；Auto Research 如果能把研究过程标准化，就可能把检索、实验、数据、图表和报告变成可复盘轨迹。这些方向真正值钱的是环境、任务和 verifier。</p>
-        <p>横向策略，是把更多真实任务接入 Code 这个通用 Agent / 环境模板。每个行业都需要把任务改造成可执行、有状态、有工具、有反馈、有验证的工作循环；先套一个 chatbot，只能解决很表层的问题。MCP、GUI、数据分析、科研流程、企业系统和生物制药，真正的机会都在这里。</p>
-        <p>横向里最重要的是任务厚度。有没有真实用户每天在做这件事？有没有预算？有没有现成的数字环境和工具接口？有没有办法把结果验证出来？行业知识问答很容易停在演示层；行业流程变成 Code-like task，Agent 才有机会真正进入生产。</p>
-        <p>所以对个人或团队来说，不一定要站在共识正中心。更有价值的问题是：我掌握的任务域有没有独特数据、工具链、客户流程或 verifier？它能不能离 Code 主干足够近，被整理成可执行、可观察、可验证、可复盘的环境？如果答案是肯定的，这个 15 度夹角就比正中心更值得下注。</p>
+        <h2>Competitive strategy: stand 15 degrees away from consensus</h2>
+        <p>This judgment eventually becomes practical: if Code Agent is already consensus, where is the new position? I think the better position is 15 degrees away from consensus. Stay close enough to Code to inherit its task template, toolchain, and training signal. Stay far enough from the most crowded center to build differentiation in a new task domain.</p>
+        <p>Code Agent has shown that a real task domain can have both commercial value and training value. Software engineering is the first mature example because it has real budgets, strong toolchains, hard feedback, verifiable results, and long-chain trajectories. Once this pattern is visible, competitive strategy splits into two lines: one vertical line that searches for the next training task capable of lifting the Agent capability ceiling, and one horizontal line that connects more real tasks into Code as a general Agent / environment template.</p>
+        <p>The vertical strategy is to press on the next task that can scale up Agent intelligence. This task must be long enough to expose planning, tool calling, state tracking, and error recovery. It also needs a stable environment, hard verifiers, and replayable trajectories. Without those, it is hard to become a training field. SWE is the clearest current template. The next candidates may be Cyber, EDA and circuit design, Auto Research, or other science tasks.</p>
+        <p>Directions that can continuously produce high-quality training signals are worth watching more closely. If Cyber solves compliance and reproduction, it has a long chain of sandboxing, scanning, exploitation, repair, and verification. If EDA connects into toolchains, it has hard feedback from RTL, simulation, synthesis, constraints, and timing closure. If Auto Research standardizes research processes, it can turn search, experiments, data, figures, and reports into replayable trajectories. The valuable part in these directions is the environment, task construction, and verifier.</p>
+        <p>The horizontal strategy is to connect more real tasks into Code as a general Agent / environment template. Each industry needs to reshape tasks into executable, stateful work loops with tools, feedback, and verification. A chatbot layer only solves the surface. The real opportunities in MCP, GUI, data analysis, research workflows, enterprise systems, and biopharma sit in this transformation.</p>
+        <p>The most important horizontal variable is task depth. Are real users doing this every day? Is there budget? Are there existing digital environments and tool interfaces? Can the result be verified? Industry knowledge Q&A can easily stay at the demo layer. Industry workflows that become Code-like tasks can let Agents enter production.</p>
+        <p>For an individual or a team, the center of consensus is not always the best place to stand. The more valuable question is whether your task domain has unique data, toolchains, customer workflows, or verifiers. Can it stay close enough to the Code trunk and be organized into an executable, observable, verifiable, replayable environment? If yes, that 15-degree angle may be a better bet than the crowded center.</p>
       </section>
     </article>
 
     <section class="discussion-shell" aria-label="Comments">
-      <h2>讨论</h2>
-      <p class="discussion-note">评论由 Disqus 提供。</p>
-      <div id="disqus_thread" data-page-title="来自 ICML 的态势感知：关于 Code Agent" data-page-identifier="blogs/icml-code-agent" data-page-url="https://chenxinli001.github.io/blogs/icml-code-agent/"></div>
+      <h2>Discussion</h2>
+      <p class="discussion-note">Comments are powered by Disqus.</p>
+      <div id="disqus_thread" data-page-title="An ICML Field Note on Code Agents" data-page-identifier="blogs/icml-code-agent" data-page-url="https://chenxinli001.github.io/blogs/icml-code-agent/"></div>
     </section>
   </main>
   <script src="../disqus-config.js"></script>
