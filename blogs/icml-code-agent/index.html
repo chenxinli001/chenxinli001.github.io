@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>来自 ICML 的态势感知：关于 Code Agent | Chenxin Li</title>
+  <meta name="description" content="从 ICML 现场信号出发，分析 Code Agent 为什么成为第一个成熟的 Agent 训练任务模板。">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/icml-code-agent/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="来自 ICML 的态势感知：关于 Code Agent">
+  <meta property="og:description" content="Code Agent 的热，指向的是 Agent 训练任务如何被定义：可执行、可反馈、可验证、可沉淀轨迹。">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/icml-code-agent/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/icml-code-agent/assets/code-agent-icml-cover.jpg">
+  <link rel="stylesheet" href="../blogs.css?v=20260713-icml-code-agent">
+  <style>
+    .icml-code-page {
+      --page: #f4efe5;
+      --surface: #fffaf0;
+      --ink: #18140f;
+      --muted: #706657;
+      --line: #dacfbf;
+      --line-strong: #bda98f;
+      --accent: #9a4f22;
+      --accent-strong: #5e2e14;
+      --accent-soft: #efe0ce;
+    }
+
+    .icml-code-page .article-shell {
+      max-width: 980px;
+    }
+
+    .icml-code-page .article-hero {
+      margin-bottom: 30px;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .icml-code-page .article-hero h1 {
+      max-width: 980px;
+      font-size: clamp(2.75rem, 7.5vw, 6.9rem);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+    }
+
+    .icml-code-page .article-subtitle {
+      max-width: 870px;
+      color: var(--ink);
+      font-size: clamp(1.24rem, 2.4vw, 1.85rem);
+      line-height: 1.42;
+    }
+
+    .icml-code-page .publication-byline {
+      margin-top: 16px;
+    }
+
+    .icml-code-page .lead-section {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-top: 28px;
+    }
+
+    .icml-code-page .lead-section .visual-figure,
+    .icml-code-page .lead-section .thesis-snapshot {
+      margin-top: 0;
+    }
+
+    .icml-code-page .thesis-snapshot {
+      align-content: start;
+      border-radius: 2px;
+      background: rgba(255, 250, 240, 0.78);
+    }
+
+    .icml-code-page .thesis-snapshot p {
+      font-size: clamp(1.1rem, 2vw, 1.48rem);
+      line-height: 1.55;
+    }
+
+    .icml-code-page .thesis-snapshot strong {
+      display: inline-block;
+      min-width: 3.1em;
+      margin-right: 0.42em;
+      padding: 0.1em 0.58em;
+      border: 1px solid rgba(165, 80, 30, 0.28);
+      border-radius: 999px;
+      background: rgba(165, 80, 30, 0.08);
+      color: var(--accent);
+      font-size: 0.74em;
+      letter-spacing: 0.08em;
+      text-align: center;
+      vertical-align: 0.08em;
+    }
+
+    .icml-code-page .visual-figure img {
+      object-fit: cover;
+    }
+
+    .icml-code-page .hero-cover img {
+      aspect-ratio: 3 / 2;
+    }
+
+    .icml-code-page .conference-photo img {
+      aspect-ratio: 16 / 9;
+      object-position: center;
+    }
+
+    .icml-code-page .compact-note {
+      max-width: 900px;
+      margin: 18px auto 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent);
+      background: rgba(239, 224, 206, 0.62);
+      color: var(--accent-strong);
+      font-size: 1.02rem;
+      line-height: 1.8;
+    }
+
+    .icml-code-page .reason-grid,
+    .icml-code-page .player-grid,
+    .icml-code-page .candidate-grid {
+      display: grid;
+      max-width: 900px;
+      margin: 22px auto 28px;
+      gap: 14px;
+    }
+
+    .icml-code-page .reason-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .icml-code-page .player-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .icml-code-page .candidate-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .icml-code-page .candidate-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+
+    .icml-code-page .signal-card,
+    .icml-code-page .reason-card,
+    .icml-code-page .player-card,
+    .icml-code-page .candidate-card {
+      min-height: 145px;
+      padding: 18px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 250, 240, 0.72);
+    }
+
+    .icml-code-page .signal-card strong,
+    .icml-code-page .reason-card strong,
+    .icml-code-page .player-card strong,
+    .icml-code-page .candidate-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 1.02rem;
+      line-height: 1.35;
+    }
+
+    .icml-code-page .signal-card span,
+    .icml-code-page .reason-card span,
+    .icml-code-page .player-card span,
+    .icml-code-page .candidate-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.62;
+    }
+
+    .icml-code-page .reason-card em {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-style: normal;
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .icml-code-page .observation-list {
+      max-width: 900px;
+      margin: 24px auto 28px;
+      padding: 0;
+      border-top: 1px solid var(--line);
+      list-style: none;
+      counter-reset: observations;
+    }
+
+    .icml-code-page .observation-list li {
+      position: relative;
+      padding: 18px 0 18px 64px;
+      border-bottom: 1px solid var(--line);
+      counter-increment: observations;
+    }
+
+    .icml-code-page .observation-list li::before {
+      content: counter(observations, decimal-leading-zero);
+      position: absolute;
+      top: 20px;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 760;
+      letter-spacing: 0.08em;
+    }
+
+    .icml-code-page .observation-list strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 1.08rem;
+      line-height: 1.35;
+    }
+
+    .icml-code-page .observation-list span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .icml-code-page .reason-deep-dive {
+      display: grid;
+      max-width: 900px;
+      margin: 10px auto 30px;
+      gap: 22px;
+    }
+
+    .icml-code-page .reason-block {
+      padding: 0;
+    }
+
+    .icml-code-page .reason-block h3 {
+      margin: 0 0 14px;
+      padding: 10px 0 10px 18px;
+      border-left: 4px solid var(--accent);
+      color: var(--accent-strong);
+      font-size: clamp(1.18rem, 2vw, 1.48rem);
+      line-height: 1.35;
+    }
+
+    .icml-code-page .reason-block p {
+      margin: 12px 0 0;
+    }
+
+    .icml-code-page .loop-figure svg,
+    .icml-code-page .lane-figure svg {
+      overflow: visible;
+    }
+
+    .icml-code-page .loop-figure .label,
+    .icml-code-page .lane-figure .label {
+      font-size: 15px;
+      font-weight: 720;
+    }
+
+    .icml-code-page .loop-figure .detail,
+    .icml-code-page .lane-figure .detail {
+      fill: var(--muted);
+      font-size: 12px;
+      font-weight: 520;
+    }
+
+    .icml-code-page .loop-figure .soft,
+    .icml-code-page .lane-figure .soft {
+      fill: #f7ead7;
+      stroke: var(--accent);
+    }
+
+    .icml-code-page .lane-label {
+      fill: var(--accent-strong);
+      font-size: 18px;
+      font-weight: 760;
+    }
+
+    .icml-code-page .axis-line {
+      stroke: var(--accent-strong);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .icml-code-page .axis-title {
+      fill: var(--accent-strong);
+      font-size: 18px;
+      font-weight: 760;
+    }
+
+    .icml-code-page .axis-caption,
+    .icml-code-page .quadrant-label {
+      fill: var(--muted);
+      font-size: 13px;
+      font-weight: 560;
+    }
+
+    .icml-code-page .target-zone {
+      fill: rgba(154, 79, 34, 0.14);
+      stroke: var(--accent);
+      stroke-width: 2;
+    }
+
+    .icml-code-page .target-label {
+      fill: var(--accent-strong);
+      font-size: 16px;
+      font-weight: 780;
+    }
+
+    .icml-code-page .source-list {
+      max-width: 900px;
+      margin: 22px auto 0;
+      padding: 16px 18px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .icml-code-page .source-list a {
+      color: var(--accent-strong);
+    }
+
+    @media (max-width: 900px) {
+      .icml-code-page .lead-section,
+      .icml-code-page .reason-grid,
+        .icml-code-page .player-grid,
+      .icml-code-page .candidate-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell article-page zh-article icml-code-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../">Blogs</a><a href="#start">开始阅读</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <h1>来自 ICML 的态势感知：关于 Code Agent</h1>
+        <p class="article-subtitle">Code Agent 为什么成了这轮 Agent 讨论的中心？更重要的问题是：Agent 时代怎么定义可训练任务。</p>
+        <p class="publication-byline">Chenxin Li · 2026 年 7 月</p>
+      </header>
+
+      <section class="article-section lead-section" id="start">
+        <figure class="visual-figure generated-image-figure hero-cover">
+          <figcaption>图 1：Code Agent 的基本循环：理解任务、修改代码、运行反馈，再进入下一轮。</figcaption>
+          <img src="./assets/code-agent-icml-cover.jpg" alt="ICML conference hall with researchers discussing code agents around laptops showing repositories, tests and debugging loops" loading="eager">
+        </figure>
+        <div class="thesis-snapshot" aria-label="核心判断">
+          <p><strong>共识</strong> 大家对 Code Agent 的共识集中且确定：专项任务 Agent 里，它的商业前景和被训练出来的概率都很高。</p>
+          <p><strong>态势</strong> Agent 任务正在进入“一纵多横”的态势。纵向看能否提升模型智能上限；横向看是否有真实经济价值、商业价值和商业闭环。Code Agent 目前同时占住这两个层面，所以动量很大。</p>
+          <p><strong>纵向</strong> 值得训练、值得拿来提升模型智能上限的“纵向”任务，至少要满足两个基本条件：足够长程，足够好 verify。</p>
+          <p><strong>横向</strong> 适合横向扩展的任务，通常要有真实业务需求、清楚经济价值和可接入的工具 / 流程；最好还能被整理成 Code-like environment，让 Agent 可以执行、观察、验证和复盘。</p>
+          <p><strong>路径</strong> 接下来要分两条线看：纵向继续找新的可 scale 训练场；横向把更多高价值任务改造成 Code-like environment。</p>
+        </div>
+      </section>
+
+      <section class="article-section publication-toc" aria-label="目录">
+        <h2>阅读路线</h2>
+        <ol class="toc-list">
+          <li><a href="#signal"><span>01</span> ICML上的Code Agent: 共识如此集中且确定</a></li>
+          <li><a href="#why"><span>02</span> Agent任务的“阡陌纵横”</a></li>
+          <li><a href="#shape"><span>03</span> Code 进可“纵”，退可“横”</a></li>
+          <li><a href="#players"><span>04</span> 新的横向任务从 Code 长出</a></li>
+          <li><a href="#future-horizontal"><span>05</span> 态势感知（I）：更多 Task 接入 Code Agent 的横向体系</a></li>
+          <li><a href="#future-vertical"><span>06</span> 态势感知（II）：现有横向任务有潜力成为未来的纵向</a></li>
+          <li><a href="#strategy"><span>07</span> 竞争策略：和“共识错开15 度夹角”</a></li>
+        </ol>
+      </section>
+
+      <section class="article-section" id="signal">
+        <h2>ICML上的Code Agent: 共识如此集中且确定</h2>
+        <p>七月的首尔很热，空气里有潮湿的海风，也有会场空调和咖啡混在一起的味道。ICML 的大厅里，人群从 poster 区流到走廊，再从走廊流回一张张临时拼出来的小桌。有人抱着电脑讲 eval，有人在白板前画 RL pipeline，也有人只是站在扶梯口，把一个还没成形的想法讲给刚认识的人听。</p>
+        <p>在这种嘈杂里，一个信号反而变得很清楚：话题总会绕回 Code。做开发者工具的人在谈 Code Agent，模型公司在谈 Code RL，聊模型能力、评测、infra、量化和金融场景、研究流程自动化的人，最后也很容易落到同一个问题：如果要训出一个真正能做事的专项 Agent，Code 是不是眼下最确定的入口？</p>
+        <p>这种确定性有点少见。过去两年，很多 Agent 叙事都很大：通用助理、全能员工、自动公司。但到了真实讨论里，大家其实更关心一个朴素的问题：它能不能先在一个任务域里稳定创造价值？Code Agent 在这里显得扎实。软件工程本身就是高价值工作，量化、金融、企业 infra、内部工具链里也到处都是代码和胶水流程。一个面向专项任务的 Code Agent 只要能稳定工作，就会直接变成生产力。</p>
+        <p>我印象比较深的是和一个量化公司的人聊天。他说他们老板这次下场很直接：在当前阶段，投入多少钱、多久能覆盖成本、能不能迅速转成利润，这件事的确定性空前高。过去很多 Agent 故事还停在愿景里，但 Code 不一样，它直接贴着生产系统、研究流程和交易 infra。一旦能把一部分工程、研究、调试和维护链路稳定自动化，账是可以算出来的，所以资金和团队会更快入场。</p>
+        <figure class="visual-figure generated-image-figure conference-photo">
+          <figcaption>图 2：ICML 现场交流中，Code、Agent、评测与训练环境反复交织。</figcaption>
+          <img src="./assets/seoul-conference-atmosphere.jpg" alt="Conference atmosphere in Seoul with researchers and laptops" loading="lazy">
+        </figure>
+        <p>所以这次在 ICML 上，我听到的是一种收束：很多原本分散的路线，开始承认 Code Agent 是一个足够清楚的任务模板。它既有商业价值，也有训练价值；既能做真实事情，也能沉淀 trajectory；既能服务一个明确场景，又能逼出模型的长链路执行能力。</p>
+        <p>进一步看，很多新任务正在顺着 Code Agent 的能力长出来。Cyber 网络安全、EDA / 电路设计、Science / research task、生物制药、Auto Research，都在尝试把自己的任务整理成可执行、可验证、可复盘的形式。它们现在看起来像横向应用，但如果任务足够长程、反馈足够清楚，也可能慢慢长成新的纵向训练场。Code 的热度真正重要的地方在于，它让大家第一次比较具体地看见：Agent 任务到底应该长什么样。</p>
+      </section>
+
+      <section class="article-section" id="why">
+        <h2>Agent任务的“阡陌纵横”</h2>
+        <p>我现在更愿意用“一纵多横”来看 Agent 任务。纵向看的是模型智能上限：一个任务能不能持续训练模型的长链路执行、工具使用、状态追踪、错误恢复和验证意识。横向看的是经济价值和业务厚度：这个任务域有没有真实需求、真实预算、真实流程，能不能变成可持续的生产力。</p>
+        <p>Code 的特别之处，是它同时站住了纵向和横向。横向看，软件工程、量化、金融、企业 infra 都有真实高价值任务；纵向看，Code 又是一个可验证、长程、反馈密集、能规模化构造任务的训练环境。应用价值和训练价值两边都很强。</p>
+        <div class="reason-grid" aria-label="四层原因">
+          <div class="reason-card"><em>01</em><strong>真实任务分布</strong><span>issue、测试、迁移、重构、调试和维护持续发生，任务不会停在少数 benchmark 题目里。</span></div>
+          <div class="reason-card"><em>02</em><strong>反馈细且便宜</strong><span>lint、type check、compile error、unit test、runtime error、CI、diff review 都能给局部反馈。</span></div>
+          <div class="reason-card"><em>03</em><strong>天然 long-horizon</strong><span>真实 coding task 要读 repo、定位文件、跨文件修改、运行测试、debug、再修正，天然拉成长链路。</span></div>
+          <div class="reason-card"><em>04</em><strong>可兼容任务模板</strong><span>很多 Agent 任务可以被改造成 CoT / Code-like 形式，从而被 Code 的执行模板兼容。</span></div>
+        </div>
+        <div class="reason-deep-dive" aria-label="四层原因展开">
+          <div class="reason-block">
+            <h3>第一层：任务足够真实，也足够多</h3>
+            <p>一个训练场如果没有真实经济价值，很难长期产生足够多、足够复杂、足够真实的任务。软件工程刚好相反：公司每天都有 issue、迁移、测试、重构、调试、集成、部署、代码审查和系统维护。这些任务本来就在真实生产里发生，有自然的需求和成本。</p>
+            <p>这点很重要。Agent 训练需要任务分布，几个漂亮样例不够。Code 的优势是任务分布天然存在，而且任务本身有代价、有上下文、有历史约束。量化、金融、企业软件、数据平台和内部 infra 也有大量业务代码和胶水代码，Code 因此连接着真实组织运行，而不只停在开源 repo 题目里。</p>
+          </div>
+
+          <div class="reason-block">
+            <h3>第二层：反馈最密，也最便宜</h3>
+            <p>Agent 做完一个动作之后，最需要的是可靠反馈。很多现实任务的反馈很慢、很贵、很模糊：写一份战略报告对不对，要过很久才知道；做一个销售动作有没有用，要等客户反应；甚至 GUI 自动化任务，也经常只有稀疏的成功或失败。</p>
+            <p>Code 的优势在于反馈极其密集。lint、type check、compile error、unit test、runtime error、CI、diff review、benchmark regression，每一步都能告诉 Agent：哪里错了、错得多具体、下一步该往哪个方向修。更关键的是，这些反馈多数已经存在于工程系统里，不需要重新发明一套评价机制。</p>
+            <p>训练会直接吃这类反馈：它可以变成 reward、trajectory、repair data，也可以用来分析模型到底卡在定位、修改、验证还是错误恢复上。对 Agent 来说，反馈越密，越容易把一次失败变成下一步动作，避免只得到一个笼统的错。</p>
+          </div>
+
+          <div class="reason-block">
+            <h3>第三层：真实任务天然是 long-horizon</h3>
+            <p>很多 Agent 能力不会在单轮 chatbot 里自然长出来。上下文选择、计划调整、工具调用、错误恢复、状态追踪、验证意识，这些能力只有在长链路任务中才会暴露。真实软件工程刚好就是这样的任务：读 issue、理解 repo、定位文件、跨文件修改、运行测试、根据错误回头修，再检查有没有破坏其他路径。</p>
+            <p>传统代码补全关心下一段 token 或下一段函数；Code Agent 关心的是一个持续变化的工作状态。它要知道自己改过什么、为什么改、下一步验证什么、失败后如何回滚或换方向。这类能力更接近“执行者”，不像普通问答模型。</p>
+            <p>Code Agent 的意义还在于给模型提供了一个复杂、可验证、能反复失败和修正的环境。这个环境越真实，越能逼出 Agent 需要的长链路执行能力。</p>
+          </div>
+
+          <div class="reason-block">
+            <h3>第四层：Code格式是最通用的Agent和环境模板</h3>
+            <p>Code 的通用性来自很多 Agent 动作本来就可以被代码化，并不要求所有任务最后都写成 Python。MCP / Tool Use 是一个例子：外部系统被包装成 typed tools 以后，Agent 可以用接近写代码的方式调用日历、数据库、浏览器、内部系统和业务 API。GUI 也是类似的：点击、输入、拖拽、读取页面状态，看起来是界面操作，但如果抽象成 action schema、UI state 和 replay trace，本质上也能进入 Code-style loop。</p>
+            <p>视觉任务也有类似趋势。很多 vision 任务可以通过代码组织成检测、裁剪、OCR、坐标定位、工具调用和验证的流程。像 Kimi 的 zero-vision 思路，本质上也是把视觉问题拆成可执行步骤，让模型通过代码和工具去处理视觉信息，避免把视觉理解完全压在一次端到端回答里。</p>
+            <p>更底层地看，数字世界里的环境本来就是用 Code 搭起来的。网页、App、数据库、文档系统、交易系统、实验平台、企业工作流，所谓“环境”通常是一组由代码定义的状态、接口和规则。Agent 要进入这些环境，最自然的中间层往往还是 Code：用代码调用工具，用代码读取状态，用代码改变世界，再用代码或规则验证结果。</p>
+            <p>所以 Code Agent 真正留下的是一种 Agent 任务模板和环境模板：任务被放进一个可操作的数字环境，Agent 通过 action 改变状态，verifier 判断结果，trajectory 留下来继续训练。谁能把自己的任务域整理成这个模板，谁就更容易接入下一阶段的 Agent 能力。</p>
+              <figure class="visual-figure loop-figure">
+                <figcaption>图 3：Code-style Agent loop：任务进入数字环境，Agent 调用工具、操作界面、处理视觉信息，并留下可复盘轨迹。</figcaption>
+                <svg viewBox="0 0 980 430" role="img" aria-label="Code-style Agent loop diagram">
+                  <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#5e2e14"></path></marker>
+                  </defs>
+                  <rect x="28" y="52" width="168" height="86" rx="8"></rect>
+                  <text x="112" y="88" text-anchor="middle" class="label">任务 / Goal</text>
+                  <text x="112" y="114" text-anchor="middle" class="detail">目标、约束、上下文</text>
+
+                  <rect x="272" y="52" width="176" height="86" rx="8" class="soft"></rect>
+                  <text x="360" y="88" text-anchor="middle" class="label">Digital Env</text>
+                  <text x="360" y="114" text-anchor="middle" class="detail">工具、界面、状态</text>
+
+                  <rect x="524" y="52" width="176" height="86" rx="8"></rect>
+                  <text x="612" y="88" text-anchor="middle" class="label">Agent Action</text>
+                  <text x="612" y="114" text-anchor="middle" class="detail">MCP、GUI、vision tool</text>
+
+                  <rect x="776" y="52" width="176" height="86" rx="8" class="soft"></rect>
+                  <text x="864" y="88" text-anchor="middle" class="label">Verifier</text>
+                  <text x="864" y="114" text-anchor="middle" class="detail">测试、指标、回放、规则</text>
+
+                  <path d="M196 95 H268" class="flow-line" marker-end="url(#arrow)"></path>
+                  <path d="M448 95 H520" class="flow-line" marker-end="url(#arrow)"></path>
+                  <path d="M700 95 H772" class="flow-line" marker-end="url(#arrow)"></path>
+                  <path d="M864 138 C864 214 612 214 612 142" class="flow-line" marker-end="url(#arrow)"></path>
+
+                  <rect x="174" y="260" width="210" height="96" rx="8"></rect>
+                  <text x="279" y="298" text-anchor="middle" class="label">State Change</text>
+                  <text x="279" y="324" text-anchor="middle" class="detail">系统状态被真实改动</text>
+
+                  <rect x="594" y="260" width="210" height="96" rx="8" class="soft"></rect>
+                  <text x="699" y="298" text-anchor="middle" class="label">Trajectory Data</text>
+                  <text x="699" y="324" text-anchor="middle" class="detail">action、observation、failure、repair</text>
+
+                  <path d="M784 138 C790 204 740 230 704 258" class="flow-line" marker-end="url(#arrow)"></path>
+                  <path d="M612 138 C610 202 440 248 386 292" class="flow-line" marker-end="url(#arrow)"></path>
+                  <path d="M384 306 H590" class="flow-line" marker-end="url(#arrow)"></path>
+                  <path d="M699 260 C640 212 488 192 370 140" class="flow-line" marker-end="url(#arrow)"></path>
+                </svg>
+              </figure>
+            <p>这点和 LM 时代有一个类比。LLM 能统一很多任务，是因为写作、翻译、总结、问答、推理都能被压到 token prediction 和 chat 交互里。Agent 时代也需要类似的统一外壳。现在最成熟的外壳是 Code 这种可执行工作循环：它把任务、环境、行动、验证和轨迹放到同一个闭环里。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="shape">
+        <h2>Code 进可“纵”，退可“横”</h2>
+        <p>所以 Code 这件事最有意思的地方，在于它同时站在两个方向上。往纵向看，它是训练 Agent 能力的环境；往横向看，它又是一个真实、昂贵、高频的生产任务域。这也是为什么大家会在 ICML 的不同讨论里反复绕回 Code：它能同时解释训练和商业。</p>
+        <p>先说“进可纵”。一个好的纵向训练场，至少要足够长程、足够好 verify。Code 两个条件都很强：真实任务需要读 repo、理解上下文、跨文件修改、运行测试、debug、回滚，再确认有没有破坏其他路径。这里面每一步都在考模型的规划、状态追踪、工具调用和错误恢复。模型只靠单轮聊天，很难稳定长出这些能力；但放进工程环境里，它必须一边做事，一边根据反馈修正自己。</p>
+        <p>这也是 Code 对训练有吸引力的原因。它给模型一个持续变化的工作现场。Agent 今天改了哪些文件，为什么这么改，测试为什么失败，下一步是补依赖、改逻辑还是回滚，这些都会变成 trajectory。对训练来说，这比一个最终分数更有价值，因为中间过程本身就能告诉你模型卡在哪里。</p>
+        <p>再说“退可横”。Code 本身就是很厚的商业任务域。软件工程、量化、金融、企业 infra、数据平台、研究工具链，都有大量读代码、改代码、调系统、接工具、维护流程的工作。这些工作本来就在组织里发生，组织每天都要付钱解决。只要 Code Agent 能稳定吃掉其中一部分，价值就很直接。</p>
+        <p>所以 Code 的位置很特殊：它往上可以变成训练模型 Agent 能力的纵向场景，往外可以变成覆盖真实工作流的横向场景。很多方向只能回答其中一个问题：要么商业价值很清楚，但训练信号太弱；要么评测很清楚，但离真实生产太远。Code 现在难得的是，两边都能回答，所以它才会成为这一轮 Agent 讨论里最集中的共识。</p>
+      </section>
+
+      <section class="article-section" id="players">
+        <h2>新的横向任务从 Code 长出</h2>
+        <p>横向的变化也很明显。很多任务开始学习 Code 的任务组织方式。它们把原本松散的业务流程，改写成更像工程任务的形态：有环境，有工具，有中间状态，有结果检查，也有失败后的修正路径。这个变化比“给行业套一个 chatbot”更重要。</p>
+        <p>我在现场更明显看到的是几类外溢。第一类是 Auto Research，大家在想怎么把研究过程拆成可执行、可追踪、可验证的 Agent 工作流；第二类是 Cyber，安全任务本来就有扫描、利用、修复、验证和复现，天然接近 Code Agent 的工作循环；第三类是 EDA / 电路设计，RTL、仿真、综合、约束、timing 和验证本来就是强工具链环境；第四类是 Bioscience，尤其是生物制药，它有实验、数据、脚本、指标和复现链路；第五类是更广义的 Science，很多科研流程也在被重新整理成可执行、可追踪的任务环境。</p>
+        <ol class="observation-list" aria-label="横向任务观察">
+          <li><strong>Auto Research</strong><span>这里看到的是把选题、检索、实验脚本、数据分析、图表、报告和复现串成工作流。它更接近“研究过程自动化”，单点问答只能覆盖很小一部分。</span></li>
+          <li><strong>Cyber</strong><span>安全任务天然有工具链、沙箱、扫描、利用、修复和验证，链路长，反馈也更清楚，所以很容易被拿来对齐 Code Agent 的工作循环。</span></li>
+          <li><strong>EDA / 电路设计</strong><span>电路设计有 RTL、netlist、仿真、综合、约束、timing closure 和 formal verification。Agent 如果能进入这套工具链，反馈会比很多开放任务硬得多。</span></li>
+          <li><strong>Bioscience / 生物制药</strong><span>生物制药有实验设计、数据处理、脚本、指标、复现和合规约束。如果这些流程被整理成环境，就会很接近新的 Agent 任务场。</span></li>
+          <li><strong>其他 Science</strong><span>更广义的科学研究也在往这个方向靠：文献、数据、实验记录、模拟、分析脚本和报告，可以被串成更长的执行链路。</span></li>
+        </ol>
+        <p>这些方向现在看起来是横向外溢：它们先接住真实业务需求，先解决具体场景里的效率问题。但它们真正值得看的地方，是有没有可能沉淀出稳定任务分布。如果一个领域里每天都有高价值任务发生，而且任务过程能被记录、验证和复盘，它就不会只是一个 demo 场景，而会开始靠近 Code 的位置。</p>
+        <p>所以“从 Code 长出”指的是新的任务域正在被 Code 的格式重新组织。所有事情不需要都变成写代码；关键是把自己的领域改造成 Agent 可以长期工作的环境。</p>
+      </section>
+
+      <section class="article-section" id="future-horizontal">
+        <h2>态势感知（I）：更多 Task 接入 Code Agent 的横向体系</h2>
+        <p>接下来几个月，横向会先变得更热。更多任务会接入 Code Agent 的横向体系：Auto Research、Cyber、EDA / 电路设计、数据分析、科研实验、生物制药、GUI / Browser。它们不一定一开始就是新的训练场，但会先学习 Code Agent 的任务组织方式：把任务拆成可执行步骤，把环境状态暴露出来，把反馈和验证接进工作流。</p>
+        <p>这里的“接入”要把真实工作流拆开，放进一个 Agent 能够持续工作的环境里。任务入口要清楚，工具调用要稳定，中间状态要能被看见，最后结果要能被检查。只有这样，Agent 才会从一次性回答变成在任务场里反复行动。</p>
+        <p>所以这条线看的是真实任务域能否被改造成 Code-like environment。比如 GUI 方向要解决的是状态表示和回放，Cyber 要解决的是安全边界和可复现环境，EDA 要解决的是工具链接入、仿真反馈、约束生成和 timing closure，Bio / Science 要解决的是实验流程和指标验证，数据分析要解决的是数据、脚本、图表和结论之间的闭环。这些问题看起来很工程，但正是横向任务能不能进入 Agent 体系的门槛。</p>
+        <p>横向任务越厚，越能提供真实需求、真实预算、真实流程，也越有机会反过来成为模型能力增长的燃料。短期看，它们会先以工具、MCP、workflow、harness 的形式接进来；长期看，其中少数任务如果积累出稳定环境和稳定反馈，就可能继续往纵向走。</p>
+        <figure class="visual-figure lane-figure">
+          <figcaption>图 4：一纵多横：纵向看能否成为可 scale 的 Agent 训练场，横向看真实任务域。</figcaption>
+          <svg viewBox="0 0 980 430" role="img" aria-label="Vertical and horizontal axes for future agent opportunities">
+            <defs>
+              <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#5e2e14"></path></marker>
+            </defs>
+            <rect x="580" y="54" width="320" height="128" rx="10" class="target-zone"></rect>
+            <text x="740" y="80" text-anchor="middle" class="target-label">横纵都强：下一代训练场</text>
+            <text x="740" y="106" text-anchor="middle" class="detail">真实任务域 + scale Agent 能力</text>
+
+            <path d="M130 360 H910" class="axis-line" marker-end="url(#arrow2)"></path>
+            <path d="M130 360 V42" class="axis-line" marker-end="url(#arrow2)"></path>
+            <text x="910" y="398" text-anchor="end" class="axis-title">横向：真实任务域更厚</text>
+            <text x="148" y="34" class="axis-title">纵向：训练能力更强</text>
+            <text x="150" y="384" class="axis-caption">任务分布薄</text>
+            <text x="770" y="384" class="axis-caption">高价值任务域</text>
+            <text x="22" y="332" class="axis-caption">训练信号弱</text>
+            <text x="22" y="92" class="axis-caption">verified / long-horizon</text>
+
+            <rect x="205" y="238" width="210" height="74" rx="8"></rect>
+            <text x="310" y="268" text-anchor="middle" class="label">Demo / 噪声区</text>
+            <text x="310" y="292" text-anchor="middle" class="detail">难验证，轨迹也弱</text>
+
+            <rect x="560" y="244" width="228" height="78" rx="8"></rect>
+            <text x="674" y="274" text-anchor="middle" class="label">横向任务域</text>
+            <text x="674" y="298" text-anchor="middle" class="detail">需求真，任务密</text>
+
+            <rect x="220" y="86" width="230" height="80" rx="8"></rect>
+            <text x="335" y="118" text-anchor="middle" class="label">纵向训练场</text>
+            <text x="335" y="142" text-anchor="middle" class="detail">可验证，能 scale</text>
+
+            <rect x="610" y="194" width="118" height="58" rx="8" class="soft"></rect>
+            <text x="669" y="218" text-anchor="middle" class="label">Cyber</text>
+            <text x="669" y="238" text-anchor="middle" class="detail">安全 / 工具链</text>
+
+            <rect x="735" y="202" width="132" height="58" rx="8" class="soft"></rect>
+            <text x="801" y="226" text-anchor="middle" class="label">Data / Research</text>
+            <text x="801" y="246" text-anchor="middle" class="detail">脚本 / 指标</text>
+
+            <rect x="662" y="122" width="138" height="48" rx="8" class="soft"></rect>
+            <text x="731" y="142" text-anchor="middle" class="label">Code Agent</text>
+            <text x="731" y="160" text-anchor="middle" class="detail">已验证交叉点</text>
+
+            <rect x="480" y="132" width="118" height="58" rx="8"></rect>
+            <text x="539" y="156" text-anchor="middle" class="label">GUI</text>
+            <text x="539" y="176" text-anchor="middle" class="detail">等 verifier</text>
+
+            <rect x="332" y="182" width="152" height="58" rx="8"></rect>
+            <text x="408" y="206" text-anchor="middle" class="label">Verified Research</text>
+            <text x="408" y="226" text-anchor="middle" class="detail">任务还要收敛</text>
+          </svg>
+        </figure>
+        <p>这也是为什么 MCP / Tool Use 会变得重要。它们更像横向接入的基础设施：把外部系统包装成 typed tools，让非代码任务更容易进入 Code Agent 式循环。有价值的横向扩张，会让 Agent 在更多真实环境里做事，而不只是知道更多行业名词。</p>
+      </section>
+
+      <section class="article-section" id="future-vertical">
+        <h2>态势感知（II）：现有横向任务有潜力成为未来的纵向</h2>
+        <p>第二条线更关键：现有横向任务会不会长成新的纵向。Code Agent 已经演示过一次：一个高价值应用任务，也可以变成训练模型 Agent 能力的主战场。下一次交叉点，可能来自 Auto Research，也可能来自 Cyber、EDA / 电路设计、生物制药、科学研究或别的任务域。</p>
+        <p>关键在于哪个方向能从应用变成训练环境。横向任务先解决商业问题，纵向任务则要反过来抬高模型能力上限。一个任务域要完成这次升级，必须能不断产生高质量 trajectory，能给出自动反馈，能反复训练，并且能随着数据和环境扩展持续 scale。</p>
+        <p>筛选标准很硬：任务必须好验证，链路必须够长，失败必须能归因。好验证意味着结果可以通过测试、回放、指标、规则或外部环境状态判断；链路够长意味着任务要跨多个步骤暴露规划和错误恢复；失败能归因，才有可能把一次失败变成下一轮训练材料。</p>
+        <p>这个升级通常不会一步到位。一个横向任务会先以产品或工具形态出现，解决一个具体场景里的效率问题；然后慢慢长出 harness、任务生成、环境回放、verifier 和数据记录；最后才可能变成训练场。真正的分水岭，是它能不能从“帮人做一次事”，变成“持续产生可训练的任务分布”。</p>
+        <div class="candidate-grid" aria-label="候选方向">
+          <div class="candidate-card"><strong>Auto Research</strong><span>研究流程足够长，能覆盖检索、实验、数据、脚本、图表和报告。难点是任务定义、反馈验证和结果复现。</span></div>
+          <div class="candidate-card"><strong>Cyber</strong><span>有工具链、沙箱、扫描、利用、修复、验证，天然适合训练长链路执行。难点是合规、复现和环境构造。</span></div>
+          <div class="candidate-card"><strong>EDA / 电路设计</strong><span>有 RTL、netlist、仿真、综合、PPA、约束和时序验证，反馈硬、链路长。难点是工具链门槛高、数据封闭和设计空间巨大。</span></div>
+          <div class="candidate-card"><strong>Bioscience / 生物制药</strong><span>有实验设计、数据处理、脚本、指标和复现链路。难点是任务标准化、反馈噪声、实验成本和合规边界。</span></div>
+          <div class="candidate-card"><strong>其他 Science</strong><span>文献、数据、模拟、分析脚本和报告可以组成长链路科研任务。难点是 verifier 不够硬、环境差异大和任务定义发散。</span></div>
+        </div>
+        <p>这几类和前面的横向观察是同一组，只是这里换一个问题看：谁最可能从横向应用升级成纵向训练场。Auto Research 的优势是链路长、环节多、天然需要工具协作，但要先把任务定义和结果验证做硬；Cyber 的优势是 verifier 相对清楚，工具链也成熟，但环境复现和合规边界会很难；EDA / 电路设计的优势是反馈硬、工具链强、任务价值高，但工具和数据壁垒也很高；Bioscience / 生物制药的价值厚，难点是实验反馈慢、噪声大、标准化成本高；其他 Science 则需要先把科研流程收敛成更硬的任务定义。</p>
+        <p>所以我不会只看某个方向有没有大模型 demo，而会看它有没有开始形成“环境工程”。有没有标准化的任务入口，能不能稳定复现同一个场景，失败之后能不能知道错在计划、工具、数据还是验证，轨迹能不能被留下来继续训练。没有这些东西，横向任务再热也只是应用层；有了这些东西，它才有机会变成纵向能力的燃料。</p>
+        <p>所以未来几个月我会更关注这类信号：某个横向任务是否开始出现稳定环境、稳定 verifier、稳定 trajectory。只要这三件事同时出现，它就可能从应用层机会继续长成新的纵向训练场。</p>
+      </section>
+
+      <section class="article-section" id="strategy">
+        <h2>竞争策略：和“共识错开15 度夹角”</h2>
+        <p>这个判断最后会落到一个很实际的问题：如果 Code Agent 已经成为共识，新的位置在哪里？我觉得可以和共识错开 15 度：离 Code 足够近，能继承它的任务模板、工具链和训练信号；同时避开最拥挤的中心，在新的任务域里形成差异化。</p>
+        <p>Code Agent 证明了一个真实任务域可以同时具备商业价值和训练价值。软件工程是第一个成熟例子，因为它有真实预算、强工具链、硬反馈、可验证结果，也能留下长链路 trajectory。这个模式一旦成立，竞争策略就分成两条：一条往纵向走，继续找能抬高模型能力上限的训练任务；一条往横向走，把更多真实任务接入 Code 这个通用 Agent / 环境模板。</p>
+        <p>纵向策略，是压住下一个能够 scale up Agent 智能上限的训练任务。这个任务必须足够长程，能暴露规划、工具调用、状态追踪和错误恢复；也必须有稳定环境、硬 verifier 和可复盘轨迹，否则就很难成为训练场。SWE 是当前最清楚的样板，后面可能轮到 Cyber、EDA / 电路设计、Auto Research 或其他科学任务。</p>
+        <p>能持续生产高质量训练信号的方向更值得压注。Cyber 如果能解决合规和复现，就有沙箱、扫描、利用、修复、验证这条长链路；EDA 如果能接入工具链，就有 RTL、仿真、综合、约束和 timing closure 的硬反馈；Auto Research 如果能把研究过程标准化，就可能把检索、实验、数据、图表和报告变成可复盘轨迹。这些方向真正值钱的是环境、任务和 verifier。</p>
+        <p>横向策略，是把更多真实任务接入 Code 这个通用 Agent / 环境模板。每个行业都需要把任务改造成可执行、有状态、有工具、有反馈、有验证的工作循环；先套一个 chatbot，只能解决很表层的问题。MCP、GUI、数据分析、科研流程、企业系统和生物制药，真正的机会都在这里。</p>
+        <p>横向里最重要的是任务厚度。有没有真实用户每天在做这件事？有没有预算？有没有现成的数字环境和工具接口？有没有办法把结果验证出来？行业知识问答很容易停在演示层；行业流程变成 Code-like task，Agent 才有机会真正进入生产。</p>
+        <p>所以对个人或团队来说，不一定要站在共识正中心。更有价值的问题是：我掌握的任务域有没有独特数据、工具链、客户流程或 verifier？它能不能离 Code 主干足够近，被整理成可执行、可观察、可验证、可复盘的环境？如果答案是肯定的，这个 15 度夹角就比正中心更值得下注。</p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>讨论</h2>
+      <p class="discussion-note">评论由 Disqus 提供。</p>
+      <div id="disqus_thread" data-page-title="来自 ICML 的态势感知：关于 Code Agent" data-page-identifier="blogs/icml-code-agent" data-page-url="https://chenxinli001.github.io/blogs/icml-code-agent/"></div>
+    </section>
+  </main>
+  <script src="../disqus-config.js"></script>
+  <script src="../disqus-loader.js"></script>
+</body>
+</html>
