@@ -58,10 +58,11 @@
 
     .icml-code-page .lead-section {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-      gap: 28px;
-      align-items: stretch;
-      margin-top: 28px;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      align-items: start;
+      max-width: 900px;
+      margin: 28px auto 0;
     }
 
     .icml-code-page .lead-section .visual-figure,
@@ -352,10 +353,6 @@
       </header>
 
       <section class="article-section lead-section" id="start">
-        <figure class="visual-figure generated-image-figure hero-cover">
-          <figcaption>图 1：Code Agent 的基本循环：理解任务、修改代码、运行反馈，再进入下一轮。</figcaption>
-          <img src="../assets/code-agent-icml-cover.jpg" alt="ICML conference hall with researchers discussing code agents around laptops showing repositories, tests and debugging loops" loading="eager">
-        </figure>
         <div class="thesis-snapshot" aria-label="核心判断">
           <p><strong>共识</strong> 大家对 Code Agent 的共识集中且确定：专项任务 Agent 里，它的商业前景和被训练出来的概率都很高。</p>
           <p><strong>态势</strong> Agent 任务正在进入“一纵多横”的态势。纵向看能否提升模型智能上限；横向看是否有真实经济价值、商业价值和商业闭环。Code Agent 目前同时占住这两个层面，所以动量很大。</p>
@@ -363,6 +360,10 @@
           <p><strong>横向</strong> 适合横向扩展的任务，通常要有真实业务需求、清楚经济价值和可接入的工具 / 流程；最好还能被整理成 Code-like environment，让 Agent 可以执行、观察、验证和复盘。</p>
           <p><strong>路径</strong> 接下来要分两条线看：纵向继续找新的可 scale 训练场；横向把更多高价值任务改造成 Code-like environment。</p>
         </div>
+        <figure class="visual-figure generated-image-figure hero-cover">
+          <figcaption>图 1：Code Agent 的基本循环：理解任务、修改代码、运行反馈，再进入下一轮。</figcaption>
+          <img src="../assets/code-agent-icml-cover.jpg" alt="ICML conference hall with researchers discussing code agents around laptops showing repositories, tests and debugging loops" loading="eager">
+        </figure>
       </section>
 
       <section class="article-section publication-toc" aria-label="目录">

@@ -58,10 +58,11 @@
 
     .icml-code-page .lead-section {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-      gap: 28px;
-      align-items: stretch;
-      margin-top: 28px;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      align-items: start;
+      max-width: 900px;
+      margin: 28px auto 0;
     }
 
     .icml-code-page .lead-section .visual-figure,
@@ -352,10 +353,6 @@
       </header>
 
       <section class="article-section lead-section" id="start">
-        <figure class="visual-figure generated-image-figure hero-cover">
-          <figcaption>Figure 1: the basic Code Agent loop: understand the task, change code, run feedback, and enter the next iteration.</figcaption>
-          <img src="./assets/code-agent-icml-cover.jpg" alt="ICML conference hall with researchers discussing code agents around laptops showing repositories, tests and debugging loops" loading="eager">
-        </figure>
         <div class="thesis-snapshot" aria-label="Core thesis">
           <p><strong>Consensus</strong> The consensus around Code Agent feels unusually concentrated and concrete: among specialized-task agents, it has both a high commercial ceiling and a high chance of being trainable.</p>
           <p><strong>Map</strong> Agent tasks are moving into a one-vertical, many-horizontal pattern. Vertically, the question is whether a task can raise the intelligence ceiling of models. Horizontally, the question is whether it has real economic value, business value, and a business loop. Code Agent currently touches both.</p>
@@ -363,6 +360,10 @@
           <p><strong>Horizontal</strong> A horizontal task usually needs real demand, clear economic value, and an accessible tool or workflow surface. Ideally, it can also be shaped into a Code-like environment where the Agent can act, observe, verify, and replay.</p>
           <p><strong>Path</strong> The next step is to watch two lines at once: vertically, keep looking for new scalable training fields; horizontally, reshape more high-value tasks into Code-like environments.</p>
         </div>
+        <figure class="visual-figure generated-image-figure hero-cover">
+          <figcaption>Figure 1: the basic Code Agent loop: understand the task, change code, run feedback, and enter the next iteration.</figcaption>
+          <img src="./assets/code-agent-icml-cover.jpg" alt="ICML conference hall with researchers discussing code agents around laptops showing repositories, tests and debugging loops" loading="eager">
+        </figure>
       </section>
 
       <section class="article-section publication-toc" aria-label="Table of contents">
