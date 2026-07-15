@@ -572,14 +572,14 @@
         <p>关键在于哪个方向能从应用变成训练环境。应用表面先解决商业问题，训练前沿则要反过来抬高模型能力上限。一个任务域要完成这次升级，必须能不断产生高质量 trajectory，能给出自动反馈，能反复训练，并且能随着数据和环境扩展持续 scale。</p>
         <p>筛选标准很硬：任务必须好验证，链路必须够长，失败必须能归因。好验证意味着结果可以通过测试、回放、指标、规则或外部环境状态判断；链路够长意味着任务要跨多个步骤暴露规划和错误恢复；失败能归因，才有可能把一次失败变成下一轮训练材料。</p>
         <p>这个升级通常不会一步到位。一个应用表面会先以产品或工具形态出现，解决一个具体场景里的效率问题；然后慢慢长出 harness、任务生成、环境回放、verifier 和数据记录；最后才可能变成训练场。<strong>真正的分水岭，是它能不能从“帮人做一次事”，变成“持续产生可训练的任务分布”。</strong></p>
-        <div class="candidate-grid" aria-label="候选方向">
-          <div class="candidate-card"><strong>Auto Research</strong><span>研究流程足够长，能覆盖检索、实验、数据、脚本、图表和报告。难点是任务定义、反馈验证和结果复现。</span></div>
-          <div class="candidate-card"><strong>Cyber</strong><span>有工具链、沙箱、扫描、利用、修复、验证，天然适合训练长链路执行。难点是合规、复现和环境构造。</span></div>
-          <div class="candidate-card"><strong>EDA / 电路设计</strong><span>有 RTL、netlist、仿真、综合、PPA、约束和时序验证，反馈硬、链路长。难点是工具链门槛高、数据封闭和设计空间巨大。</span></div>
-          <div class="candidate-card"><strong>Bioscience / 生物制药</strong><span>有实验设计、数据处理、脚本、指标和复现链路。难点是任务标准化、反馈噪声、实验成本和合规边界。</span></div>
-          <div class="candidate-card"><strong>其他 Science</strong><span>文献、数据、模拟、分析脚本和报告可以组成长链路科研任务。难点是 verifier 不够硬、环境差异大和任务定义发散。</span></div>
+        <div class="candidate-grid" aria-label="训练前沿就绪度">
+          <div class="candidate-card"><strong>Auto Research</strong><span>就绪度：中。链路足够长，但任务定义、结果验证和复现还需要变硬，才更适合作为稳定训练燃料。</span></div>
+          <div class="candidate-card"><strong>Cyber</strong><span>就绪度：高，前提是能构造安全、可复现的沙箱。它的 verifier 比多数领域更清楚，主要门槛在合规和边界控制。</span></div>
+          <div class="candidate-card"><strong>EDA / 电路设计</strong><span>就绪度：高价值但门槛重。反馈硬、链路长，但工具接入、封闭数据和设计空间复杂度会抬高进入成本。</span></div>
+          <div class="candidate-card"><strong>Bioscience / 生物制药</strong><span>就绪度：价值厚但节奏慢。任务域很厚，但反馈噪声大、成本高、合规重，而且经常离即时验证很远。</span></div>
+          <div class="candidate-card"><strong>其他 Science</strong><span>就绪度：不均匀。有些流程能变成长链路环境，但多数还需要更硬的任务定义、更强 verifier 和更稳定复现。</span></div>
         </div>
-        <p>这几类和前面的应用表面观察是同一组，只是这里换一个问题看：谁最可能从应用表面升级成训练前沿。Auto Research 的优势是链路长、环节多、天然需要工具协作，但要先把任务定义和结果验证做硬；Cyber 的优势是 verifier 相对清楚，工具链也成熟，但环境复现和合规边界会很难；EDA / 电路设计的优势是反馈硬、工具链强、任务价值高，但工具和数据壁垒也很高；Bioscience / 生物制药的价值厚，难点是实验反馈慢、噪声大、标准化成本高；其他 Science 则需要先把科研流程收敛成更硬的任务定义。</p>
+        <p>这几类和前面的应用表面观察是同一组，但这里换成就绪度视角：谁更接近成为训练前沿，还卡在哪个瓶颈上？Cyber 和 EDA 更靠前，因为它们的反馈更硬；Auto Research 链路长，但任务定义还偏软；Bioscience / 生物制药价值厚，但反馈慢且噪声大；更广义的 Science 还不均匀，需要先把任务定义和 verifier 做硬。</p>
         <p>所以我不会只看某个方向有没有大模型 demo，而会看它有没有开始形成“环境工程”。有没有标准化的任务入口，能不能稳定复现同一个场景，失败之后能不能知道错在计划、工具、数据还是验证，轨迹能不能被留下来继续训练。没有这些东西，应用表面再热也只是应用层；有了这些东西，它才有机会变成训练前沿的燃料。</p>
         <p>所以未来几个月我会更关注这类信号：某个应用表面是否开始出现稳定环境、稳定 verifier、稳定 trajectory。只要这三件事同时出现，它就可能从应用层机会继续长成新的训练前沿。</p>
       </section>
