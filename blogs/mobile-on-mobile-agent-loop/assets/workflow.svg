@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Mobile-on-Mobile workflow</title>
+  <desc id="desc">A five-step workflow from phone-side Codex to desktop Codex, USB ADB, same phone GUI, and screenshot evidence.</desc>
+  <rect width="1200" height="520" fill="#fff"/>
+  <g font-family="Outfit, Inter, sans-serif">
+    <text x="64" y="74" fill="#8b2323" font-size="18" font-weight="700" letter-spacing="3">OBSERVE - ACT - VERIFY</text>
+    <text x="64" y="118" fill="#1a1a1a" font-family="Newsreader, Georgia, serif" font-size="46">The loop is small on purpose</text>
+  </g>
+  <g transform="translate(58 190)" font-family="Outfit, Inter, sans-serif">
+    <g>
+      <rect width="188" height="126" rx="18" fill="#fbfbf8" stroke="#d6cec4"/>
+      <text x="94" y="49" text-anchor="middle" fill="#1a1a1a" font-size="22" font-weight="700">Phone</text>
+      <text x="94" y="80" text-anchor="middle" fill="#5a5a5a" font-size="15">user intent</text>
+    </g>
+    <g transform="translate(232 0)">
+      <rect width="188" height="126" rx="18" fill="#fbfbf8" stroke="#d6cec4"/>
+      <text x="94" y="49" text-anchor="middle" fill="#1a1a1a" font-size="22" font-weight="700">Desktop</text>
+      <text x="94" y="80" text-anchor="middle" fill="#5a5a5a" font-size="15">local executor</text>
+    </g>
+    <g transform="translate(464 0)">
+      <rect width="188" height="126" rx="18" fill="#fbfbf8" stroke="#d6cec4"/>
+      <text x="94" y="49" text-anchor="middle" fill="#1a1a1a" font-size="22" font-weight="700">ADB</text>
+      <text x="94" y="80" text-anchor="middle" fill="#5a5a5a" font-size="15">control bridge</text>
+    </g>
+    <g transform="translate(696 0)">
+      <rect width="188" height="126" rx="18" fill="#fbfbf8" stroke="#d6cec4"/>
+      <text x="94" y="49" text-anchor="middle" fill="#1a1a1a" font-size="22" font-weight="700">Phone GUI</text>
+      <text x="94" y="80" text-anchor="middle" fill="#5a5a5a" font-size="15">real app state</text>
+    </g>
+    <g transform="translate(928 0)">
+      <rect width="188" height="126" rx="18" fill="#fbfbf8" stroke="#d6cec4"/>
+      <text x="94" y="49" text-anchor="middle" fill="#1a1a1a" font-size="22" font-weight="700">Evidence</text>
+      <text x="94" y="80" text-anchor="middle" fill="#5a5a5a" font-size="15">screenshot + UI</text>
+    </g>
+    <g stroke="#8b2323" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M188 63 H232"/>
+      <path d="M420 63 H464"/>
+      <path d="M652 63 H696"/>
+      <path d="M884 63 H928"/>
+    </g>
+    <g fill="#8b2323">
+      <path d="M232 63 l-16 -9 v18z"/>
+      <path d="M464 63 l-16 -9 v18z"/>
+      <path d="M696 63 l-16 -9 v18z"/>
+      <path d="M928 63 l-16 -9 v18z"/>
+    </g>
+  </g>
+  <text x="64" y="398" fill="#5a5a5a" font-family="Outfit, Inter, sans-serif" font-size="22">The point is not remote control. The point is a verifiable agent loop where the phone can be both the control surface and the target surface.</text>
+</svg>

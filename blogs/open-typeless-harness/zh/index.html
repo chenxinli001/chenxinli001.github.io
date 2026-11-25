@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Typeless Harness | Chenxin Li</title>
+  <meta name="description" content="一种 correction-native 的语音输入方式，从你真实做出的编辑中学习个人词汇。">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/open-typeless-harness/zh/">
+  <link rel="alternate" hreflang="en" href="https://chenxinli001.github.io/blogs/open-typeless-harness/">
+  <link rel="alternate" hreflang="zh-CN" href="https://chenxinli001.github.io/blogs/open-typeless-harness/zh/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Open Typeless Harness">
+  <meta property="og:description" content="一种 correction-native 的语音输入方式，从你真实做出的编辑中学习个人词汇。">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/open-typeless-harness/zh/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/open-typeless-harness/assets/cover.png">
+  <link rel="stylesheet" href="../../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../../">Blogs</a><a href="../">English version</a><a href="https://github.com/OpenCodexLabs/open-typeless-harness" target="_blank" rel="noopener">GitHub</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">项目笔记</span>
+          <a class="language-pill" href="../">Read in English</a>
+        </div>
+        <h1>Open Typeless Harness</h1>
+        <p class="article-subtitle">一种 correction-native 的语音输入方式，从你真实做出的编辑中学习个人词汇。</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/open-typeless-harness" target="_blank" rel="noopener">GitHub: OpenCodexLabs/open-typeless-harness</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>日期</span><strong>2026 年 5 月 21 日</strong></div>
+          <div><span>状态</span><strong>项目笔记</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section">
+        <h2>结论先行</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-typeless-harness">OpenCodexLabs/open-typeless-harness</a>.</p>
+        <p>Open Typeless Harness 来自一个简单挫败感：通用 speech-to-text 总是在那些对你最重要的词上失败。项目名、论文术语、产品名、中英混合短语和个人写作习惯，恰好是普通 dictation 最笨的地方。</p>
+        <p>这个项目问的是另一个问题：如果语音输入能从文本落地后你实际做出的编辑里学习，会怎样？</p>
+      </section>
+
+      <section class="article-section">
+        <h2>为什么需要它</h2>
+        <p>痛点不是 dictation 犯了一次错，而是它明天还会犯同样的错。你说一个 repo 名，修一次；说一个论文缩写，修一次；中英混说，再修一次。系统完全看不到这些 correction history。</p>
+        <p>这意味着用户手动变成了学习循环。每一次 correction 都是一个微小训练信号，但普通语音输入会把它丢掉。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 1：普通 speech-to-text 会反复犯同样的个人词汇错误，因为它不会记住 correction。</figcaption>
+          <img src="../assets/problem.png" alt="Voice input repeatedly failing on personal vocabulary and technical terms" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>核心想法</h2>
+        <p>语音输入不应该是一个单独的写作框，而应该是覆盖在你已有工作字段上的输入层。你在当前 App 里说话，让模型 polish transcript，把它插入当前 focused field，然后观察短窗口内跟随发生的编辑。</p>
+        <p>这些编辑才是真正的产品信号。稳定 correction 可以成为本地 speech skills；模糊 correction 可以保持可审阅。这个 loop 会变好，但不要求用户变成 prompt engineer。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 2：语音输入变成带有本地 speech skills 的 correction-native loop。</figcaption>
+          <img src="../assets/cover.png" alt="AI-native typeless voice input cover illustration" loading="lazy">
+        </figure>
+        <table>
+          <thead><tr><th>阶段</th><th>发生什么</th><th>为什么重要</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Listen</strong></td><td>捕获语音并生成 ASR transcript。</td><td>用户可以留在当前写作上下文中。</td></tr>
+            <tr><td><strong>Polish</strong></td><td>使用相关 speech skills 和 LLM polish step。</td><td>个人词汇可以在插入前被应用。</td></tr>
+            <tr><td><strong>Insert</strong></td><td>把文本写入当前 focused field。</td><td>App 像输入层，而不是另一个编辑器。</td></tr>
+            <tr><td><strong>Learn</strong></td><td>观察插入后的短窗口编辑。</td><td>真实 correction 成为产品反馈。</td></tr>
+            <tr><td><strong>Adapt</strong></td><td>把稳定模式提升为本地 speech skills。</td><td>下一次 dictation 可以改进，而不需要手动调 prompt。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>工作流</h2>
+        <p>这个 workflow 是一个反馈循环：listen、polish、insert、learn、adapt。每一步都很小，但合在一起就把产品类别从 “speech-to-text” 变成了 correction-native input。</p>
+        <p>重要边界是：它仍然是输入层，不是自主 agent。它应该写入用户正在使用的字段，从用户编辑中学习，并把本地词汇控制权留给用户。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 3：listen、polish、insert、观察 correction，并把稳定模式反馈回本地 speech skills。</figcaption>
+          <img src="../assets/workflow.png" alt="Open Typeless Harness correction-native voice input workflow" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>为什么重要</h2>
+        <p>AI-native work 不只是让 agent 操作文件，也包括改变人表达意图的方式。语音带宽很高，但前提是系统理解个人词汇和上下文相关表达。</p>
+        <p>Open Typeless Harness 让语音输入不再像一次性转写服务，而更像一种会随着使用而改进的本地写作习惯。</p>
+      </section>
+
+      <section class="article-section">
+        <h2>什么时候使用</h2>
+        <table>
+          <thead><tr><th>适合使用</th><th>需要小心</th></tr></thead>
+          <tbody>
+            <tr><td>你经常口述技术内容或中英混合内容。</td><td>目标字段包含你不想被监控的私密文本。</td></tr>
+            <tr><td>你反复纠正同样的词汇错误。</td><td>你需要严格的法律、医疗或金融转写。</td></tr>
+            <tr><td>你想在现有 App 内使用语音输入。</td><td>一个简单快捷键已经足够完成任务。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>一句话故事</h2>
+        <p>语音输入不应该止步于 transcription。更有意思的产品 primitive 是 correction loop：用户修了什么，哪些修正反复出现，哪些应该变成本地 skill？</p>
+        <p><strong>Open Typeless Harness 把 dictation 变成一个由真实编辑驱动的本地学习循环。</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>讨论</h2>
+      <p class="discussion-note">评论由 Disqus 提供。</p>
+      <div
+        id="disqus_thread"
+        data-page-title="Open Typeless Harness"
+        data-page-identifier="blogs/open-typeless-harness"
+        data-page-url="https://chenxinli001.github.io/blogs/open-typeless-harness/zh/"
+      ></div>
+    </section>
+  </main>
+  <script src="../../disqus-config.js"></script>
+  <script src="../../disqus-loader.js"></script>
+</body>
+</html>

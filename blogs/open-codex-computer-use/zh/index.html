@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Codex Computer Use | Chenxin Li</title>
+  <meta name="description" content="一个本地 macOS 执行层，让 agent 能在后台检查和操作真实 App。">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/open-codex-computer-use/zh/">
+  <link rel="alternate" hreflang="en" href="https://chenxinli001.github.io/blogs/open-codex-computer-use/">
+  <link rel="alternate" hreflang="zh-CN" href="https://chenxinli001.github.io/blogs/open-codex-computer-use/zh/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Open Codex Computer Use">
+  <meta property="og:description" content="一个本地 macOS 执行层，让 agent 能在后台检查和操作真实 App。">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/open-codex-computer-use/zh/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/open-codex-computer-use/assets/cover.png">
+  <link rel="stylesheet" href="../../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../../">Blogs</a><a href="../">English version</a><a href="https://github.com/OpenCodexLabs/open-codex-computer-use" target="_blank" rel="noopener">GitHub</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">项目笔记</span>
+          <a class="language-pill" href="../">Read in English</a>
+        </div>
+        <h1>Open Codex Computer Use</h1>
+        <p class="article-subtitle">一个本地 macOS 执行层，让 agent 能在后台检查和操作真实 App。</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/open-codex-computer-use" target="_blank" rel="noopener">GitHub: OpenCodexLabs/open-codex-computer-use</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>日期</span><strong>2026 年 5 月 21 日</strong></div>
+          <div><span>状态</span><strong>项目笔记</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section">
+        <h2>结论先行</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/open-codex-computer-use">OpenCodexLabs/open-codex-computer-use</a>.</p>
+        <p>Open Codex Computer Use 来自一个简单的产品判断：agent 需要操作真实 App，但它不应该抢走用户前台的鼠标和键盘。</p>
+        <p>这个项目把 computer use 变成一个本地执行层：agent 观察截图和 Accessibility 状态，通过受控工具表面行动，在每次动作后接收反馈，并通过独立的后台 lane 保持工作可见。</p>
+      </section>
+
+      <section class="article-section">
+        <h2>为什么需要它</h2>
+        <p>旧桌面假设是一个用户、一个光标、一个前台任务。agent 工作打破了这个假设。coding agent 可能需要检查浏览器预览、操作 Notes、检查设置、打开 dashboard，或者和没有干净 API 的企业 App 交互。</p>
+        <p>如果它共享同一个前台光标，人就会被阻塞；如果它没有反馈就操作，agent 会漂移；如果 App 的 Accessibility 结构很弱，agent 就需要恢复路径。这就是为什么 computer use 应该是一个真实闭环，而不是盲宏。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 1：共享前台光标会让 agent 工作变成打断，而不是协作。</figcaption>
+          <img src="../assets/problem.png" alt="Human and agent conflicting over the same foreground desktop cursor" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>核心想法</h2>
+        <p>Computer use 不只是 “click x, type y”。对 agent 来说，它是感知、动作、反馈和恢复。执行层需要暴露足够的状态，让模型能推理 UI；也需要提供足够的动作后证据，让它知道动作是否成功。</p>
+        <p>Open Codex Computer Use 聚焦的就是这个缺失层。它不是新的 agent harness，而是一个本地 macOS 工具表面；当任务离开文件、进入真实 App 时，harness 可以调用它。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 2：为截图、Accessibility 状态、动作和反馈准备一个独立的 agent 操作 lane。</figcaption>
+          <img src="../assets/cover.png" alt="AI-native computer use cover illustration" loading="lazy">
+        </figure>
+        <table>
+          <thead><tr><th>层级</th><th>提供什么</th><th>为什么重要</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Observation</strong></td><td>截图加 Accessibility tree。</td><td>agent 同时看到像素和语义 UI 结构。</td></tr>
+            <tr><td><strong>Action</strong></td><td>点击、滚动、拖拽、键盘输入、文本输入和 accessibility actions。</td><td>agent 可以操作原生 App，而不只是网页。</td></tr>
+            <tr><td><strong>Feedback</strong></td><td>每个动作后的状态。</td><td>闭环可以恢复，而不是假设动作已经成功。</td></tr>
+            <tr><td><strong>Visibility</strong></td><td>App-aware virtual cursor 和适合 demo 的 trace。</td><td>用户能理解 agent 在做什么。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>工作流</h2>
+        <p>这个 loop 故意很朴素：observe、plan、act、再 observe。朴素很重要。没有动作后状态，agent 只能猜；没有 Accessibility 状态，它会过度依赖像素；没有可见光标或 trace，用户无法信任发生了什么。</p>
+        <p>这也是本地执行重要的原因。真实 Mac 有真实 App、真实权限、真实 WebView 和真实用户状态。执行层应该贴近这个环境，同时又让 agent 的 lane 保持显式。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 3：后台 computer use 是 observe-act-feedback loop，并和人的前台工作 lane 分开。</figcaption>
+          <img src="../assets/workflow.png" alt="Open Codex Computer Use observe action feedback workflow" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>为什么重要</h2>
+        <p>AI-native workflow 不断跨越代码和界面的边界。agent 可能先写实现，再在浏览器验证 UI，然后调整设置，再收集截图作为证据。纯文本 harness 已经不够。</p>
+        <p>Open Codex Computer Use 给这些 UI 步骤提供共享 primitive。与其让每个 agent 发明自己的脆弱桌面控制技巧，不如让 harness 调用一个用 App 状态、动作和反馈说话的本地 MCP server。</p>
+      </section>
+
+      <section class="article-section">
+        <h2>什么时候使用</h2>
+        <table>
+          <thead><tr><th>适合使用</th><th>需要小心</th></tr></thead>
+          <tbody>
+            <tr><td>任务需要操作原生 macOS App。</td><td>App 是自绘 UI，或者 Accessibility 结构很弱。</td></tr>
+            <tr><td>你想要本地 computer use，而不是云桌面。</td><td>动作涉及安全、支付或账号变更后果。</td></tr>
+            <tr><td>你需要带可见 agent 动作的 demo。</td><td>已有稳定 API，且比 UI 控制更安全。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>一句话故事</h2>
+        <p>agent 时代需要清楚区分人的前台工作和 agent 的后台工作。如果 agent 必须使用真实 App，它就应该通过显式的 observation-action-feedback loop 来做。</p>
+        <p><strong>Open Codex Computer Use 给 agent 提供了一个本地、可见、理解 App 的操作 lane，用于真实 macOS 工作。</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>讨论</h2>
+      <p class="discussion-note">评论由 Disqus 提供。</p>
+      <div
+        id="disqus_thread"
+        data-page-title="Open Codex Computer Use"
+        data-page-identifier="blogs/open-codex-computer-use"
+        data-page-url="https://chenxinli001.github.io/blogs/open-codex-computer-use/zh/"
+      ></div>
+    </section>
+  </main>
+  <script src="../../disqus-config.js"></script>
+  <script src="../../disqus-loader.js"></script>
+</body>
+</html>

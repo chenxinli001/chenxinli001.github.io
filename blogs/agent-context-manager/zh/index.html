@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Context Manager | Chenxin Li</title>
+  <meta name="description" content="面向长时间 agent 工作的跨 harness 上下文压缩与召回。">
+  <link rel="canonical" href="https://chenxinli001.github.io/blogs/agent-context-manager/zh/">
+  <link rel="alternate" hreflang="en" href="https://chenxinli001.github.io/blogs/agent-context-manager/">
+  <link rel="alternate" hreflang="zh-CN" href="https://chenxinli001.github.io/blogs/agent-context-manager/zh/">
+  <meta name="author" content="Chenxin Li">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Agent Context Manager">
+  <meta property="og:description" content="面向长时间 agent 工作的跨 harness 上下文压缩与召回。">
+  <meta property="og:url" content="https://chenxinli001.github.io/blogs/agent-context-manager/zh/">
+  <meta property="og:image" content="https://chenxinli001.github.io/blogs/agent-context-manager/assets/cover.png">
+  <link rel="stylesheet" href="../../blogs.css?v=20260512-phoneclaw">
+</head>
+<body>
+  <main class="page-shell article-page">
+    <nav class="site-topbar" aria-label="Primary navigation">
+      <a class="brand-link" href="../../../">Chenxin Li</a>
+      <div class="topbar-links"><a href="../../">Blogs</a><a href="../">English version</a><a href="https://github.com/OpenCodexLabs/agent-context-manager" target="_blank" rel="noopener">GitHub</a></div>
+    </nav>
+
+    <article class="article-shell">
+      <header class="article-hero">
+        <div class="eyebrow-row">
+          <span class="eyebrow">项目笔记</span>
+          <a class="language-pill" href="../">Read in English</a>
+        </div>
+        <h1>Agent Context Manager</h1>
+        <p class="article-subtitle">面向长时间 agent 工作的跨 harness 上下文压缩与召回。</p>
+        <div class="panel-actions hero-actions">
+          <a href="https://github.com/OpenCodexLabs/agent-context-manager" target="_blank" rel="noopener">GitHub: OpenCodexLabs/agent-context-manager</a>
+        </div>
+        <div class="meta-grid compact-meta" aria-label="Article metadata">
+          <div><span>日期</span><strong>2026 年 5 月 21 日</strong></div>
+          <div><span>状态</span><strong>项目笔记</strong></div>
+        </div>
+      </header>
+
+      <section class="article-section">
+        <h2>结论先行</h2>
+        <p><strong>GitHub:</strong> <a href="https://github.com/OpenCodexLabs/agent-context-manager">OpenCodexLabs/agent-context-manager</a>.</p>
+        <p>Agent Context Manager 起点是一个非常普通的痛点：严肃的 agent 工作不会发生在一个干净的聊天窗口里。它会在 Codex、Claude Code、CodeBuddy、本地终端、浏览器会话、写到一半的笔记和旧调试轨迹之间来回移动。</p>
+        <p>这个项目围绕一句话展开：<strong>全局召回，本地压缩，有意识地应用。</strong> 目标不是给 agent 无限记忆，而是在正确时刻找回正确的工作集，并让人或 agent 在影响下一轮会话前先审阅它。</p>
+      </section>
+
+      <section class="article-section">
+        <h2>为什么需要它</h2>
+        <p>痛点通常出现在第三次或第四次 handoff。你昨天已经解释过项目约束，已经在另一个 harness 里找到了坏掉的命令，也已经决定过不要碰某个高风险文件。但下一次 session 重新开始时是空白的，于是用户又变成了记忆总线。</p>
+        <p>这不仅烦人，还会改变工作质量。agent 可能重复失败路径、错过旧决策，或者花前十分钟重建同一份上下文。本地 trace 明明存在，但埋在错误的位置和错误的格式里。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 1：当有用决策散落在本地 agent trace 里时，用户会被迫成为记忆桥梁。</figcaption>
+          <img src="../assets/problem.png" alt="Fragmented agent sessions with repeated context and scattered local traces" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>核心想法</h2>
+        <p>缺失的层不是另一个私有记忆盒子，而是一张上下文恢复工作台。旧 trace 应该可搜索；当前 session 应该可压缩；结果应该作为候选上下文被预览，而不是静默注入 prompt。</p>
+        <p>所以 Agent Context Manager 刻意保持小。它坐在 harness 旁边，不试图成为 agent、IDE 或操作系统。它只给 workflow 提供三个具体动作：recall、compact 和可审阅的 jobs。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 2：跨 harness 的 trace 变成可审阅的上下文 job，而不是静默记忆注入。</figcaption>
+          <img src="../assets/cover.png" alt="AI-native context recovery cover illustration" loading="lazy">
+        </figure>
+        <table>
+          <thead><tr><th>操作</th><th>含义</th><th>为什么重要</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Recall</strong></td><td>在旧的本地 agent trace 里搜索相关片段。</td><td>下一轮 session 可以恢复先前决策，而不必让用户重新讲一遍。</td></tr>
+            <tr><td><strong>Compact</strong></td><td>把当前 session 总结成更小的候选上下文块。</td><td>长任务可以继续推进，而不需要复制整段 transcript。</td></tr>
+            <tr><td><strong>Jobs</strong></td><td>排队、预览、应用或丢弃上下文结果。</td><td>上下文在影响当前 agent 前保持可审阅。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>工作流</h2>
+        <p>一个好的上下文工作流应该像清理工作台。先搜索旧 trace，再把当前 session 压缩成更小的 handoff，然后审阅候选块。只有在这之后，下一轮 agent 才应该接收这段上下文。</p>
+        <p>审阅步骤就是产品边界。上下文很强，但过时或不相关的上下文也很危险。Agent Context Manager 把上下文保持为一个显式 job，可以预览、应用或丢弃。</p>
+        <figure class="visual-figure generated-image-figure">
+          <figcaption>图 3：召回旧工作，压缩当前工作，审阅结果，只应用有用的工作集。</figcaption>
+          <img src="../assets/workflow.png" alt="Agent Context Manager recall compact review apply workflow" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="article-section">
+        <h2>为什么重要</h2>
+        <p>更深一层看，agent context 正在成为一等 artifact。它不只是聊天历史，而是决定下一轮 agent 是否能负责任行动的项目状态。</p>
+        <p>对于长时间 coding 工作，当前 prompt 应该包含当前目标、硬约束、先前决策、动过的文件、试过的命令和未解决风险。它不应该包含旧 transcript 的每一个分支。Agent Context Manager 是一种从本地证据重建这个工作集的实际方式。</p>
+      </section>
+
+      <section class="article-section">
+        <h2>什么时候使用</h2>
+        <table>
+          <thead><tr><th>适合使用</th><th>不该滥用</th></tr></thead>
+          <tbody>
+            <tr><td>你在多个 coding-agent 工具之间切换。</td><td>任务只是一次性小编辑，没有先前项目上下文。</td></tr>
+            <tr><td>你需要恢复旧决策、bug 或约束。</td><td>旧 trace 可能包含你不希望被搜索的敏感内容。</td></tr>
+            <tr><td>你想在 session 之间做 compact handoff。</td><td>你需要一个完全自动、没有人工审阅的记忆系统。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="article-section">
+        <h2>一句话故事</h2>
+        <p>如果 agent 要做严肃的多日工作，它就需要一层上下文恢复机制。不是因为模型应该记住一切，而是因为用户不应该成为昨天 trace 和今天任务之间唯一的桥梁。</p>
+        <p><strong>Agent Context Manager 把散落的本地 trace 变成可审阅的上下文操作：recall、compact，并有意识地 apply。</strong></p>
+      </section>
+    </article>
+
+    <section class="discussion-shell" aria-label="Comments">
+      <h2>讨论</h2>
+      <p class="discussion-note">评论由 Disqus 提供。</p>
+      <div
+        id="disqus_thread"
+        data-page-title="Agent Context Manager"
+        data-page-identifier="blogs/agent-context-manager"
+        data-page-url="https://chenxinli001.github.io/blogs/agent-context-manager/zh/"
+      ></div>
+    </section>
+  </main>
+  <script src="../../disqus-config.js"></script>
+  <script src="../../disqus-loader.js"></script>
+</body>
+</html>
